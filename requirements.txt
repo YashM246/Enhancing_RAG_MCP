@@ -4,4 +4,5 @@ pandas
 numpy
 tqdm
 python-dotenv
-vllm
+json
+pickle

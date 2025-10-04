@@ -1,0 +1,148 @@
+[
+  {
+    "tool_id": "brave_search_001",
+    "tool_name": "Brave Web Search",
+    "description": "A web search tool using Brave's Search API to find current information on the internet. Performs real-time searches and returns relevant web results including titles, snippets, and URLs. Best for finding recent news, articles, and general web content.",
+    "parameters": {
+      "query": {
+        "type": "string",
+        "description": "The search query string",
+        "required": true
+      },
+      "count": {
+        "type": "integer",
+        "description": "Number of results to return (1-20)",
+        "required": false,
+        "default": 10
+      }
+    },
+    "usage_example": "Search for recent news about artificial intelligence breakthroughs",
+    "category": "web_search"
+  },
+  {
+    "tool_id": "arxiv_search_002",
+    "tool_name": "arXiv Academic Search",
+    "description": "Search and retrieve academic papers from arXiv, a repository of electronic preprints in physics, mathematics, computer science, and related fields. Returns paper titles, abstracts, authors, publication dates, and PDF links. Ideal for finding research papers and academic literature.",
+    "parameters": {
+      "query": {
+        "type": "string",
+        "description": "Search query for papers (can include keywords, authors, or topics)",
+        "required": true
+      },
+      "max_results": {
+        "type": "integer",
+        "description": "Maximum number of papers to return",
+        "required": false,
+        "default": 10
+      },
+      "sort_by": {
+        "type": "string",
+        "description": "Sort order: relevance, lastUpdatedDate, or submittedDate",
+        "required": false,
+        "default": "relevance"
+      }
+    },
+    "usage_example": "Find recent papers about climate change and machine learning",
+    "category": "academic"
+  },
+  {
+    "tool_id": "postgresql_query_003",
+    "tool_name": "PostgreSQL Database Query",
+    "description": "Execute SQL queries against a PostgreSQL database. Supports SELECT, INSERT, UPDATE, and DELETE operations. Returns query results in JSON format. Useful for retrieving, modifying, or analyzing data stored in relational databases.",
+    "parameters": {
+      "query": {
+        "type": "string",
+        "description": "SQL query to execute",
+        "required": true
+      },
+      "database": {
+        "type": "string",
+        "description": "Database name to connect to",
+        "required": true
+      },
+      "timeout": {
+        "type": "integer",
+        "description": "Query timeout in seconds",
+        "required": false,
+        "default": 30
+      }
+    },
+    "usage_example": "Get all users who registered in the last 30 days",
+    "category": "database"
+  },
+  {
+    "tool_id": "file_read_004",
+    "tool_name": "File Reader",
+    "description": "Read contents from local or remote files. Supports various formats including text files, JSON, CSV, and XML. Can read entire files or specific line ranges. Useful for accessing configuration files, logs, or data files.",
+    "parameters": {
+      "file_path": {
+        "type": "string",
+        "description": "Path to the file (local path or URL)",
+        "required": true
+      },
+      "encoding": {
+        "type": "string",
+        "description": "File encoding (utf-8, ascii, etc.)",
+        "required": false,
+        "default": "utf-8"
+      },
+      "line_range": {
+        "type": "object",
+        "description": "Optional line range to read (start, end)",
+        "required": false
+      }
+    },
+    "usage_example": "Read the configuration file at /etc/app/config.json",
+    "category": "file_operations"
+  },
+  {
+    "tool_id": "slack_send_005",
+    "tool_name": "Slack Message Sender",
+    "description": "Send messages to Slack channels or direct messages. Supports formatted text with markdown, attachments, and mentions. Can send to specific channels, users, or groups. Ideal for notifications, alerts, and team communication.",
+    "parameters": {
+      "channel": {
+        "type": "string",
+        "description": "Channel ID or name (e.g., #general or user ID)",
+        "required": true
+      },
+      "message": {
+        "type": "string",
+        "description": "Message text (supports markdown formatting)",
+        "required": true
+      },
+      "thread_ts": {
+        "type": "string",
+        "description": "Thread timestamp to reply to a thread",
+        "required": false
+      }
+    },
+    "usage_example": "Send a notification to the engineering team about deployment completion",
+    "category": "communication"
+  },
+  {
+    "tool_id": "weather_api_006",
+    "tool_name": "Weather Information API",
+    "description": "Retrieve current weather conditions and forecasts for any location worldwide. Returns temperature, humidity, wind speed, precipitation, and conditions. Supports both current weather and multi-day forecasts.",
+    "parameters": {
+      "location": {
+        "type": "string",
+        "description": "City name, zip code, or coordinates (lat,lon)",
+        "required": true
+      },
+      "units": {
+        "type": "string",
+        "description": "Temperature units: metric, imperial, or kelvin",
+        "required": false,
+        "default": "metric"
+      },
+      "forecast_days": {
+        "type": "integer",
+        "description": "Number of forecast days (0 for current only, 1-7 for forecast)",
+        "required": false,
+        "default": 0
+      }
+    },
+    "usage_example": "What's the weather like in New York City today?",
+    "category": "data_api"
+  }
+]

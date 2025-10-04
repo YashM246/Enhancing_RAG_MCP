@@ -116,7 +116,7 @@
 **Indexing Module:**
 - [ ] Create `src/indexing/tool_indexer.py`
 - [ ] Implement `ToolIndexer` class:
-  - [ ] Embedding model initialization (start with all-MiniLM-L6-v2)
+  - [ ] Embedding model initialization (configurable: all-MiniLM-L6-v2, intfloat/e5-base-v2)
   - [ ] Text combination method (name + description + examples)
   - [ ] Embedding generation with batching
   - [ ] FAISS index creation
@@ -170,8 +170,9 @@
 
 **Complete Indexing:**
 - [ ] Test multiple embedding models:
-  - [ ] all-MiniLM-L6-v2 (fast)
-  - [ ] all-mpnet-base-v2 (better quality)
+  - [ ] all-MiniLM-L6-v2 (fast, baseline)
+  - [ ] intfloat/e5-base-v2 (semantic search optimized)
+  - [ ] all-mpnet-base-v2 (optional: better quality)
   - [ ] Compare quality in notebook
 - [ ] Build full index with all collected tools
 - [ ] Implement index versioning

@@ -1,8 +1,7 @@
 sentence-transformers
 faiss-cpu
-openai
-anthropic
 pandas
 numpy
 tqdm
 python-dotenv
+vllm

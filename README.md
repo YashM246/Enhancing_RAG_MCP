@@ -113,13 +113,39 @@ This project is based on:
 **Core Libraries:**
 - `sentence-transformers` - Text embeddings
 - `faiss-cpu` - Vector similarity search
-- `openai` / `anthropic` - LLM APIs
+- `vllm` or `ollama` - Open-source LLM serving
 - `pandas`, `numpy` - Data processing
 
 **Embedding Models:**
 - Phase 1: `all-MiniLM-L6-v2` (fast, baseline)
 - Optional: `all-mpnet-base-v2` (higher quality)
 
-**LLMs:**
-- Primary: GPT-4 / Claude Sonnet
-- Cost-effective: GPT-3.5 / Claude Haiku (for testing)
+**LLMs (Self-Hosted):**
+- Primary: Mistral 7B Instruct / Mixtral 8x7B Instruct
+- Alternative: Qwen2.5-7B-Instruct / LLaMA 3.1-8B-Instruct
+- Deployment: vLLM server via SSH (GPU-accelerated)
+
+**Infrastructure:**
+- Remote GPU server access via SSH
+- Model serving: vLLM / Text Generation Inference / Ollama
+- GPU Requirements: 40GB+ VRAM (A100 or equivalent)
+
+## 📊 Current Status
+
+**Phase 1 Progress:**
+- [x] Project setup and data collection
+- [x] Core implementation (indexing, retrieval, LLM integration)
+- [x] Baseline experiments completed
+- [x] Results analysis and validation
+- [x] Documentation
+
+**Phase 2 Timeline:** 3-4 weeks (after Phase 1 completion)
+
+## 🤝 Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
+
+**Team Structure:**
+- 6-person team
+- Modular codebase for parallel development
+- Code reviews required for all PRs

@@ -17,7 +17,7 @@
 
 **Project Infrastructure:**
 - [X] Create GitHub repository
-- [] Set up project structure:
+- [ ] Set up project structure:
   ```
   rag-mcp-project/
   ├── data/
@@ -38,17 +38,21 @@
 - [x] Create requirements.txt with dependencies:
   - sentence-transformers
   - faiss-cpu (or faiss-gpu)
-  - openai / anthropic
+  - vllm / ollama (for local model serving)
   - pandas, numpy
   - tqdm
   - python-dotenv
-- [x] Set up .env.example for API keys
+- [x] Set up .env.example for server credentials
 - [x] Initialize Git and .gitignore
 
 **Development Environment:**
 - [x] Install all dependencies
-- [ ] Verify API access (OpenAI/Anthropic)
-- [ ] Test basic imports and connectivity
+- [ ] Set up SSH access to GPU server
+- [ ] Install vLLM on server: `pip install vllm`
+- [ ] Download model: `huggingface-cli download mistralai/Mistral-7B-Instruct-v0.3`
+- [ ] Start model server: `vllm serve mistralai/Mistral-7B-Instruct-v0.3 --host 0.0.0.0 --port 8000`
+- [ ] Test server connectivity from local machine
+- [ ] Test basic imports and model inference
 
 ---
 
@@ -131,12 +135,12 @@
 **LLM Integration Module:**
 - [ ] Create `src/llm/llm_selector.py`
 - [ ] Implement `LLMToolSelector` class:
-  - [ ] API client setup (OpenAI/Anthropic)
-  - [ ] Prompt template design
+  - [ ] HTTP client setup for vLLM server
+  - [ ] Prompt template design (with strict JSON formatting for open models)
   - [ ] Tool formatting for prompt
-  - [ ] Response parsing (JSON extraction)
+  - [ ] Response parsing (JSON extraction with fallback regex)
   - [ ] Error handling and retry logic
-- [ ] Create `src/utils/token_counter.py` for cost tracking
+- [ ] Create `src/utils/token_counter.py` for tracking
 
 **Evaluation Module:**
 - [ ] Create `src/evaluation/evaluator.py`
@@ -182,12 +186,11 @@
 - [ ] Create `notebooks/retrieval_analysis.ipynb`
 
 **Complete LLM Integration:**
-- [ ] Finalize prompt engineering
-- [ ] Test different prompt formats
-- [ ] Optimize for token efficiency
-- [ ] Implement structured output parsing
+- [ ] Finalize prompt engineering for Mistral 7B
+- [ ] Test different prompt formats (strict JSON output)
+- [ ] Implement robust JSON parsing with fallbacks
 - [ ] Add comprehensive error handling
-- [ ] Create cost tracking system
+- [ ] Test batching capabilities if needed
 - [ ] Create `notebooks/prompt_engineering.ipynb`
 
 **Complete Evaluation:**
@@ -206,13 +209,14 @@
   1. Load data
   2. Build/load index
   3. Initialize retriever
-  4. Initialize LLM selector
+  4. Initialize LLM selector (connect to vLLM server)
   5. Run experiments
   6. Save results
 - [ ] Add command-line arguments:
   - `--mode` (rag-mcp, all-tools, random)
   - `--k` (top-k value)
   - `--output` (results directory)
+  - `--server-url` (vLLM server URL)
 - [ ] Test pipeline on 10 sample queries
 
 **Integration Testing:**
@@ -220,6 +224,7 @@
 - [ ] Test full workflow end-to-end
 - [ ] Verify results format
 - [ ] Check for error handling
+- [ ] Test server connection resilience
 
 **Baseline Implementations:**
 - [ ] Create `src/baselines/all_tools_baseline.py`
@@ -232,11 +237,12 @@
 **Documentation:**
 - [ ] Update `README.md` with:
   - Project overview
-  - Setup instructions
+  - Setup instructions (including server setup)
   - Usage examples
   - Project structure
 - [ ] Create `docs/api_interfaces.md`
 - [ ] Create `docs/architecture.md`
+- [ ] Create `docs/server_setup.md` (vLLM configuration)
 
 ---
 
@@ -246,7 +252,7 @@
 
 **Prepare for Experiments:**
 - [ ] Verify all 50+ queries are ready
-- [ ] Set experiment budget (API costs)
+- [ ] Ensure server is running and stable
 - [ ] Configure logging and result saving
 - [ ] Create experiment tracking sheet
 
@@ -257,7 +263,7 @@
   - Accuracy
   - Token usage (prompt + completion)
   - Latency per query
-  - Cost
+  - Server response times
 - [ ] Monitor for errors and handle gracefully
 
 **Experiment 2: RAG-MCP (k=5)**
@@ -283,6 +289,7 @@
 - [ ] Test different embedding models
 - [ ] Test different k values (1, 3, 5, 10)
 - [ ] Test different text combinations for indexing
+- [ ] Test different prompt formats for Mistral
 - [ ] Save results: `results/ablation_studies.json`
 
 ---
@@ -304,14 +311,14 @@
 **Token Usage Analysis:**
 - [ ] Calculate average prompt tokens per experiment
 - [ ] Calculate average completion tokens
-- [ ] Calculate total cost per experiment
 - [ ] Create token usage comparison chart
 - [ ] Verify >50% reduction with RAG-MCP
 
 **Latency Analysis:**
 - [ ] Calculate average latency per query
-- [ ] Identify bottlenecks (retrieval vs. LLM)
+- [ ] Identify bottlenecks (retrieval vs. LLM vs. network)
 - [ ] Create latency distribution plots
+- [ ] Analyze server response times
 
 **Retrieval Quality Analysis:**
 - [ ] Calculate Recall@k for different k values
@@ -323,6 +330,7 @@
 **LLM Selection Analysis:**
 - [ ] Cases where tool retrieved but not selected
 - [ ] Prompt effectiveness evaluation
+- [ ] JSON parsing success rate
 - [ ] Error pattern identification
 - [ ] Create LLM analysis report: `reports/llm_selection_analysis.md`
 
@@ -330,6 +338,7 @@
 - [ ] Categorize all failures:
   - Retrieval failures (correct tool not in top-k)
   - Selection failures (retrieved but not chosen)
+  - Parsing failures (invalid JSON output)
   - Execution failures (errors)
 - [ ] Analyze by query difficulty
 - [ ] Analyze by query category
@@ -368,7 +377,7 @@
 - [ ] If results don't match:
   - [ ] Try different embedding models
   - [ ] Adjust top-k parameter
-  - [ ] Review prompt engineering
+  - [ ] Review prompt engineering for Mistral
   - [ ] Debug retrieval pipeline
 - [ ] Create `reports/validation_against_paper.md`
 
@@ -401,6 +410,7 @@
 - [ ] Update `README.md` with:
   - [ ] Project description
   - [ ] Installation instructions
+  - [ ] Server setup guide
   - [ ] Quick start guide
   - [ ] Usage examples
   - [ ] Configuration options
@@ -422,9 +432,9 @@
   - Parameter tuning guide
   - Best practices
 - [ ] Create `docs/llm_integration.md`:
-  - Prompt engineering guide
-  - API provider setup
-  - Cost optimization tips
+  - Prompt engineering guide for Mistral
+  - vLLM server setup
+  - Response parsing strategies
 - [ ] Create `docs/evaluation_methodology.md`:
   - Metrics definitions
   - Evaluation process
@@ -442,6 +452,7 @@
 - [ ] Create `docs/reproducibility_guide.md`:
   - Step-by-step instructions
   - Environment requirements
+  - Server setup steps
   - Expected results
   - Troubleshooting guide
 - [ ] Test reproduction on clean environment
@@ -492,6 +503,7 @@
 - [ ] Architecture documentation
 - [ ] API documentation
 - [ ] User guide
+- [ ] Server setup guide
 - [ ] Reproducibility guide
 - [ ] Technical reports
 
@@ -535,14 +547,18 @@
 pip install -r requirements.txt
 python scripts/validate_data.py
 
+# Server setup (on GPU server)
+pip install vllm
+vllm serve mistralai/Mistral-7B-Instruct-v0.3 --host 0.0.0.0 --port 8000
+
 # Build index
 python src/main.py --build-index
 
 # Run experiments
-python src/main.py --mode rag-mcp --k 3
-python src/main.py --mode rag-mcp --k 5
-python src/main.py --mode all-tools
-python src/main.py --mode random
+python src/main.py --mode rag-mcp --k 3 --server-url http://your-server:8000
+python src/main.py --mode rag-mcp --k 5 --server-url http://your-server:8000
+python src/main.py --mode all-tools --server-url http://your-server:8000
+python src/main.py --mode random --server-url http://your-server:8000
 
 # Run evaluation
 python src/evaluation/evaluate.py --results results/
@@ -567,7 +583,3 @@ After completing Phase 1, implement hybrid search:
 
 ---
 
-**Version:** 1.0  
-**Status:** Ready for Execution  
-**Estimated Duration:** 4 weeks  
-**Team Size:** 6 members

@@ -17,7 +17,7 @@
 
 **Project Infrastructure:**
 - [X] Create GitHub repository
-- [ ] Set up project structure:
+- [X] Set up project structure:
   ```
   rag-mcp-project/
   ├── data/
@@ -114,14 +114,14 @@
 ### Initial Implementation (Days 3-5)
 
 **Indexing Module:**
-- [ ] Create `src/indexing/tool_indexer.py`
-- [ ] Implement `ToolIndexer` class:
-  - [ ] Embedding model initialization (configurable: all-MiniLM-L6-v2, intfloat/e5-base-v2)
-  - [ ] Text combination method (name + description + examples)
-  - [ ] Embedding generation with batching
-  - [ ] FAISS index creation
-  - [ ] Index save/load functionality
-- [ ] Test basic indexing on sample tools
+- [x] Create `src/indexing/tool_indexer.py`
+- [x] Implement `ToolIndexer` class:
+  - [x] Embedding model initialization (configurable: all-MiniLM-L6-v2, intfloat/e5-base-v2)
+  - [x] Text combination method (name + description + examples)
+  - [x] Embedding generation with batching
+  - [x] FAISS index creation
+  - [x] Index save/load functionality
+- [x] Test basic indexing on sample tools
 
 **Retrieval Module:**
 - [ ] Create `src/retrieval/retriever.py`

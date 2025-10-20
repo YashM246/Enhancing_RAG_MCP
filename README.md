@@ -52,27 +52,6 @@ User Query → Retriever → Top-k Tools → LLM → Tool Selection
 3. **LLM Selector:** Final tool selection from retrieved candidates
 4. **Evaluator:** Measures accuracy, token usage, and latency
 
-## 📁 Project Structure
-
-```
-rag-mcp-project/
-├── data/
-│   ├── tools/              # MCP tool descriptions (50-100 tools)
-│   ├── queries/            # Test queries with ground truth
-│   └── indexes/            # Pre-built vector indexes
-├── src/
-│   ├── indexing/           # Tool embedding and indexing
-│   ├── retrieval/          # Semantic + hybrid retrieval
-│   ├── llm/                # LLM integration and prompting
-│   ├── evaluation/         # Metrics and experiment runner
-│   └── utils/              # Helper functions
-├── notebooks/              # Analysis and visualization
-├── results/                # Experiment outputs
-├── reports/                # Analysis reports
-├── tests/                  # Unit and integration tests
-└── docs/                   # Technical documentation
-```
-
 ## 📈 Evaluation Metrics
 
 **Accuracy Metrics:**
@@ -141,11 +120,3 @@ This project is based on:
 
 **Phase 2 Timeline:** 3-4 weeks (after Phase 1 completion)
 
-## 🤝 Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
-
-**Team Structure:**
-- 6-person team
-- Modular codebase for parallel development
-- Code reviews required for all PRs

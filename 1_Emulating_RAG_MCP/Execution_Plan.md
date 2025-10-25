@@ -133,14 +133,16 @@
 - [ ] Create `src/retrieval/retrieval_metrics.py` for Recall@k, MRR
 
 **LLM Integration Module:**
-- [ ] Create `src/llm/llm_selector.py`
-- [ ] Implement `LLMToolSelector` class:
-  - [ ] HTTP client setup for vLLM server
-  - [ ] Prompt template design (with strict JSON formatting for open models)
-  - [ ] Tool formatting for prompt
-  - [ ] Response parsing (JSON extraction with fallback regex)
-  - [ ] Error handling and retry logic
-- [ ] Create `src/utils/token_counter.py` for tracking
+- [x] Create `src/llm/llm_selector.py`
+- [x] Implement `LLMToolSelector` class:
+  - [x] HTTP client setup for vLLM server
+  - [x] Prompt template design (with strict JSON formatting for open models)
+  - [x] Tool formatting for prompt
+  - [x] Response parsing (JSON extraction with fallback regex)
+  - [x] Error handling and retry logic
+- [x] Token tracking integrated into LLMToolSelector
+- [x] Create comprehensive unit tests (19 tests, all passing)
+- [x] Test with mocked responses (no server required)
 
 **Evaluation Module:**
 - [ ] Create `src/evaluation/evaluator.py`

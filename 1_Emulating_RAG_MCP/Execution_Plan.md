@@ -3,17 +3,16 @@
 ## Project Overview
 **Goal:** Emulate RAG-MCP methodology on 50-100 tools to establish baseline performance
 
-**Timeline:** 3-4 weeks  
-**Success Criteria:** 
+**Success Criteria:**
 - Achieve ~40-45% accuracy with RAG-MCP
 - Demonstrate >50% token reduction vs. all-tools baseline
 - Complete reproducible implementation
 
 ---
 
-## WEEK 1: Setup & Data Preparation
+## Phase 1: Setup & Data Preparation
 
-### Environment Setup (Days 1-2)
+### Environment Setup
 
 **Project Infrastructure:**
 - [X] Create GitHub repository
@@ -56,7 +55,7 @@
 
 ---
 
-### Data Collection (Days 3-5)
+### Data Collection
 
 **Tool Collection:**
 - [ ] Collect 50-100 MCP tool descriptions from:
@@ -85,7 +84,7 @@
 }
 ```
 
-**Query Dataset Creation:**
+**Query Dataset Creation/Collection:**
 - [ ] Create 50-100 test queries with ground truth
 - [ ] Distribute queries by difficulty:
   - [ ] 40% easy (clear, unambiguous)
@@ -111,7 +110,7 @@
 
 ---
 
-### Initial Implementation (Days 3-5)
+### Initial Implementation
 
 **Indexing Module:**
 - [x] Create `src/indexing/tool_indexer.py`
@@ -160,9 +159,9 @@
 
 ---
 
-## WEEK 2: Integration & Baseline Implementation
+## Phase 2: Integration & Baseline Implementation
 
-### Complete Core Components (Days 1-3)
+### Complete Core Components
 
 **Finalize Data:**
 - [ ] Ensure 50+ tools collected
@@ -174,7 +173,6 @@
 - [ ] Test multiple embedding models:
   - [ ] all-MiniLM-L6-v2 (fast, baseline)
   - [ ] intfloat/e5-base-v2 (semantic search optimized)
-  - [ ] all-mpnet-base-v2 (optional: better quality)
   - [ ] Compare quality in notebook
 - [ ] Build full index with all collected tools
 - [ ] Implement index versioning
@@ -204,7 +202,7 @@
 
 ---
 
-### End-to-End Integration (Days 4-5)
+### End-to-End Integration
 
 **Main Pipeline:**
 - [ ] Create `src/main.py` with CLI interface
@@ -249,9 +247,9 @@
 
 ---
 
-## WEEK 3: Experimentation & Analysis
+## Phase 3: Experimentation & Analysis
 
-### Run Experiments (Days 1-2)
+### Run Experiments
 
 **Prepare for Experiments:**
 - [ ] Verify all 50+ queries are ready
@@ -297,7 +295,7 @@
 
 ---
 
-### Analysis & Visualization (Days 3-5)
+### Analysis & Visualization
 
 **Results Aggregation:**
 - [ ] Aggregate all experiment results
@@ -366,158 +364,6 @@
 - [ ] Create `reports/results_summary.md`
 - [ ] Create `reports/executive_summary.md`
 - [ ] Create `docs/comparison_with_paper.md` (compare to Gan & Sun results)
-
----
-
-## WEEK 4: Validation & Documentation
-
-### Validation (Days 1-2)
-
-**Validate Against Paper:**
-- [ ] Compare accuracy: Target ~43% (paper result)
-- [ ] Compare token reduction: Target >50%
-- [ ] Document any deviations
-- [ ] If results don't match:
-  - [ ] Try different embedding models
-  - [ ] Adjust top-k parameter
-  - [ ] Review prompt engineering for Mistral
-  - [ ] Debug retrieval pipeline
-- [ ] Create `reports/validation_against_paper.md`
-
-**Code Quality:**
-- [ ] Code review and cleanup
-- [ ] Add docstrings to all functions
-- [ ] Add type hints
-- [ ] Remove debug code
-- [ ] Optimize performance where possible
-- [ ] Add caching for repeated operations
-
-**Testing:**
-- [ ] Write unit tests for core components
-- [ ] Test edge cases
-- [ ] Verify reproducibility (run same experiment twice)
-- [ ] Create `tests/test_*.py` files
-- [ ] Target >70% code coverage
-
----
-
-### Documentation (Days 3-5)
-
-**Code Documentation:**
-- [ ] Complete all docstrings
-- [ ] Add inline comments for complex logic
-- [ ] Create API documentation
-- [ ] Document all configuration options
-
-**User Documentation:**
-- [ ] Update `README.md` with:
-  - [ ] Project description
-  - [ ] Installation instructions
-  - [ ] Server setup guide
-  - [ ] Quick start guide
-  - [ ] Usage examples
-  - [ ] Configuration options
-  - [ ] Results summary
-- [ ] Create `CONTRIBUTING.md`
-- [ ] Create `docs/user_guide.md`
-
-**Technical Documentation:**
-- [ ] Create `docs/architecture.md`:
-  - System architecture diagram
-  - Component interactions
-  - Data flow
-- [ ] Create `docs/indexing_pipeline.md`:
-  - Embedding model choices
-  - Text combination strategies
-  - FAISS setup
-- [ ] Create `docs/retrieval_documentation.md`:
-  - Retrieval algorithms
-  - Parameter tuning guide
-  - Best practices
-- [ ] Create `docs/llm_integration.md`:
-  - Prompt engineering guide for Mistral
-  - vLLM server setup
-  - Response parsing strategies
-- [ ] Create `docs/evaluation_methodology.md`:
-  - Metrics definitions
-  - Evaluation process
-  - Results interpretation
-
-**Data Documentation:**
-- [ ] Complete `data/README.md`:
-  - Data sources and licenses
-  - Collection methodology
-  - Schema documentation
-  - Usage examples
-- [ ] Create `docs/ground_truth_methodology.md`
-
-**Reproducibility:**
-- [ ] Create `docs/reproducibility_guide.md`:
-  - Step-by-step instructions
-  - Environment requirements
-  - Server setup steps
-  - Expected results
-  - Troubleshooting guide
-- [ ] Test reproduction on clean environment
-- [ ] Create reproduction checklist
-
-**Phase 2 Preparation:**
-- [ ] Create `docs/phase_2_handoff.md`:
-  - Current implementation summary
-  - What worked well
-  - Known limitations
-  - Suggestions for hybrid search
-- [ ] Design hybrid retrieval interface (skeleton)
-- [ ] Create `configs/phase_2_evaluation_config.yaml`
-
-**Project Retrospective:**
-- [ ] Document lessons learned
-- [ ] Identify what worked well
-- [ ] Identify challenges faced
-- [ ] Suggestions for improvement
-- [ ] Create `docs/retrospective.md`
-
----
-
-## Final Deliverables Checklist
-
-### Code:
-- [ ] Complete, working RAG-MCP implementation
-- [ ] All baseline implementations
-- [ ] Comprehensive evaluation framework
-- [ ] Unit and integration tests
-- [ ] Clean, documented codebase
-
-### Data:
-- [ ] 50-100 MCP tool descriptions
-- [ ] 50-100 test queries with ground truth
-- [ ] Data validation scripts
-- [ ] Data documentation
-
-### Results:
-- [ ] All experiment results (JSON/CSV)
-- [ ] Aggregated results and statistics
-- [ ] Comparison tables
-- [ ] Visualizations (charts, plots)
-- [ ] Analysis reports
-
-### Documentation:
-- [ ] README.md (comprehensive)
-- [ ] Architecture documentation
-- [ ] API documentation
-- [ ] User guide
-- [ ] Server setup guide
-- [ ] Reproducibility guide
-- [ ] Technical reports
-
-### Reports:
-- [ ] Executive summary
-- [ ] Results summary
-- [ ] Retrieval analysis
-- [ ] LLM selection analysis
-- [ ] Error analysis
-- [ ] Validation against paper
-- [ ] Project retrospective
 
 ---
 

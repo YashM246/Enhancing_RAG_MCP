@@ -51,6 +51,10 @@ def parse_tool_selection_response(response_text: str) -> Dict:
     if not response_text or not response_text.strip():
         raise ValueError("Empty response from LLM")
 
+    # Pre-processing: Fix escaped underscores (Ollama sometimes does this)
+    # Changes: selected\_tool → selected_tool
+    response_text = response_text.replace('\\_', '_')
+
     # Strategy 1: Direct JSON parse
     # Try to parse the response as pure JSON
     # Works for: {"selected_tool": "brave_search"}

@@ -58,3 +58,7 @@ Thumbs.db
 # Project specific
 data/indexes/*.index
 data/indexes/*.metadata.json
+
+
+#files 
+ingest_mcp_bench_tools.py

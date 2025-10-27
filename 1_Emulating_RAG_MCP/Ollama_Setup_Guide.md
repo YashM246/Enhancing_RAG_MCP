@@ -69,8 +69,24 @@ selector = LLMToolSelector(
     backend="ollama"
 )
 
-# Now use selector.select_tool() as normal
+# Example usage (multi-tool support)
+tools = [
+    {"tool_name": "arxiv_search", "description": "Search papers"},
+    {"tool_name": "file_writer", "description": "Write files"}
+]
+
+# Single tool query
+result = selector.select_tool("Find AI papers", tools)
+print(result["selected_tools"])      # ["arxiv_search"]
+print(result["num_tools_selected"])  # 1
+
+# Multi-tool query
+result = selector.select_tool("Find papers and save them", tools)
+print(result["selected_tools"])      # ["arxiv_search", "file_writer"]
+print(result["num_tools_selected"])  # 2
 ```
+
+**Note:** The LLM selects 1-3 tools per query, preferring fewer tools when possible.
 
 ## Performance Tips
 

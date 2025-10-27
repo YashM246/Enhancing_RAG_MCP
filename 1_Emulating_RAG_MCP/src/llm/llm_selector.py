@@ -5,11 +5,12 @@ This is the main module for LLM-based tool selection in the RAG-MCP system.
 It provides the LLMToolSelector class which:
 1. Connects to a vLLM/Ollama server (or compatible API) via HTTP
 2. Formats prompts with query + candidate tools
-3. Sends requests to the LLM for tool selection
+3. Sends requests to the LLM for tool selection (1-3 tools)
 4. Parses responses and tracks metrics
 
-The LLM acts as a "final selector" that chooses the best tool from
-the top-k candidates retrieved by semantic search.
+The LLM acts as a "final selector" that chooses 1-3 tools from
+the top-k candidates retrieved by semantic search. The LLM selects
+the MINIMUM number of tools needed for the query.
 
 Supports both vLLM and Ollama backends automatically.
 """
@@ -22,11 +23,13 @@ from .response_parser import parse_tool_selection_response
 
 class LLMToolSelector:
     """
-    Selects the most appropriate tool from candidates using an LLM.
+    Selects 1-3 appropriate tools from candidates using an LLM.
 
     This class connects to a vLLM or Ollama server (or any OpenAI-compatible API)
     and uses an LLM to make the final tool selection decision from a
     set of candidate tools retrieved by semantic search.
+
+    The LLM selects the MINIMUM number of tools needed (1-3 max) for the query.
 
     Attributes:
         server_url (str): URL of the LLM server
@@ -103,12 +106,16 @@ class LLMToolSelector:
         candidate_tools: List[Dict]
     ) -> Dict:
         """
-        Select the best tool from candidates using the LLM.
+        Select 1-3 tools from candidates using the LLM.
+
+        The LLM will analyze the query and select the MINIMUM number of tools
+        needed (1-3 maximum). Simple queries get 1 tool, complex queries requiring
+        multiple distinct actions may get 2-3 tools.
 
         This is the main method that:
         1. Formats a prompt with the query and candidate tools
-        2. Sends an HTTP request to the vLLM server
-        3. Parses the LLM's response to extract the selected tool
+        2. Sends an HTTP request to the LLM server (vLLM or Ollama)
+        3. Parses the LLM's response to extract 1-3 selected tools
         4. Tracks token usage for evaluation
 
         Args:
@@ -121,7 +128,8 @@ class LLMToolSelector:
 
         Returns:
             Dict with keys:
-                - selected_tool (str): Name of the chosen tool
+                - selected_tools (List[str]): Names of 1-3 chosen tools (priority order)
+                - num_tools_selected (int): How many tools were selected (1-3)
                 - usage (dict): Token counts from LLM
                   - prompt_tokens (int)
                   - completion_tokens (int)
@@ -129,18 +137,25 @@ class LLMToolSelector:
                 - raw_response (str): Original LLM response
 
         Raises:
-            ValueError: If no tools provided or response unparseable
+            ValueError: If no tools provided, response unparseable, or >3 tools selected
             TimeoutError: If LLM server request times out
             RuntimeError: If HTTP request fails
 
-        Example:
+        Example (single tool):
             >>> selector = LLMToolSelector()
             >>> tools = [{"tool_name": "arxiv", "description": "Papers"}]
             >>> result = selector.select_tool("Find papers on AI", tools)
-            >>> result["selected_tool"]
-            'arxiv'
-            >>> result["usage"]["prompt_tokens"]
-            95
+            >>> result["selected_tools"]
+            ['arxiv']
+            >>> result["num_tools_selected"]
+            1
+
+        Example (multiple tools):
+            >>> result = selector.select_tool("Search papers and email results", tools)
+            >>> result["selected_tools"]
+            ['arxiv_search', 'email_sender']
+            >>> result["num_tools_selected"]
+            2
         """
         # Validation: Ensure we have tools to select from
         if not candidate_tools:
@@ -155,7 +170,7 @@ class LLMToolSelector:
         response_text, usage = self._call_llm_server(messages)
 
         # Step 3: Parse the response
-        # Extract the selected tool name from the response text
+        # Extract 1-3 selected tool names from the response text
         result = parse_tool_selection_response(response_text)
 
         # Step 4: Track token usage
@@ -164,9 +179,10 @@ class LLMToolSelector:
         self.total_completion_tokens += usage.get("completion_tokens", 0)
 
         # Step 5: Add metadata to result
-        # Include usage stats and raw response for debugging
+        # Include usage stats, raw response, and count for convenience
         result["usage"] = usage
         result["raw_response"] = response_text
+        result["num_tools_selected"] = len(result["selected_tools"])
 
         return result
 

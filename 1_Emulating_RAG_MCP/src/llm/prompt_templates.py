@@ -5,8 +5,8 @@ This module provides functions to format prompts for the LLM.
 The prompt includes the user's query and a list of candidate tools
 retrieved by the semantic search system.
 
-The LLM's job is to analyze the query and select the most appropriate
-tool from the candidates.
+The LLM's job is to analyze the query and select 1-3 tools based on
+the query's requirements. The LLM should prefer fewer tools when possible.
 """
 
 from typing import List, Dict
@@ -14,13 +14,13 @@ from typing import List, Dict
 
 def format_tool_selection_prompt(query: str, tools: List[Dict]) -> List[Dict]:
     """
-    Format a tool selection prompt for the LLM.
+    Format a tool selection prompt for the LLM (multi-tool support).
 
     This function creates a structured prompt that:
     1. Explains the LLM's role (tool selector)
     2. Presents the user's query
     3. Lists all candidate tools with descriptions
-    4. Requests a JSON response with the selected tool
+    4. Requests a JSON response with 1-3 selected tools
 
     Args:
         query (str): The user's query/question
@@ -47,10 +47,21 @@ def format_tool_selection_prompt(query: str, tools: List[Dict]) -> List[Dict]:
         2
     """
     # System message: Defines the LLM's role and output format
-    # This stays the same for all queries
+    # Emphasizes selecting minimum tools needed (1-3 max)
     system_msg = """You are a tool selection assistant.
-Select the most appropriate tool from the list.
-Return ONLY JSON: {"selected_tool": "tool_name"}"""
+Analyze the query and select the MINIMUM number of tools needed (1-3 maximum).
+
+Rules:
+- Use 1 tool if the query has a single, clear objective
+- Use 2-3 tools only if the query explicitly requires multiple distinct actions
+- Return tools in priority order (most important first)
+
+Return ONLY JSON: {"selected_tools": ["tool_name1", "tool_name2", ...]}
+
+Examples:
+- "Search for papers" -> {"selected_tools": ["arxiv_search"]}
+- "Search papers and check weather" -> {"selected_tools": ["arxiv_search", "weather_api"]}
+- "Find papers, save to file, and email results" -> {"selected_tools": ["arxiv_search", "file_writer", "email_sender"]}"""
 
     # Format the tool list as numbered items
     # Example output:
@@ -84,7 +95,7 @@ def format_tool_selection_prompt_verbose(query: str, tools: List[Dict]) -> List[
 
     Use this if the LLM produces verbose or incorrect responses with the
     simple template. This version includes usage examples and more explicit
-    instructions.
+    instructions for multi-tool selection.
 
     Args:
         query (str): The user's query/question
@@ -94,18 +105,27 @@ def format_tool_selection_prompt_verbose(query: str, tools: List[Dict]) -> List[
         List[Dict]: Messages in OpenAI chat format
     """
     system_msg = """You are a tool selection assistant. Your job is to analyze
-a user's query and select the most appropriate tool from a list of available tools.
+a user's query and select the MINIMUM number of tools needed (1-3 maximum).
 
 Instructions:
 1. Read the user's query carefully
 2. Review all available tools and their descriptions
-3. Select the ONE tool that best matches the query's intent
-4. Return ONLY a JSON object with this exact format: {"selected_tool": "exact_tool_name"}
+3. Determine if the query requires 1, 2, or 3 tools:
+   - Use 1 tool if the query has ONE clear objective
+   - Use 2-3 tools only if the query explicitly requires MULTIPLE distinct actions
+4. Return ONLY a JSON object with this exact format: {"selected_tools": ["tool1", "tool2", ...]}
 
 Important:
-- Use the exact tool name as provided
+- Prefer fewer tools when possible (minimize, don't maximize)
+- Use exact tool names as provided
+- Return tools in priority order (most important first)
 - Do not add any explanation or additional text
-- If unsure, choose the closest match"""
+- Maximum 3 tools allowed
+
+Examples:
+- Single objective: {"selected_tools": ["brave_search"]}
+- Two objectives: {"selected_tools": ["arxiv_search", "file_writer"]}
+- Three objectives: {"selected_tools": ["database_query", "file_writer", "email_sender"]}"""
 
     # Format tools with more detail including usage examples
     tool_list = []
@@ -129,7 +149,7 @@ Important:
 Available Tools:
 {tools_formatted}
 
-Select the best tool and respond with JSON: {{"selected_tool": "exact_tool_name"}}"""
+Select the minimum tools needed (1-3 max) and respond with JSON: {{"selected_tools": ["tool1", "tool2", ...]}}"""
 
     return [
         {"role": "system", "content": system_msg},

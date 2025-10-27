@@ -5,6 +5,8 @@ This module provides utilities to parse tool selections from LLM responses.
 Since open-source LLMs (like Mistral 7B) sometimes produce inconsistent
 output formats, we implement multiple parsing strategies with fallbacks.
 
+Supports multi-tool selection (1-3 tools per query).
+
 Parsing strategies (tried in order):
 1. Direct JSON parse - if response is clean JSON
 2. Markdown code block extraction - if JSON is wrapped in ```json ... ```
@@ -12,14 +14,15 @@ Parsing strategies (tried in order):
 4. Fallback error - if all strategies fail
 
 Example responses handled:
-- '{"selected_tool": "brave_search"}'
-- '```json\n{"selected_tool": "arxiv_search"}\n```'
-- 'I select {"selected_tool": "file_reader"} for this task.'
+- '{"selected_tools": ["brave_search"]}'
+- '{"selected_tools": ["arxiv_search", "file_writer"]}'
+- '```json\n{"selected_tools": ["arxiv", "email"]}\n```'
+- 'I select {"selected_tools": ["file_reader"]} for this task.'
 """
 
 import json
 import re
-from typing import Dict
+from typing import Dict, List
 
 
 def parse_tool_selection_response(response_text: str) -> Dict:
@@ -27,25 +30,29 @@ def parse_tool_selection_response(response_text: str) -> Dict:
     Parse tool selection from LLM response using multiple strategies.
 
     This function tries multiple parsing approaches to handle various
-    response formats from different LLMs. It's designed to be robust
-    against formatting inconsistencies.
+    response formats from different LLMs. Supports multi-tool selection (1-3 tools).
 
     Args:
         response_text (str): Raw text response from the LLM
 
     Returns:
-        Dict: A dictionary with the selected tool:
-              {"selected_tool": "tool_name"}
+        Dict: A dictionary with the selected tools:
+              {"selected_tools": ["tool_name1", "tool_name2", ...]}
+              Array contains 1-3 tool names in priority order.
 
     Raises:
-        ValueError: If the response cannot be parsed by any strategy
+        ValueError: If the response cannot be parsed by any strategy,
+                   or if more than 3 tools are selected
 
     Example:
-        >>> parse_tool_selection_response('{"selected_tool": "brave_search"}')
-        {'selected_tool': 'brave_search'}
+        >>> parse_tool_selection_response('{"selected_tools": ["brave_search"]}')
+        {'selected_tools': ['brave_search']}
 
-        >>> parse_tool_selection_response('```json\\n{"selected_tool": "arxiv"}\\n```')
-        {'selected_tool': 'arxiv'}
+        >>> parse_tool_selection_response('{"selected_tools": ["arxiv", "file_writer"]}')
+        {'selected_tools': ['arxiv', 'file_writer']}
+
+        >>> parse_tool_selection_response('```json\\n{"selected_tools": ["arxiv"]}\\n```')
+        {'selected_tools': ['arxiv']}
     """
     # Validate input
     if not response_text or not response_text.strip():
@@ -57,21 +64,32 @@ def parse_tool_selection_response(response_text: str) -> Dict:
 
     # Strategy 1: Direct JSON parse
     # Try to parse the response as pure JSON
-    # Works for: {"selected_tool": "brave_search"}
+    # Works for: {"selected_tools": ["brave_search", "arxiv"]}
     try:
         parsed = json.loads(response_text.strip())
-        if "selected_tool" in parsed:
-            return {"selected_tool": parsed["selected_tool"]}
+        if "selected_tools" in parsed:
+            tools = parsed["selected_tools"]
+            # Validate: must be list with 1-3 items
+            if not isinstance(tools, list):
+                raise ValueError(f"selected_tools must be a list, got {type(tools)}")
+            if len(tools) < 1:
+                raise ValueError("selected_tools array is empty (need at least 1 tool)")
+            if len(tools) > 3:
+                raise ValueError(f"Too many tools selected ({len(tools)}). Maximum is 3.")
+            # Ensure all items are strings
+            if not all(isinstance(t, str) for t in tools):
+                raise ValueError("All tools in selected_tools must be strings")
+            return {"selected_tools": tools}
     except json.JSONDecodeError:
         # Not valid JSON, try next strategy
         pass
 
     # Strategy 2: Extract from markdown code block
     # Many LLMs wrap JSON in markdown code blocks
-    # Works for: ```json\n{"selected_tool": "..."}\n```
-    # Also works for: ```\n{"selected_tool": "..."}\n```
+    # Works for: ```json\n{"selected_tools": ["..."]}\n```
+    # Also works for: ```\n{"selected_tools": ["..."]}\n```
     markdown_match = re.search(
-        r'```(?:json)?\s*(\{[^}]*"selected_tool"[^}]*\})\s*```',
+        r'```(?:json)?\s*(\{[^}]*"selected_tools"[^}]*\})\s*```',
         response_text,
         re.DOTALL | re.IGNORECASE
     )
@@ -80,61 +98,78 @@ def parse_tool_selection_response(response_text: str) -> Dict:
             # Extract the JSON string from the code block
             json_str = markdown_match.group(1)
             parsed = json.loads(json_str)
-            return {"selected_tool": parsed["selected_tool"]}
-        except (json.JSONDecodeError, KeyError):
+            if "selected_tools" in parsed:
+                tools = parsed["selected_tools"]
+                if isinstance(tools, list) and 1 <= len(tools) <= 3:
+                    if all(isinstance(t, str) for t in tools):
+                        return {"selected_tools": tools}
+        except (json.JSONDecodeError, KeyError, ValueError):
             # Code block didn't contain valid JSON, continue to next strategy
             pass
 
-    # Strategy 3: Regex search for JSON object
-    # Find any JSON-like object with "selected_tool" field
-    # Works for: "I think {"selected_tool": "brave_search"} is best"
+    # Strategy 3: Regex search for JSON array
+    # Find any JSON-like object with "selected_tools" array field
+    # Works for: "I select {"selected_tools": ["brave_search", "arxiv"]} for this"
     json_match = re.search(
-        r'\{[^}]*"selected_tool"\s*:\s*"([^"]+)"[^}]*\}',
+        r'"selected_tools"\s*:\s*\[(.*?)\]',
         response_text,
         re.DOTALL
     )
     if json_match:
-        # Extract just the tool name from the regex match
-        tool_name = json_match.group(1)
-        return {"selected_tool": tool_name}
+        try:
+            # Extract and parse the array contents
+            array_content = json_match.group(1)
+            # Parse as JSON array
+            tools = json.loads(f'[{array_content}]')
+            if isinstance(tools, list) and 1 <= len(tools) <= 3:
+                if all(isinstance(t, str) for t in tools):
+                    return {"selected_tools": tools}
+        except (json.JSONDecodeError, ValueError):
+            # Couldn't parse array, continue to fallback
+            pass
 
     # All strategies failed - response is unparseable
     # Provide a helpful error message with response preview
     raise ValueError(
         f"Cannot parse tool selection from response. "
+        f"Expected format: {{\"selected_tools\": [\"tool1\", \"tool2\", ...]}}. "
         f"Response (first 200 chars): {response_text[:200]}..."
     )
 
 
 def validate_tool_selection(
-    selected_tool: str,
+    selected_tools: List[str],
     candidate_tools: list
 ) -> bool:
     """
-    Validate that the selected tool is in the candidate list.
+    Validate that all selected tools are in the candidate list.
 
-    This is a safety check to ensure the LLM selected one of the
-    tools we actually provided, not a hallucinated tool name.
+    This is a safety check to ensure the LLM selected only tools
+    from the list we provided, not hallucinated tool names.
 
     Args:
-        selected_tool (str): Tool name selected by LLM
+        selected_tools (List[str]): Tool names selected by LLM (1-3 tools)
         candidate_tools (list): List of tool dicts that were provided to LLM
 
     Returns:
-        bool: True if selected_tool is valid, False otherwise
+        bool: True if ALL selected_tools are valid, False otherwise
 
     Example:
         >>> tools = [{"tool_name": "brave_search"}, {"tool_name": "arxiv"}]
-        >>> validate_tool_selection("brave_search", tools)
+        >>> validate_tool_selection(["brave_search"], tools)
         True
-        >>> validate_tool_selection("nonexistent_tool", tools)
+        >>> validate_tool_selection(["brave_search", "arxiv"], tools)
+        True
+        >>> validate_tool_selection(["nonexistent_tool"], tools)
+        False
+        >>> validate_tool_selection(["brave_search", "nonexistent"], tools)
         False
     """
     # Extract tool names from candidate list
     tool_names = [t.get('tool_name', '') for t in candidate_tools]
 
-    # Check if selected tool is in the list
-    return selected_tool in tool_names
+    # Check if ALL selected tools are in the list
+    return all(tool in tool_names for tool in selected_tools)
 
 
 def extract_reasoning(response_text: str) -> str:

@@ -31,20 +31,43 @@ class TestResponseParser:
     Test the response parsing module.
 
     This tests our ability to extract tool selections from various
-    LLM response formats.
+    LLM response formats. Supports multi-tool selection (1-3 tools).
     """
 
-    def test_parse_direct_json(self):
+    def test_parse_direct_json_single_tool(self):
         """
-        Test parsing a clean JSON response.
+        Test parsing a clean JSON response with single tool.
 
-        This is the ideal case where the LLM returns perfect JSON.
+        This is the ideal case where the LLM returns perfect JSON with 1 tool.
         """
-        response = '{"selected_tool": "brave_search"}'
+        response = '{"selected_tools": ["brave_search"]}'
         result = parse_tool_selection_response(response)
 
-        assert result["selected_tool"] == "brave_search"
+        assert result["selected_tools"] == ["brave_search"]
         assert isinstance(result, dict)
+        assert len(result["selected_tools"]) == 1
+
+    def test_parse_direct_json_multiple_tools(self):
+        """
+        Test parsing a clean JSON response with multiple tools.
+
+        LLM returns 2 tools for a query requiring multiple actions.
+        """
+        response = '{"selected_tools": ["arxiv_search", "file_writer"]}'
+        result = parse_tool_selection_response(response)
+
+        assert result["selected_tools"] == ["arxiv_search", "file_writer"]
+        assert len(result["selected_tools"]) == 2
+
+    def test_parse_direct_json_three_tools(self):
+        """
+        Test parsing JSON with maximum 3 tools.
+        """
+        response = '{"selected_tools": ["arxiv", "file_writer", "email_sender"]}'
+        result = parse_tool_selection_response(response)
+
+        assert result["selected_tools"] == ["arxiv", "file_writer", "email_sender"]
+        assert len(result["selected_tools"]) == 3
 
     def test_parse_markdown_json(self):
         """
@@ -52,10 +75,10 @@ class TestResponseParser:
 
         Many LLMs wrap JSON in ```json ... ``` blocks.
         """
-        response = '```json\n{"selected_tool": "arxiv_search"}\n```'
+        response = '```json\n{"selected_tools": ["arxiv_search"]}\n```'
         result = parse_tool_selection_response(response)
 
-        assert result["selected_tool"] == "arxiv_search"
+        assert result["selected_tools"] == ["arxiv_search"]
 
     def test_parse_markdown_without_language(self):
         """
@@ -63,10 +86,10 @@ class TestResponseParser:
 
         Some LLMs use ``` without the language tag.
         """
-        response = '```\n{"selected_tool": "file_reader"}\n```'
+        response = '```\n{"selected_tools": ["file_reader", "postgres_query"]}\n```'
         result = parse_tool_selection_response(response)
 
-        assert result["selected_tool"] == "file_reader"
+        assert result["selected_tools"] == ["file_reader", "postgres_query"]
 
     def test_parse_with_extra_text(self):
         """
@@ -74,10 +97,30 @@ class TestResponseParser:
 
         Some LLMs add explanation before/after the JSON.
         """
-        response = 'I select {"selected_tool": "postgres_query"} for this task.'
+        response = 'I select {"selected_tools": ["postgres_query"]} for this task.'
         result = parse_tool_selection_response(response)
 
-        assert result["selected_tool"] == "postgres_query"
+        assert result["selected_tools"] == ["postgres_query"]
+
+    def test_parse_too_many_tools(self):
+        """
+        Test that selecting more than 3 tools raises ValueError.
+
+        The maximum allowed is 3 tools.
+        """
+        response = '{"selected_tools": ["tool1", "tool2", "tool3", "tool4"]}'
+        with pytest.raises(ValueError, match="Too many tools"):
+            parse_tool_selection_response(response)
+
+    def test_parse_empty_array(self):
+        """
+        Test that empty tools array raises ValueError.
+
+        Need at least 1 tool selected.
+        """
+        response = '{"selected_tools": []}'
+        with pytest.raises(ValueError, match="empty"):
+            parse_tool_selection_response(response)
 
     def test_parse_empty_response(self):
         """
@@ -92,14 +135,14 @@ class TestResponseParser:
         """
         Test that unparseable response raises ValueError.
 
-        If we can't extract a tool, we should fail explicitly.
+        If we can't extract tools, we should fail explicitly.
         """
         with pytest.raises(ValueError, match="Cannot parse"):
             parse_tool_selection_response("This has no tool selection at all")
 
-    def test_validate_tool_selection_valid(self):
+    def test_validate_tool_selection_valid_single(self):
         """
-        Test validation with a valid tool selection.
+        Test validation with a valid single tool selection.
 
         The LLM selected a tool from our candidate list.
         """
@@ -108,7 +151,21 @@ class TestResponseParser:
             {"tool_name": "arxiv_search"}
         ]
 
-        assert validate_tool_selection("brave_search", tools) is True
+        assert validate_tool_selection(["brave_search"], tools) is True
+
+    def test_validate_tool_selection_valid_multiple(self):
+        """
+        Test validation with multiple valid tools.
+
+        Both selected tools are in the candidate list.
+        """
+        tools = [
+            {"tool_name": "brave_search"},
+            {"tool_name": "arxiv_search"},
+            {"tool_name": "file_reader"}
+        ]
+
+        assert validate_tool_selection(["brave_search", "arxiv_search"], tools) is True
 
     def test_validate_tool_selection_invalid(self):
         """
@@ -121,7 +178,20 @@ class TestResponseParser:
             {"tool_name": "arxiv_search"}
         ]
 
-        assert validate_tool_selection("nonexistent_tool", tools) is False
+        assert validate_tool_selection(["nonexistent_tool"], tools) is False
+
+    def test_validate_tool_selection_partial_invalid(self):
+        """
+        Test validation when some tools are valid, some invalid.
+
+        If any tool is invalid, validation fails.
+        """
+        tools = [
+            {"tool_name": "brave_search"},
+            {"tool_name": "arxiv_search"}
+        ]
+
+        assert validate_tool_selection(["brave_search", "nonexistent"], tools) is False
 
 
 class TestPromptTemplates:
@@ -229,11 +299,11 @@ class TestLLMToolSelector:
         ]
 
     @patch('src.llm.llm_selector.requests.post')
-    def test_select_tool_success(self, mock_post, sample_tools):
+    def test_select_tool_success_single(self, mock_post, sample_tools):
         """
-        Test successful tool selection with mocked HTTP response.
+        Test successful tool selection with single tool (mocked HTTP response).
 
-        This simulates a perfect response from the vLLM server.
+        This simulates a perfect response from the LLM server with 1 tool selected.
 
         The @patch decorator replaces requests.post with a mock object,
         so we don't actually make HTTP requests.
@@ -244,7 +314,7 @@ class TestLLMToolSelector:
         # Define what the mock should return when .json() is called
         mock_response.json.return_value = {
             "choices": [
-                {"message": {"content": '{"selected_tool": "arxiv_search"}'}}
+                {"message": {"content": '{"selected_tools": ["arxiv_search"]}'}}
             ],
             "usage": {
                 "prompt_tokens": 100,
@@ -264,9 +334,40 @@ class TestLLMToolSelector:
         result = selector.select_tool("Find papers on AI", sample_tools)
 
         # Verify the result
-        assert result["selected_tool"] == "arxiv_search"
+        assert result["selected_tools"] == ["arxiv_search"]
+        assert result["num_tools_selected"] == 1
         assert result["usage"]["prompt_tokens"] == 100
         assert result["usage"]["completion_tokens"] == 20
+        assert "raw_response" in result
+
+    @patch('src.llm.llm_selector.requests.post')
+    def test_select_tool_success_multiple(self, mock_post, sample_tools):
+        """
+        Test successful tool selection with multiple tools.
+
+        This simulates LLM selecting 2 tools for a complex query.
+        """
+        mock_response = Mock()
+        mock_response.json.return_value = {
+            "choices": [
+                {"message": {"content": '{"selected_tools": ["arxiv_search", "file_reader"]}'}}
+            ],
+            "usage": {
+                "prompt_tokens": 105,
+                "completion_tokens": 22,
+                "total_tokens": 127
+            }
+        }
+        mock_response.raise_for_status = Mock()
+        mock_post.return_value = mock_response
+
+        selector = LLMToolSelector()
+        result = selector.select_tool("Find papers and save to file", sample_tools)
+
+        # Verify the result
+        assert result["selected_tools"] == ["arxiv_search", "file_reader"]
+        assert result["num_tools_selected"] == 2
+        assert result["usage"]["total_tokens"] == 127
         assert "raw_response" in result
 
     @patch('src.llm.llm_selector.requests.post')
@@ -279,7 +380,7 @@ class TestLLMToolSelector:
         mock_response = Mock()
         mock_response.json.return_value = {
             "choices": [
-                {"message": {"content": '```json\n{"selected_tool": "brave_search"}\n```'}}
+                {"message": {"content": '```json\n{"selected_tools": ["brave_search"]}\n```'}}
             ],
             "usage": {"prompt_tokens": 95, "completion_tokens": 18}
         }
@@ -290,7 +391,7 @@ class TestLLMToolSelector:
         result = selector.select_tool("Search the web", sample_tools)
 
         # Should successfully parse despite markdown wrapper
-        assert result["selected_tool"] == "brave_search"
+        assert result["selected_tools"] == ["brave_search"]
 
     @patch('src.llm.llm_selector.requests.post')
     def test_token_tracking(self, mock_post, sample_tools):
@@ -302,7 +403,7 @@ class TestLLMToolSelector:
         # Setup mock response
         mock_response = Mock()
         mock_response.json.return_value = {
-            "choices": [{"message": {"content": '{"selected_tool": "arxiv_search"}'}}],
+            "choices": [{"message": {"content": '{"selected_tools": ["arxiv_search"]}'}}],
             "usage": {"prompt_tokens": 100, "completion_tokens": 20}
         }
         mock_response.raise_for_status = Mock()

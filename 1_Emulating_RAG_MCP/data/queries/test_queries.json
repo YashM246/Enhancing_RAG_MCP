@@ -1,0 +1,44 @@
+[
+  {
+    "query_id": "q001",
+    "query": "Find recent research papers about climate change",
+    "ground_truth_tool": "arxiv_search_002",
+    "category": "academic",
+    "difficulty": "easy"
+  },
+  {
+    "query_id": "q002",
+    "query": "Search the web for latest AI news",
+    "ground_truth_tool": "brave_search_001",
+    "category": "web_search",
+    "difficulty": "easy"
+  },
+  {
+    "query_id": "q003",
+    "query": "Retrieve user data from the database",
+    "ground_truth_tool": "postgresql_query_003",
+    "category": "database",
+    "difficulty": "easy"
+  },
+  {
+    "query_id": "q004",
+    "query": "Read the contents of my config file",
+    "ground_truth_tool": "file_read_004",
+    "category": "file_operations",
+    "difficulty": "easy"
+  },
+  {
+    "query_id": "q005",
+    "query": "Send a message to the team channel",
+    "ground_truth_tool": "slack_send_005",
+    "category": "communication",
+    "difficulty": "easy"
+  },
+  {
+    "query_id": "q006",
+    "query": "What's the temperature outside?",
+    "ground_truth_tool": "weather_api_006",
+    "category": "data_api",
+    "difficulty": "easy"
+  }
+]

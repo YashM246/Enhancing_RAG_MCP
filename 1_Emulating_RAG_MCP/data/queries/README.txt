@@ -1,6 +1,9 @@
-Add Test Queries Here
+✅ TEST QUERIES - SAMPLE DATA AVAILABLE
 
-Expected format: test_queries.json
+Files:
+✅ test_queries.json - Sample test queries with ground truth
+
+Expected format: test_queries.json (JSON array)
 Schema:
 {
   "query_id": "q001",
@@ -9,3 +12,11 @@ Schema:
   "category": "academic",
   "difficulty": "easy"
 }
+
+Usage:
+Load in benchmarking module with:
+benchmarker.benchmark_retrieval_only(
+    queries_json_path="data/queries/test_queries.json",
+    ...
+)
+

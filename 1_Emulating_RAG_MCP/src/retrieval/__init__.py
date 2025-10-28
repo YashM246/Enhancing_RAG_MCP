@@ -3,5 +3,10 @@ Retrieval Module
 Handles semantic search and tool retrieval from FAISS indexes.
 """
 
-# Will be populated when retriever is implemented
-__all__ = []
+from .retriever import ToolRetriever
+from .retrieval_metrics import RetrievalMetrics
+
+__all__ = [
+    'ToolRetriever',
+    'RetrievalMetrics'
+]

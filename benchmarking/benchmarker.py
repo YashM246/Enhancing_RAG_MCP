@@ -15,8 +15,8 @@ project_root = current_dir.parent
 src_dir = project_root / "src"
 sys.path.insert(0, str(src_dir))
 
-from indexing import ToolIndexer
-from retrieval import ToolRetriever, RetrievalMetrics
+from src.indexing import ToolIndexer
+from src.retrieval import ToolRetriever, RetrievalMetrics
 
 
 class Benchmarker:

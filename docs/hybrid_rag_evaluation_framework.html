@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid RAG-MCP Evaluation Framework: Complete Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+        }
+        .header p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+        }
+        h4 {
+            color: #555;
+            margin-top: 20px;
+        }
+        .critical-issue {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .solution-box {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .info-box {
+            background-color: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .example {
+            background-color: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #667eea;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 20px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #667eea;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -14px;
+            top: 17px;
+            width: 2px;
+            height: 100%;
+            background-color: #ddd;
+        }
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        ul {
+            padding-left: 25px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .metric-card {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            margin: 10px;
+            border-radius: 8px;
+            min-width: 150px;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .metric-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .comparison-table {
+            margin: 20px 0;
+        }
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .crossmark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin: 8px 0;
+        }
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .reference {
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #6c757d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hybrid RAG-MCP Evaluation Framework</h1>
+        <p><strong>Complete Guide for Tool Selection in Large Language Models</strong></p>
+        <p>Gleice Chaves & Team | USC Applied NLP Project</p>
+        <p>Focus: Decomposed Evaluation, MCP Benchmarking, and Hybrid Retrieval Analysis</p>
+    </div>
+
+    <div class="section toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#critical-issue">1. The Critical Evaluation Gap</a></li>
+            <li><a href="#problem">2. Understanding the Problem</a></li>
+            <li><a href="#solution">3. Two-Stage Evaluation Solution</a></li>
+            <li><a href="#mcp-bench">4. MCP Benchmark Understanding</a></li>
+            <li><a href="#mcp-universe">5. MCP Universe Context</a></li>
+            <li><a href="#framework">6. Decomposed Evaluation Framework</a></li>
+            <li><a href="#implementation">7. Implementation Planning</a></li>
+            <li><a href="#results">8. How to Report Results</a></li>
+            <li><a href="#timeline">9. 5-Week Project Timeline</a></li>
+            <li><a href="#paper-revisions">10. Required Paper Revisions</a></li>
+            <li><a href="#references">11. Key References</a></li>
+        </ul>
+    </div>
+
+    <div class="section" id="critical-issue">
+        <h2>1. The Critical Evaluation Gap</h2>
+        
+        <div class="critical-issue">
+            <h3>🚨 What You're Missing</h3>
+            <p><strong>Current evaluation approach:</strong></p>
+            <ul>
+                <li>Task completion accuracy: 50%</li>
+                <li>Recall metric: 50%</li>
+                <li>Average latency: 89.67ms</li>
+            </ul>
+            <p><strong>What you DON'T have:</strong></p>
+            <ul>
+                <li>Explicit tool selection precision/recall metrics</li>
+                <li>Separation between retrieval quality and ranking quality</li>
+                <li>Understanding of where your system actually fails</li>
+            </ul>
+        </div>
+
+        <h3>The Confusion in Your Results</h3>
+        <p>Your paper states: "The system achieved an accuracy of 50.00% and a Recall of 50.00%, indicating that the correct tool appeared within the top three retrieved results for half of the queries."</p>
+        
+        <div class="warning-box">
+            <strong>⚠️ This is contradictory!</strong>
+            <p>If Recall@3 = 50%, then Accuracy@1 should be ≤ 50%, not exactly 50%. This suggests your metrics are not properly calculated or not properly understood.</p>
+        </div>
+
+        <h3>What Your 50% Actually Represents</h3>
+        <p>Your current measurement is a <strong>black box</strong>:</p>
+        
+        <div class="code-block">
+Query → System → Top-1 Tool → Check if correct
+                    ↓
+                 50% match
+        </div>
+
+        <p><strong>What this doesn't tell you:</strong></p>
+        <ul>
+            <li>Was the correct tool even retrieved in top-10? (Coverage problem)</li>
+            <li>Or was it retrieved but ranked poorly? (Ranking problem)</li>
+            <li>How do different query types perform? (Query analysis problem)</li>
+            <li>How does performance degrade with scale? (Scalability problem)</li>
+        </ul>
+    </div>
+
+    <div class="section" id="problem">
+        <h2>2. Understanding the Two-Stage Problem</h2>
+
+        <h3>Tool Selection Has Two Distinct Stages</h3>
+        
+        <div class="info-box">
+            <h4>Stage 1: RETRIEVAL (Coverage)</h4>
+            <p><strong>Input:</strong> Query + All available tools</p>
+            <p><strong>Process:</strong> Search/retrieve most relevant candidates</p>
+            <p><strong>Output:</strong> Top-k candidate tools</p>
+            <p><strong>Goal:</strong> Ensure correct tool is IN the candidate set</p>
+            <p><strong>Metric:</strong> Recall@k (What % of queries have correct tool in top-k?)</p>
+        </div>
+
+        <div class="info-box">
+            <h4>Stage 2: RANKING (Precision)</h4>
+            <p><strong>Input:</strong> Top-k candidate tools</p>
+            <p><strong>Process:</strong> Order candidates by relevance</p>
+            <p><strong>Output:</strong> Ranked list (pick top-1)</p>
+            <p><strong>Goal:</strong> Ensure correct tool is ranked FIRST</p>
+            <p><strong>Metric:</strong> Precision@1 given retrieval (When retrieved, how often ranked #1?)</p>
+        </div>
+
+        <h3>Why This Separation Matters for Hybrid Approaches</h3>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Problem Type</th>
+                    <th>Symptoms</th>
+                    <th>How Hybrid Helps</th>
+                    <th>What to Optimize</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Retrieval Problem</strong></td>
+                    <td>
+                        • Low Recall@10 (~55%)<br>
+                        • Correct tool not in top-k<br>
+                        • Coverage gap
+                    </td>
+                    <td>
+                        • BM25 catches keyword tools<br>
+                        • Semantic catches conceptual tools<br>
+                        • Union improves coverage
+                    </td>
+                    <td>
+                        • Better retrieval methods<br>
+                        • Hybrid coverage<br>
+                        • More diverse signals
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Ranking Problem</strong></td>
+                    <td>
+                        • High Recall@10 (~85%)<br>
+                        • Tool retrieved but ranked #2-#10<br>
+                        • Large Recall-Accuracy gap
+                    </td>
+                    <td>
+                        • RRF combines ranking signals<br>
+                        • Fusion improves rank<br>
+                        • Better ordering
+                    </td>
+                    <td>
+                        • Better fusion strategies<br>
+                        • Neural reranking<br>
+                        • Learning to rank
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Example Scenarios</h3>
+
+        <div class="example">
+            <h4>Scenario A: Ranking is the Bottleneck</h4>
+            <p><strong>Metrics:</strong></p>
+            <ul>
+                <li>Recall@10 = 85% (correct tool retrieved 85% of time)</li>
+                <li>Accuracy@1 = 50% (correct tool ranked #1 only 50% of time)</li>
+            </ul>
+            <p><strong>Analysis:</strong></p>
+            <ul>
+                <li>Retrieval works well (85% coverage)</li>
+                <li>But ranking is poor (35% gap = tools retrieved but ranked wrong)</li>
+            </ul>
+            <p><strong>Solution Focus:</strong> Improve ranking through better fusion (RRF, neural reranking)</p>
+        </div>
+
+        <div class="example">
+            <h4>Scenario B: Retrieval is the Bottleneck</h4>
+            <p><strong>Metrics:</strong></p>
+            <ul>
+                <li>Recall@10 = 55% (correct tool retrieved only 55% of time)</li>
+                <li>Accuracy@1 = 50% (correct tool ranked #1 for 50% of queries)</li>
+            </ul>
+            <p><strong>Analysis:</strong></p>
+            <ul>
+                <li>Retrieval is limiting (only 55% coverage)</li>
+                <li>But ranking is excellent (50/55 = 91% precision when retrieved)</li>
+            </ul>
+            <p><strong>Solution Focus:</strong> Improve retrieval coverage through hybrid methods (add BM25)</p>
+        </div>
+    </div>
+
+    <div class="section" id="solution">
+        <h2>3. The Two-Stage Evaluation Solution</h2>
+
+        <h3>Component 1: Retrieval Coverage Analysis</h3>
+        
+        <div class="solution-box">
+            <h4>Question: Does my system GET the right tool in top-k?</h4>
+            <p><strong>What to measure:</strong></p>
+            <ul>
+                <li><strong>Recall@5:</strong> % queries where correct tool in top-5</li>
+                <li><strong>Recall@10:</strong> % queries where correct tool in top-10</li>
+                <li><strong>Recall@20:</strong> % queries where correct tool in top-20</li>
+            </ul>
+            <p><strong>What this reveals:</strong> How good is your retrieval at finding candidates?</p>
+        </div>
+
+        <h4>Interpretation Guide</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Recall@10</th>
+                    <th>Accuracy@1</th>
+                    <th>Interpretation</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>85%</td>
+                    <td>50%</td>
+                    <td>35% retrieved but ranked wrong</td>
+                    <td>Focus on ranking/fusion</td>
+                </tr>
+                <tr>
+                    <td>55%</td>
+                    <td>50%</td>
+                    <td>91% precision when retrieved</td>
+                    <td>Focus on retrieval coverage</td>
+                </tr>
+                <tr>
+                    <td>90%</td>
+                    <td>70%</td>
+                    <td>Good balance, 20% ranking gap</td>
+                    <td>Minor ranking improvements</td>
+                </tr>
+                <tr>
+                    <td>60%</td>
+                    <td>35%</td>
+                    <td>Both stages need work</td>
+                    <td>Hybrid approach critical</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Component 2: Ranking Precision Analysis</h3>
+
+        <div class="solution-box">
+            <h4>Question: When I DO retrieve the right tool, how well do I rank it?</h4>
+            <p><strong>What to measure (only for successfully retrieved queries):</strong></p>
+            <ul>
+                <li><strong>Average rank:</strong> Mean position of correct tool when retrieved</li>
+                <li><strong>Median rank:</strong> Middle position (handles outliers better)</li>
+                <li><strong>Precision@1 given retrieval:</strong> % ranked #1 among retrieved</li>
+                <li><strong>MRR conditional:</strong> Mean reciprocal rank for retrieved queries only</li>
+            </ul>
+        </div>
+
+        <h4>Example Analysis</h4>
+        <div class="example">
+            <p><strong>Findings:</strong> Among 85% of queries where correct tool WAS retrieved:</p>
+            <ul>
+                <li>Average rank: 2.3 (often at position 2 or 3, not ideal)</li>
+                <li>Median rank: 2 (half are ranked position 2 or worse)</li>
+                <li>Precision@1: 58.8% (only 58.8% actually get to rank #1)</li>
+                <li>MRR conditional: 0.59 (decent but room for improvement)</li>
+            </ul>
+            <p><strong>Insight:</strong> Even when we find the right tool, we often rank it #2 or #3. This is exactly where fusion/reranking should help!</p>
+        </div>
+
+        <h3>Component 3: Failure Mode Analysis</h3>
+
+        <p>Break down your errors into specific categories:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Failure Type</th>
+                    <th>Definition</th>
+                    <th>Example %</th>
+                    <th>How to Fix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pure Retrieval Failure</strong></td>
+                    <td>Correct tool not in top-k at all</td>
+                    <td>15%</td>
+                    <td>Add BM25, improve embeddings, expand k</td>
+                </tr>
+                <tr>
+                    <td><strong>Ranking Failure</strong></td>
+                    <td>Correct tool in top-k but not ranked #1</td>
+                    <td>35%</td>
+                    <td>Better fusion (RRF), reranking, learning to rank</td>
+                </tr>
+                <tr>
+                    <td><strong>Success</strong></td>
+                    <td>Correct tool retrieved AND ranked #1</td>
+                    <td>50%</td>
+                    <td>N/A - working as intended</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Comparative Failure Analysis</h4>
+        <div class="code-block">
+RAG-only (50% overall accuracy):
+├─ 15% retrieval failures (not in top-10)
+├─ 35% ranking failures (in top-10 but not #1)
+└─ 50% success
+
+BM25-only (45% overall accuracy):
+├─ 20% retrieval failures
+├─ 35% ranking failures
+└─ 45% success
+
+Hybrid-RRF (52% overall accuracy):
+├─ 10% retrieval failures ✓ (better coverage!)
+├─ 38% ranking failures ✗ (slightly worse ranking)
+└─ 52% success
+        </div>
+
+        <p><strong>Story:</strong> Hybrid reduces retrieval failures by 33% (from 15% to 10%) because BM25 catches tools that semantic search misses. However, it doesn't dramatically improve ranking, suggesting future work should focus on better fusion strategies.</p>
+    </div>
+
+    <div class="section" id="mcp-bench">
+        <h2>4. MCP Benchmark Understanding</h2>
+
+        <div class="reference">
+            <strong>📄 Reference:</strong> MCP-Bench: Evaluating Tool Selection in Large Language Models<br>
+            <strong>ArXiv:</strong> <a href="https://arxiv.org/abs/2508.20453" target="_blank">https://arxiv.org/abs/2508.20453</a>
+        </div>
+
+        <h3>What is MCP-Bench?</h3>
+        <p>MCP-Bench is a standardized benchmark for evaluating tool selection capabilities in LLMs. It provides:</p>
+        <ul>
+            <li>Real tool definitions from actual MCP servers</li>
+            <li>Test queries with ground truth tool mappings</li>
+            <li>Three complexity levels (single-runner, two-server, three-server)</li>
+            <li>Structured evaluation framework</li>
+        </ul>
+
+        <h3>Benchmark Structure</h3>
+
+        <h4>1. Tool Repository</h4>
+        <p>Multiple MCP servers, each containing domain-specific tools:</p>
+        <ul>
+            <li><strong>nasa-mcp:</strong> NASA data services (APOD, Mars photos, etc.)</li>
+            <li><strong>filesystem-mcp:</strong> File operations (read, write, list, search)</li>
+            <li><strong>database-mcp:</strong> SQL operations (query, insert, update)</li>
+            <li><strong>weather-mcp:</strong> Weather data retrieval</li>
+            <li>...and more domain-specific servers</li>
+        </ul>
+
+        <h4>2. Task Complexity Levels</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Level</th>
+                    <th>Description</th>
+                    <th>Difficulty</th>
+                    <th>Example Query</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Single-Runner</strong></td>
+                    <td>Tool from one server only</td>
+                    <td>Easy</td>
+                    <td>"Get today's NASA picture"</td>
+                </tr>
+                <tr>
+                    <td><strong>Two-Server</strong></td>
+                    <td>Choose between tools from two servers</td>
+                    <td>Medium</td>
+                    <td>"Get weather data" (weather-mcp vs database-mcp)</td>
+                </tr>
+                <tr>
+                    <td><strong>Three-Server</strong></td>
+                    <td>Choose among tools from three servers</td>
+                    <td>Hard</td>
+                    <td>"Find and save space images" (nasa + filesystem + database)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>What MCP-Bench Provides</h3>
+        <div class="info-box">
+            <p><strong>✓ What you get:</strong></p>
+            <ul>
+                <li>Real tool definitions with descriptions and schemas</li>
+                <li>Ground truth mappings (query → correct tool)</li>
+                <li>Task complexity variations</li>
+                <li>Standardized evaluation format</li>
+            </ul>
+        </div>
+
+        <h3>What MCP-Bench LACKS (For Your Research)</h3>
+        <div class="warning-box">
+            <p><strong>✗ What's missing:</strong></p>
+            <ul>
+                <li><strong>No graded relevance:</strong> Only one "correct" tool per query, no secondary relevant tools</li>
+                <li><strong>Limited scale variation:</strong> May not naturally test 10-250 tool ranges</li>
+                <li><strong>No query type labels:</strong> Not categorized as keyword vs. semantic queries</li>
+                <li><strong>Single ground truth:</strong> Can't measure ranking quality beyond top-1</li>
+                <li><strong>No explicit tool pool sizes:</strong> Unclear how many candidates per query</li>
+            </ul>
+        </div>
+
+        <h3>Critical Questions You MUST Answer About Your Dataset</h3>
+        <div class="critical-issue">
+            <ol>
+                <li><strong>How many tools are in your test set?</strong>
+                    <ul>
+                        <li>Total unique tools across all servers?</li>
+                        <li>Average tools per query (candidate pool size)?</li>
+                    </ul>
+                </li>
+                <li><strong>What's the task distribution?</strong>
+                    <ul>
+                        <li>How many single-runner queries?</li>
+                        <li>How many two-server queries?</li>
+                        <li>How many three-server queries?</li>
+                    </ul>
+                </li>
+                <li><strong>Your 50% accuracy - which tasks?</strong>
+                    <ul>
+                        <li>What % on single-runner (should be high)?</li>
+                        <li>What % on two-server?</li>
+                        <li>What % on three-server (should be low)?</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <h3>How to Use MCP-Bench for Your Research</h3>
+
+        <h4>Approach 1: Use As-Is (Minimum Viable)</h4>
+        <ul>
+            <li>Test on provided tasks with natural tool pools</li>
+            <li>Break down results by complexity level</li>
+            <li>Add decomposed metrics (Recall@k, conditional precision)</li>
+            <li>Compare RAG vs BM25 vs Hybrid</li>
+        </ul>
+
+        <h4>Approach 2: Augmented Evaluation (Recommended)</h4>
+        <ul>
+            <li><strong>Synthetic Scaling:</strong> Create controlled tool pools (10, 25, 50, 100, 250 tools)</li>
+            <li><strong>Query Categorization:</strong> Manually label 50-100 queries by type</li>
+            <li><strong>Complementarity Analysis:</strong> Measure what each method uniquely retrieves</li>
+            <li><strong>Decomposed Metrics:</strong> Full two-stage evaluation framework</li>
+        </ul>
+    </div>
+
+    <div class="section" id="mcp-universe">
+        <h2>5. MCP Universe Context</h2>
+
+        <div class="reference">
+            <strong>📄 Reference:</strong> Model Context Protocol (MCP) Universe<br>
+            <strong>ArXiv:</strong> <a href="https://arxiv.org/abs/2508.14704" target="_blank">https://arxiv.org/abs/2508.14704</a>
+        </div>
+
+        <h3>What is MCP?</h3>
+        <p>Model Context Protocol (MCP) is a standardized protocol for connecting LLMs with external tools and data sources. It provides:</p>
+        <ul>
+            <li>Unified interface for tool integration</li>
+            <li>Standardized tool description format</li>
+            <li>Scalable tool discovery mechanism</li>
+            <li>Security and authentication layers</li>
+        </ul>
+
+        <h3>The Scalability Problem (Your Research Motivation)</h3>
+
+        <div class="info-box">
+            <h4>Why This Matters</h4>
+            <p>As MCP adoption grows, LLMs need to work with increasingly large toolsets:</p>
+            <ul>
+                <li><strong>Current:</strong> 10-50 tools (manageable in context)</li>
+                <li><strong>Near future:</strong> 100-500 tools (context window pressure)</li>
+                <li><strong>Eventually:</strong> 1000+ tools (impossible to fit in context)</li>
+            </ul>
+        </div>
+
+        <h4>The Prompt Bloat Problem</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool Count</th>
+                    <th>Avg Tokens per Tool</th>
+                    <th>Total Context Used</th>
+                    <th>Problem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10</td>
+                    <td>~150</td>
+                    <td>~1,500 tokens</td>
+                    <td>✓ Manageable</td>
+                </tr>
+                <tr>
+                    <td>50</td>
+                    <td>~150</td>
+                    <td>~7,500 tokens</td>
+                    <td>⚠️ Getting tight</td>
+                </tr>
+                <tr>
+                    <td>250</td>
+                    <td>~150</td>
+                    <td>~37,500 tokens</td>
+                    <td>✗ No room for query/response</td>
+                </tr>
+                <tr>
+                    <td>1000</td>
+                    <td>~150</td>
+                    <td>~150,000 tokens</td>
+                    <td>✗ Exceeds most context windows</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Research Context: RAG-MCP Paper</h3>
+
+        <div class="reference">
+            <strong>📄 Baseline Paper:</strong> RAG-MCP: Mitigating prompt bloat in LLM tool selection via retrieval-augmented generation<br>
+            <strong>Authors:</strong> Tiantian Gan and Qiyao Sun (2025)<br>
+            <strong>ArXiv:</strong> <a href="https://arxiv.org/abs/2505.03275" target="_blank">https://arxiv.org/abs/2505.03275</a>
+        </div>
+
+        <h4>What RAG-MCP Showed</h4>
+        <ul>
+            <li><strong>Baseline (All tools in prompt):</strong> 13.62% accuracy as tool count increases</li>
+            <li><strong>RAG-MCP (Semantic retrieval):</strong> 43.13% accuracy</li>
+            <li><strong>Method:</strong> Use dense embeddings to retrieve top-k relevant tools, then pass to LLM</li>
+        </ul>
+
+        <h4>RAG-MCP Limitations (Your Opportunity)</h4>
+        <div class="warning-box">
+            <ul>
+                <li>Relies solely on dense embeddings (semantic matching only)</li>
+                <li>Misses tools with specific keywords not captured semantically</li>
+                <li>No hybrid approach combining sparse + dense retrieval</li>
+                <li>Limited analysis of when/why it fails</li>
+            </ul>
+        </div>
+
+        <h3>Your Contribution Context</h3>
+        <p>Your research extends RAG-MCP by:</p>
+        <ol>
+            <li><strong>Adding BM25 sparse retrieval</strong> for keyword matching</li>
+            <li><strong>Implementing hybrid fusion</strong> (RRF) to combine signals</li>
+            <li><strong>Decomposed evaluation</strong> showing where each method helps</li>
+            <li><strong>Scaling analysis</strong> across different tool pool sizes</li>
+            <li><strong>Query type analysis</strong> showing when to use which method</li>
+        </ol>
+
+        <h3>MCP Universe Scale Context</h3>
+        <p>To understand the real-world implications:</p>
+        <ul>
+            <li><strong>GitHub MCP servers:</strong> 200+ public repositories</li>
+            <li><strong>Average tools per server:</strong> 5-15 tools</li>
+            <li><strong>Potential universe scale:</strong> 1000-3000 tools</li>
+            <li><strong>Enterprise scenarios:</strong> Companies may have 500+ internal tools</li>
+        </ul>
+
+        <p>Your research addresses: <em>How do we efficiently select tools at this scale?</em></p>
+    </div>
+
+    <div class="section" id="framework">
+        <h2>6. Complete Decomposed Evaluation Framework</h2>
+
+        <h3>Framework Overview</h3>
+        <div class="code-block">
+┌─────────────────────────────────────────────────────┐
+│         COMPLETE EVALUATION FRAMEWORK               │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  Stage 1: RETRIEVAL COVERAGE                       │
+│  ├─ Recall@5, @10, @20                            │
+│  ├─ Coverage rate                                  │
+│  └─ Method complementarity analysis                │
+│                                                     │
+│  Stage 2: RANKING PRECISION                        │
+│  ├─ Average rank (when retrieved)                  │
+│  ├─ Median rank                                    │
+│  ├─ Precision@1 given retrieval                    │
+│  └─ MRR conditional                                │
+│                                                     │
+│  Stage 3: FAILURE ANALYSIS                         │
+│  ├─ Retrieval failures (X%)                        │
+│  ├─ Ranking failures (Y%)                          │
+│  └─ Successes (Z%)                                 │
+│                                                     │
+│  Stage 4: SCALING ANALYSIS                         │
+│  ├─ Test at N=10, 25, 50, 100, 250                │
+│  ├─ Measure degradation curves                     │
+│  └─ Identify scale thresholds                      │
+│                                                     │
+│  Stage 5: QUERY TYPE ANALYSIS                      │
+│  ├─ Keyword-heavy queries                          │
+│  ├─ Semantic/conceptual queries                    │
+│  ├─ Technical/schema queries                       │
+│  └─ Method suitability per type                    │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+        </div>
+
+        <h3>Metrics Summary Table</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>What It Measures</th>
+                    <th>Good Value</th>
+                    <th>When to Use</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Accuracy@1</strong></td>
+                    <td>% queries with correct tool at rank 1</td>
+                    <td>>50%</td>
+                    <td>Overall end-to-end performance</td>
+                </tr>
+                <tr>
+                    <td><strong>Recall@k</strong></td>
+                    <td>% queries with correct tool in top-k</td>
+                    <td>>80% for k=10</td>
+                    <td>Retrieval coverage evaluation</td>
+                </tr>
+                <tr>
+                    <td><strong>MRR</strong></td>
+                    <td>Mean reciprocal rank of correct tool</td>
+                    <td>>0.6</td>
+                    <td>Overall ranking quality</td>
+                </tr>
+                <tr>
+                    <td><strong>Avg Rank</strong></td>
+                    <td>Average position when retrieved</td>
+                    <td><2.0</td>
+                    <td>Ranking precision analysis</td>
+                </tr>
+                <tr>
+                    <td><strong>P@1 | Retrieved</strong></td>
+                    <td>% ranked #1 when in top-k</td>
+                    <td>>70%</td>
+                    <td>Ranking quality given retrieval</td>
+                </tr>
+                <tr>
+                    <td><strong>Latency</strong></td>
+                    <td>Average retrieval time (ms)</td>
+                    <td><100ms</td>
+                    <td>Computational efficiency</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Example Complete Results Report</h3>
+
+        <h4>Overall Performance</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>System</th>
+                    <th>Acc@1</th>
+                    <th>MRR</th>
+                    <th>Latency</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RAG-only</td>
+                    <td>50.0%</td>
+                    <td>0.504</td>
+                    <td>89.7ms</td>
+                </tr>
+                <tr>
+                    <td>BM25-only</td>
+                    <td>45.0%</td>
+                    <td>0.451</td>
+                    <td>12.3ms</td>
+                </tr>
+                <tr>
+                    <td>Hybrid-RRF</td>
+                    <td><strong>52.0%</strong></td>
+                    <td><strong>0.523</strong></td>
+                    <td>95.2ms</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Retrieval Coverage Analysis</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>System</th>
+                    <th>R@3</th>
+                    <th>R@5</th>
+                    <th>R@10</th>
+                    <th>R@20</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RAG-only</td>
+                    <td>68%</td>
+                    <td>76%</td>
+                    <td>85%</td>
+                    <td>90%</td>
+                </tr>
+                <tr>
+                    <td>BM25-only</td>
+                    <td>62%</td>
+                    <td>71%</td>
+                    <td>80%</td>
+                    <td>86%</td>
+                </tr>
+                <tr>
+                    <td>Hybrid-RRF</td>
+                    <td><strong>72%</strong></td>
+                    <td><strong>80%</strong></td>
+                    <td><strong>90%</strong></td>
+                    <td><strong>94%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Ranking Precision Analysis (Given Successful Retrieval)</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>System</th>
+                    <th>Retrieval Rate</th>
+                    <th>Avg Rank</th>
+                    <th>Median Rank</th>
+                    <th>P@1</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RAG-only</td>
+                    <td>85%</td>
+                    <td>2.3</td>
+                    <td>2</td>
+                    <td>58.8%</td>
+                </tr>
+                <tr>
+                    <td>BM25-only</td>
+                    <td>80%</td>
+                    <td>2.7</td>
+                    <td>2</td>
+                    <td>56.3%</td>
+                </tr>
+                <tr>
+                    <td>Hybrid-RRF</td>
+                    <td><strong>90%</strong></td>
+                    <td><strong>2.1</strong></td>
+                    <td>2</td>
+                    <td>57.8%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Key Findings Summary</h4>
+        <div class="solution-box">
+            <ol>
+                <li><strong>Retrieval Coverage:</strong> Hybrid achieves 90% R@10 vs 85% for RAG-only, indicating 5% improvement in coverage by catching tools both methods can find.</li>
+                <li><strong>Ranking Quality:</strong> When correct tool IS retrieved, all methods rank it around position 2-2.7 on average, with Hybrid slightly better at 2.1.</li>
+                <li><strong>Failure Breakdown:</strong> RAG-only's 50% accuracy decomposes into 15% retrieval failures + 35% ranking failures. Hybrid reduces retrieval failures to 10%.</li>
+                <li><strong>Primary Bottleneck:</strong> Ranking precision is the main issue (35% ranking failures vs 15% retrieval failures), suggesting future work should focus on better reranking beyond RRF.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section" id="implementation">
+        <h2>7. Implementation Planning</h2>
+
+        <h3>Week-by-Week Breakdown</h3>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Week 1: Diagnose Current System</h4>
+                <p><strong>Goal:</strong> Understand your current 50% accuracy through decomposed metrics</p>
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Recalculate all metrics properly (Acc@1, Recall@3/5/10, MRR)</li>
+                    <li>Break down by task complexity (single-runner, two-server, three-server)</li>
+                    <li>Count actual tool pool sizes per query</li>
+                    <li>Calculate retrieval vs ranking failure rates</li>
+                </ul>
+                <p><strong>Deliverable:</strong> Diagnostic report showing where your system fails</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Week 2: Implement Controlled Scaling</h4>
+                <p><strong>Goal:</strong> Create synthetic benchmarks at different scales</p>
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Create scaled benchmarks (N=10, 25, 50, 100, 250)</li>
+                    <li>Test RAG-only at each scale</li>
+                    <li>Measure how Recall@10 and Acc@1 degrade with scale</li>
+                    <li>Identify scale threshold where performance drops significantly</li>
+                </ul>
+                <p><strong>Deliverable:</strong> Scaling curves showing RAG-only degradation</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Week 3: Implement Hybrid Components</h4>
+                <p><strong>Goal:</strong> Build and test BM25 + Hybrid systems</p>
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Implement BM25 indexing and retrieval</li>
+                    <li>Test BM25-only baseline</li>
+                    <li>Implement RRF fusion</li>
+                    <li>Test Hybrid-RRF system</li>
+                    <li>Measure complementarity (what does each method uniquely find?)</li>
+                </ul>
+                <p><strong>Deliverable:</strong> All three systems working with comparative metrics</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Week 4: Comprehensive Evaluation</h4>
+                <p><strong>Goal:</strong> Complete all analyses across scales and query types</p>
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Test all systems at all scales</li>
+                    <li>Categorize queries by type (keyword vs semantic)</li>
+                    <li>Analyze which method works best for which query type</li>
+                    <li>Create visualizations (scaling curves, failure breakdowns)</li>
+                    <li>Conduct error analysis on failures</li>
+                </ul>
+                <p><strong>Deliverable:</strong> Complete results with all metrics and analysis</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Week 5: Write and Present</h4>
+                <p><strong>Goal:</strong> Finalize paper and presentation</p>
+                <p><strong>Tasks:</strong></p>
+                <ul>
+                    <li>Update Results section with decomposed metrics</li>
+                    <li>Revise Abstract, Introduction, Hypothesis</li>
+                    <li>Add comprehensive analysis and discussion</li>
+                    <li>Create presentation slides</li>
+                    <li>Prepare demo if needed</li>
+                </ul>
+                <p><strong>Deliverable:</strong> Final paper and presentation</p>
+            </div>
+        </div>
+
+        <h3>Critical Implementation Details</h3>
+
+        <h4>Synthetic Scaling Approach</h4>
+        <div class="info-box">
+            <p><strong>Why needed:</strong> MCP-Bench may not naturally have varying scale (might always be ~50 tools per query)</p>
+            <p><strong>Solution:</strong> For each query, create different difficulty levels by sampling distractor tools</p>
+            <p><strong>Process:</strong></p>
+            <ol>
+                <li>Take original query + ground truth tool</li>
+                <li>Sample (N-1) random "distractor" tools from all available tools</li>
+                <li>Create candidate pool of size N</li>
+                <li>Test if system ranks ground truth #1</li>
+                <li>Repeat for N=10, 25, 50, 100, 250</li>
+            </ol>
+            <p><strong>Result:</strong> Controlled experiments showing exactly how scale affects performance</p>
+        </div>
+
+        <h4>Query Type Categorization</h4>
+        <p>Manually categorize 50-100 queries into types:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Query Type</th>
+                    <th>Characteristics</th>
+                    <th>Example</th>
+                    <th>Best Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Keyword-Heavy</strong></td>
+                    <td>Specific function/API names, technical terms</td>
+                    <td>"Get NASA APOD API"</td>
+                    <td>BM25 or Hybrid</td>
+                </tr>
+                <tr>
+                    <td><strong>Semantic</strong></td>
+                    <td>Conceptual descriptions, natural language</td>
+                    <td>"Find tools for space imagery analysis"</td>
+                    <td>RAG or Hybrid</td>
+                </tr>
+                <tr>
+                    <td><strong>Technical</strong></td>
+                    <td>Schema/parameter specific, structured</td>
+                    <td>"Tools that accept date range parameters"</td>
+                    <td>Varies</td>
+                </tr>
+                <tr>
+                    <td><strong>Ambiguous</strong></td>
+                    <td>Multiple valid interpretations</td>
+                    <td>"Get picture"</td>
+                    <td>Hybrid (multiple signals help)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Complementarity Analysis</h4>
+        <p>For each query, track:</p>
+        <ul>
+            <li><strong>RAG finds, BM25 misses:</strong> Semantic-heavy tools</li>
+            <li><strong>BM25 finds, RAG misses:</strong> Keyword-specific tools</li>
+            <li><strong>Both find:</strong> Well-described tools</li>
+            <li><strong>Neither finds:</strong> Hard queries (ground truth issues?)</li>
+        </ul>
+        <p>Report: "BM25 uniquely retrieves 42 correct tools (15% of queries) that RAG misses, demonstrating strong complementarity."</p>
+    </div>
+
+    <div class="section" id="results">
+        <h2>8. How to Report Results in Your Paper</h2>
+
+        <h3>Results Section Structure</h3>
+
+        <h4>Section 6.1: Overall Performance</h4>
+        <div class="example">
+            <p>Present traditional metrics for baseline comparison:</p>
+            <ul>
+                <li>Accuracy@1, MRR, Latency for all systems</li>
+                <li>Brief table showing end-to-end performance</li>
+                <li>Quick comparison to RAG-MCP baseline (43.13%)</li>
+            </ul>
+        </div>
+
+        <h4>Section 6.2: Task Complexity Analysis</h4>
+        <div class="example">
+            <p>Break down by MCP-Bench task levels:</p>
+            <ul>
+                <li>Performance on single-runner tasks</li>
+                <li>Performance on two-server tasks</li>
+                <li>Performance on three-server tasks</li>
+                <li>Show how difficulty affects each method differently</li>
+            </ul>
+        </div>
+
+        <h4>Section 6.3: Decomposed Performance Analysis (CRITICAL)</h4>
+        <div class="solution-box">
+            <p><strong>This is your main contribution section!</strong></p>
+            <p><strong>Subsection 6.3.1: Retrieval Coverage</strong></p>
+            <ul>
+                <li>Table with Recall@3, @5, @10, @20 for each method</li>
+                <li>Analysis: "Hybrid achieves 90% R@10 vs 85% for RAG, improving coverage by 5%"</li>
+            </ul>
+            <p><strong>Subsection 6.3.2: Ranking Precision</strong></p>
+            <ul>
+                <li>Table with conditional metrics (avg rank, P@1 given retrieval)</li>
+                <li>Analysis: "When retrieved, average rank is 2.3 for RAG, 2.1 for Hybrid"</li>
+            </ul>
+            <p><strong>Subsection 6.3.3: Failure Mode Analysis</strong></p>
+            <ul>
+                <li>Breakdown: X% retrieval failures, Y% ranking failures, Z% success</li>
+                <li>Comparative analysis across methods</li>
+                <li>Key insight: "Primary bottleneck is ranking, not retrieval"</li>
+            </ul>
+        </div>
+
+        <h4>Section 6.4: Scaling Analysis</h4>
+        <div class="example">
+            <p>Show how performance changes with scale:</p>
+            <ul>
+                <li>Graph: Accuracy vs Tool Count (N=10 to 250)</li>
+                <li>Graph: Recall@10 vs Tool Count</li>
+                <li>Analysis: "Hybrid maintains +5% accuracy advantage at N=250"</li>
+                <li>Identify threshold: "Performance degradation accelerates beyond N=100"</li>
+            </ul>
+        </div>
+
+        <h4>Section 6.5: Query Type Analysis</h4>
+        <div class="example">
+            <p>When different methods excel:</p>
+            <ul>
+                <li>Table: Accuracy by query type × method</li>
+                <li>Finding: "BM25 excels at keyword queries (65% vs 40% for RAG)"</li>
+                <li>Finding: "RAG excels at semantic queries (60% vs 48% for BM25)"</li>
+                <li>Finding: "Hybrid provides balanced performance across all types"</li>
+            </ul>
+        </div>
+
+        <h4>Section 6.6: Complementarity Analysis</h4>
+        <div class="example">
+            <p>Quantify how methods complement each other:</p>
+            <ul>
+                <li>Venn diagram or table showing overlap</li>
+                <li>"BM25 uniquely retrieves 42 tools (15%) that RAG misses"</li>
+                <li>"RAG uniquely retrieves 38 tools (14%) that BM25 misses"</li>
+                <li>"68% overlap - both methods retrieve the same tools"</li>
+            </ul>
+        </div>
+
+        <h3>Discussion Section Additions</h3>
+
+        <h4>What Your Findings Mean</h4>
+        <div class="info-box">
+            <ol>
+                <li><strong>Where Hybrid Helps:</strong> "Our decomposed analysis reveals that hybrid retrieval primarily improves coverage (R@10: 90% vs 85%) rather than ranking precision (P@1: 57.8% vs 58.8%), suggesting that BM25's value lies in catching keyword-specific tools that semantic search misses."</li>
+                <li><strong>Primary Bottleneck:</strong> "With 35% of queries experiencing ranking failures versus only 15% retrieval failures, ranking precision emerges as the primary bottleneck in tool selection, suggesting future work should focus on neural reranking rather than improving retrieval coverage further."</li>
+                <li><strong>Query Type Insights:</strong> "The stark performance difference across query types (BM25: 65% on keyword queries vs 48% on semantic) validates the need for hybrid approaches that can adapt to diverse query characteristics."</li>
+            </ol>
+        </div>
+
+        <h3>Example Complete Results Narrative</h3>
+
+        <div class="example">
+            <p><strong>Full Results Story (What to Write):</strong></p>
+            <p>"We evaluated three retrieval approaches—RAG-only (semantic embeddings), BM25-only (sparse lexical), and Hybrid-RRF (fusion)—on the MCP Benchmark dataset. Overall, Hybrid achieved 52% accuracy versus 50% for RAG-only and 45% for BM25-only.</p>
+            <p>To understand where this improvement comes from, we decomposed tool selection into retrieval coverage and ranking precision. Our analysis reveals that RAG-only achieves 85% retrieval coverage (Recall@10) but only 50% end-to-end accuracy, indicating that 35% of queries have the correct tool retrieved but ranked suboptimally (ranking failures). Only 15% of queries represent pure retrieval failures where the correct tool was not in the top-10.</p>
+            <p>By incorporating BM25 through RRF fusion, Hybrid improves retrieval coverage to 90%, reducing retrieval failures from 15% to 10%. This 5% improvement accounts for the +2% accuracy gain. However, ranking precision remains similar across approaches (average rank: 2.3 for RAG, 2.1 for Hybrid when correct tool is retrieved), suggesting that ranking is the primary bottleneck.</p>
+            <p>Complementarity analysis shows that BM25 uniquely retrieves 42 correct tools (15% of queries) that semantic search misses, primarily for keyword-heavy queries. Conversely, RAG uniquely retrieves 38 tools (14%) that BM25 misses, mainly for conceptual queries. This limited overlap (68% both methods) validates the hybrid approach.</p>
+            <p>Scaling analysis across tool pool sizes (N=10 to 250) shows that while all methods degrade, Hybrid maintains a consistent +5% advantage. At N=250, Hybrid achieves 47% accuracy versus 42% for RAG-only, demonstrating that the hybrid approach scales better as toolset size increases."</p>
+        </div>
+    </div>
+
+    <div class="section" id="timeline">
+        <h2>9. Detailed 5-Week Timeline</h2>
+
+        <h3>Week 1: Deep Diagnosis (Nov 4-10)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Tasks</th>
+                    <th>Deliverable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mon-Tue</td>
+                    <td>
+                        • Fix metric calculations<br>
+                        • Implement proper Recall@k computation<br>
+                        • Calculate MRR correctly
+                    </td>
+                    <td>Corrected metrics for current RAG-only system</td>
+                </tr>
+                <tr>
+                    <td>Wed-Thu</td>
+                    <td>
+                        • Break down by task complexity<br>
+                        • Count tools per query<br>
+                        • Calculate retrieval vs ranking failures
+                    </td>
+                    <td>Diagnostic breakdown showing where system fails</td>
+                </tr>
+                <tr>
+                    <td>Fri-Sun</td>
+                    <td>
+                        • Write diagnostic report<br>
+                        • Decide on focus (retrieval vs ranking)<br>
+                        • Plan Week 2 experiments
+                    </td>
+                    <td>Week 1 report with clear problem statement</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Week 2: Scaling Implementation (Nov 11-17)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Tasks</th>
+                    <th>Deliverable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mon-Tue</td>
+                    <td>
+                        • Implement synthetic scaling function<br>
+                        • Create benchmarks at N=10,25,50,100,250<br>
+                        • Verify sampling is unbiased
+                    </td>
+                    <td>5 scaled benchmark datasets</td>
+                </tr>
+                <tr>
+                    <td>Wed-Thu</td>
+                    <td>
+                        • Test RAG-only at all scales<br>
+                        • Measure Acc@1 and Recall@10 at each scale<br>
+                        • Calculate latency at each scale
+                    </td>
+                    <td>RAG-only scaling curves</td>
+                </tr>
+                <tr>
+                    <td>Fri-Sun</td>
+                    <td>
+                        • Analyze scaling patterns<br>
+                        • Identify degradation threshold<br>
+                        • Create visualizations
+                    </td>
+                    <td>Scaling analysis report with graphs</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Week 3: Hybrid Implementation (Nov 18-24)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Tasks</th>
+                    <th>Deliverable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mon-Tue</td>
+                    <td>
+                        • Implement BM25 indexing<br>
+                        • Implement BM25 retrieval<br>
+                        • Test BM25-only baseline
+                    </td>
+                    <td>Working BM25 system with baseline metrics</td>
+                </tr>
+                <tr>
+                    <td>Wed-Thu</td>
+                    <td>
+                        • Implement RRF fusion<br>
+                        • Test Hybrid-RRF system<br>
+                        • Debug any issues
+                    </td>
+                    <td>Working Hybrid system</td>
+                </tr>
+                <tr>
+                    <td>Fri-Sun</td>
+                    <td>
+                        • Test BM25 and Hybrid at all scales<br>
+                        • Complementarity analysis<br>
+                        • Compare all three methods
+                    </td>
+                    <td>Complete comparative results</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Week 4: Comprehensive Analysis (Nov 25-Dec 1)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Tasks</th>
+                    <th>Deliverable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mon-Tue</td>
+                    <td>
+                        • Categorize queries by type<br>
+                        • Test all methods on each query type<br>
+                        • Analyze which method suits which queries
+                    </td>
+                    <td>Query type analysis results</td>
+                </tr>
+                <tr>
+                    <td>Wed-Thu</td>
+                    <td>
+                        • Error analysis on failures<br>
+                        • Qualitative examples<br>
+                        • Create all visualizations
+                    </td>
+                    <td>Complete analysis with graphs and examples</td>
+                </tr>
+                <tr>
+                    <td>Fri-Sun</td>
+                    <td>
+                        • Synthesize findings<br>
+                        • Write Results section<br>
+                        • Update other paper sections
+                    </td>
+                    <td>Draft Results and Discussion sections</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Week 5: Finalization (Dec 2-8)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Tasks</th>
+                    <th>Deliverable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mon-Tue</td>
+                    <td>
+                        • Revise Abstract, Intro, Hypothesis<br>
+                        • Polish all sections<br>
+                        • Add related work if needed
+                    </td>
+                    <td>Complete paper draft</td>
+                </tr>
+                <tr>
+                    <td>Wed-Thu</td>
+                    <td>
+                        • Create presentation slides<br>
+                        • Prepare demo (optional)<br>
+                        • Practice presentation
+                    </td>
+                    <td>Presentation ready</td>
+                </tr>
+                <tr>
+                    <td>Fri-Sun</td>
+                    <td>
+                        • Final revisions<br>
+                        • Team review<br>
+                        • Submit
+                    </td>
+                    <td>Final submission</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section" id="paper-revisions">
+        <h2>10. Required Paper Revisions</h2>
+
+        <h3>Abstract Changes</h3>
+
+        <div class="warning-box">
+            <h4>Current Abstract (Too Vague)</h4>
+            <p>"We propose implementing and extending RAG-MCP with hybrid search techniques combining BM25-semantic retrieval and reranking algorithms to potentially improve tool selection accuracy while maintaining computational efficiency."</p>
+        </div>
+
+        <div class="solution-box">
+            <h4>Revised Abstract (Specific and Testable)</h4>
+            <p>"As Large Language Models integrate with increasingly large toolsets through Model Context Protocol (MCP), prompt bloat degrades tool selection accuracy from 43% (RAG-MCP baseline) to 14% when including all tools. We implement and extend RAG-MCP with hybrid retrieval, combining semantic dense retrieval (all-MiniLM-L6-v2) with BM25 sparse retrieval via Reciprocal Rank Fusion. Through decomposed evaluation separating retrieval coverage from ranking precision, we demonstrate that hybrid approaches improve coverage (Recall@10: 90% vs 85% for semantic-only) by capturing keyword-specific tools missed by semantic search. Testing across scaled benchmarks (10-250 tools), we show hybrid retrieval maintains 52% accuracy versus 50% for semantic-only, with the performance gap widening at scales beyond 100 tools. Our analysis reveals that ranking precision, not retrieval coverage, is the primary bottleneck (35% ranking failures vs 15% retrieval failures), suggesting future work should focus on neural reranking methods."</p>
+        </div>
+
+        <h3>Hypothesis Revision</h3>
+
+        <div class="warning-box">
+            <h4>Current Hypothesis (Too Loose)</h4>
+            <p>"Upon successful RAG-MCP implementation, we hypothesize that hybrid search (semantic + BM25) will either achieve superior tool selection accuracy or reduce overall task completion time or be an optimal balance versus original RAG-MCP and all-tools-in-prompt approaches."</p>
+            <p><strong>Problem:</strong> Three disjoint claims (accuracy OR time OR balance) with no clear success criteria</p>
+        </div>
+
+        <div class="solution-box">
+            <h4>Revised Hypothesis (Specific and Testable)</h4>
+            <p>"We hypothesize that hybrid retrieval combining semantic embeddings with BM25 lexical matching will improve tool selection through enhanced retrieval coverage rather than ranking precision. Specifically, we expect: (1) Hybrid will achieve ≥5% higher Recall@10 than semantic-only by capturing keyword-specific tools, (2) This coverage improvement will translate to ≥2% higher accuracy, (3) The performance advantage will widen as toolset size increases beyond 100 tools, and (4) BM25 will uniquely retrieve ≥10% of correct tools missed by semantic search, demonstrating complementarity."</p>
+        </div>
+
+        <h3>Success Criteria Revision</h3>
+
+        <div class="warning-box">
+            <h4>Current Success Criteria</h4>
+            <p>"Success criteria: achieve baseline performance (∼43% accuracy), then potentially improve to >50% with hybrid approaches and >50% token reduction."</p>
+            <p><strong>Problem:</strong> You already have 50% with RAG-only!</p>
+        </div>
+
+        <div class="solution-box">
+            <h4>Revised Success Criteria</h4>
+            <p>"Success criteria:</p>
+            <ol>
+                <li>Achieve baseline comparable to RAG-MCP (~43-50% accuracy) ✓</li>
+                <li>Demonstrate through decomposed metrics that hybrid improves retrieval coverage by ≥5% (Recall@10)</li>
+                <li>Show that coverage improvement translates to ≥2% accuracy gain</li>
+                <li>Quantify complementarity: BM25 uniquely retrieves ≥10% of correct tools</li>
+                <li>Maintain <100ms average latency despite hybrid approach</li>
+                <li>Show performance advantage scales: ≥5% accuracy gap at N=250 tools</li>
+            </ol>
+        </div>
+
+        <h3>Dataset Section Addition</h3>
+
+        <p>Add this after describing MCP-Bench:</p>
+
+        <div class="info-box">
+            <p>"The MCP Benchmark consists of [X] total tools across [Y] MCP servers and [Z] evaluation queries distributed as:</p>
+            <ul>
+                <li>Single-runner tasks: [A] queries (average [B] candidate tools)</li>
+                <li>Two-server tasks: [C] queries (average [D] candidate tools)</li>
+                <li>Three-server tasks: [E] queries (average [F] candidate tools)</li>
+            </ul>
+            <p>To evaluate scaling behavior systematically, we augment MCP-Bench with synthetic scaling experiments. For each query, we create controlled benchmarks at N=10, 25, 50, 100, and 250 tools by sampling (N-1) random distractor tools while maintaining the original ground truth. This allows us to measure performance degradation as a function of toolset size while controlling for query difficulty."</p>
+        </div>
+
+        <h3>Results Section - Complete Rewrite</h3>
+
+        <p>Replace your current one-table results section with:</p>
+
+        <h4>6. Results</h4>
+
+        <h4>6.1 Overall Performance</h4>
+        <p>[Standard table with Acc@1, MRR, Latency]</p>
+
+        <h4>6.2 Task Complexity Analysis</h4>
+        <p>[Table showing performance breakdown by single/two/three-server tasks]</p>
+
+        <h4>6.3 Decomposed Performance Analysis</h4>
+
+        <p><strong>6.3.1 Retrieval Coverage</strong></p>
+        <p>[Table with Recall@k for all methods]</p>
+        <p>"Hybrid achieves 90% Recall@10 versus 85% for RAG-only and 80% for BM25-only..."</p>
+
+        <p><strong>6.3.2 Ranking Precision</strong></p>
+        <p>[Table with conditional metrics]</p>
+        <p>"When the correct tool is retrieved, RAG-only ranks it at position 2.3 on average..."</p>
+
+        <p><strong>6.3.3 Failure Mode Analysis</strong></p>
+        <p>[Breakdown table of retrieval vs ranking failures]</p>
+        <p>"RAG-only's 50% accuracy decomposes into 15% retrieval failures and 35% ranking failures..."</p>
+
+        <h4>6.4 Scaling Analysis</h4>
+        <p>[Graphs and tables showing performance vs scale]</p>
+        <p>"As toolset size increases from 10 to 250 tools, all methods degrade, but Hybrid maintains..."</p>
+
+        <h4>6.5 Complementarity Analysis</h4>
+        <p>[Venn diagram / overlap table]</p>
+        <p>"BM25 uniquely retrieves 42 correct tools (15% of queries) that semantic search misses..."</p>
+
+        <h4>6.6 Query Type Analysis</h4>
+        <p>[Table showing accuracy by query type]</p>
+        <p>"For keyword-heavy queries, BM25 achieves 65% accuracy versus 40% for semantic-only..."</p>
+    </div>
+
+    <div class="section" id="references">
+        <h2>11. Key References & Resources</h2>
+
+        <h3>Primary Papers</h3>
+
+        <div class="reference">
+            <strong>RAG-MCP (Your Baseline)</strong><br>
+            Tiantian Gan and Qiyao Sun. 2025. RAG-MCP: Mitigating prompt bloat in LLM tool selection via retrieval-augmented generation.<br>
+            <a href="https://arxiv.org/abs/2505.03275" target="_blank">https://arxiv.org/abs/2505.03275</a><br>
+            <strong>Key contribution:</strong> Shows semantic retrieval achieves 43.13% vs 13.62% baseline
+        </div>
+
+        <div class="reference">
+            <strong>MCP-Bench (Your Benchmark)</strong><br>
+            MCP-Bench: Evaluating Tool Selection in Large Language Models<br>
+            <a href="https://arxiv.org/abs/2508.20453" target="_blank">https://arxiv.org/abs/2508.20453</a><br>
+            <strong>Key contribution:</strong> Standardized benchmark with real MCP tools and queries
+        </div>
+
+        <div class="reference">
+            <strong>MCP Universe (Context)</strong><br>
+            Model Context Protocol Universe<br>
+            <a href="https://arxiv.org/abs/2508.14704" target="_blank">https://arxiv.org/abs/2508.14704</a><br>
+            <strong>Key contribution:</strong> Overview of MCP ecosystem and scalability challenges
+        </div>
+
+        <h3>Hybrid Retrieval Background</h3>
+
+        <div class="reference">
+            <strong>RAG Foundations</strong><br>
+            Patrick Lewis et al. 2020. Retrieval-augmented generation for knowledge-intensive NLP tasks.<br>
+            NeurIPS 2020<br>
+            <strong>Key contribution:</strong> Established RAG paradigm
+        </div>
+
+        <div class="reference">
+            <strong>Hybrid Retrieval Survey</strong><br>
+            Yunfan Gao et al. 2023. Retrieval-augmented generation for large language models: A survey.<br>
+            <a href="https://arxiv.org/abs/2312.10997" target="_blank">https://arxiv.org/abs/2312.10997</a><br>
+            <strong>Key contribution:</strong> Shows benefits of combining sparse + dense retrieval
+        </div>
+
+        <div class="reference">
+            <strong>ColBERT (Late Interaction)</strong><br>
+            Omar Khattab and Matei Zaharia. 2020. ColBERT: Efficient and effective passage search via contextualized late interaction over BERT.<br>
+            SIGIR 2020<br>
+            <strong>Key contribution:</strong> Efficient reranking approach
+        </div>
+
+        <h3>Tool-Augmented LLMs</h3>
+
+        <div class="reference">
+            <strong>Toolformer</strong><br>
+            Timo Schick et al. 2023. Toolformer: Language models can teach themselves to use tools.<br>
+            NeurIPS 2023<br>
+            <strong>Key contribution:</strong> LLMs learning to use external tools
+        </div>
+
+        <div class="reference">
+            <strong>ReAct</strong><br>
+            Shunyu Yao et al. 2023. ReAct: Synergizing reasoning and acting in language models.<br>
+            ICLR 2023<br>
+            <strong>Key contribution:</strong> Reasoning + acting for tool use
+        </div>
+
+        <h3>Learning to Rank</h3>
+
+        <div class="reference">
+            <strong>LambdaMART</strong><br>
+            Christopher J.C. Burges et al. 2005. Learning to rank using gradient descent.<br>
+            ICML 2005<br>
+            <strong>Key contribution:</strong> Foundational learning to rank algorithm
+        </div>
+
+        <div class="reference">
+            <strong>Learning to Rank Book</strong><br>
+            Tie-Yan Liu. 2011. Learning to Rank for Information Retrieval.<br>
+            Springer<br>
+            <strong>Key contribution:</strong> Comprehensive LTR overview
+        </div>
+
+        <h3>Useful Implementation Libraries</h3>
+
+        <ul>
+            <li><strong>sentence-transformers:</strong> For semantic embeddings (all-MiniLM-L6-v2)</li>
+            <li><strong>FAISS:</strong> For fast similarity search</li>
+            <li><strong>rank-bm25:</strong> Python implementation of BM25</li>
+            <li><strong>PyTerrier:</strong> For IR experiments and evaluation</li>
+            <li><strong>ranx:</strong> For IR metrics calculation</li>
+        </ul>
+
+        <h3>Additional Resources</h3>
+
+        <ul>
+            <li><strong>MCP-Bench GitHub:</strong> <a href="https://github.com/mcp-bench" target="_blank">https://github.com/mcp-bench</a></li>
+            <li><strong>MCP Specification:</strong> Model Context Protocol documentation</li>
+            <li><strong>BEIR Benchmark:</strong> For comparison with standard IR benchmarks</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Summary: Your Path Forward</h2>
+
+        <div class="solution-box">
+            <h3>✅ What You Must Do</h3>
+            <ol>
+                <li><strong>Week 1:</strong> Fix your metrics and understand your current 50% through decomposition</li>
+                <li><strong>Week 2:</strong> Implement synthetic scaling and test RAG-only at different scales</li>
+                <li><strong>Week 3:</strong> Build BM25 and Hybrid systems, measure complementarity</li>
+                <li><strong>Week 4:</strong> Complete comprehensive evaluation with all analyses</li>
+                <li><strong>Week 5:</strong> Rewrite paper with decomposed metrics and honest findings</li>
+            </ol>
+        </div>
+
+        <div class="info-box">
+            <h3>🎯 Key Insights to Demonstrate</h3>
+            <ol>
+                <li>Separate retrieval coverage from ranking precision</li>
+                <li>Show WHERE hybrid helps (coverage vs ranking)</li>
+                <li>Quantify complementarity between BM25 and semantic</li>
+                <li>Demonstrate scaling behavior (10-250 tools)</li>
+                <li>Identify when each method excels (query types)</li>
+            </ol>
+        </div>
+
+        <div class="warning-box">
+            <h3>⚠️ What NOT to Do</h3>
+            <ul>
+                <li>Don't claim you tested 10-250 tools without synthetic scaling</li>
+                <li>Don't report "Recall 50%" without specifying Recall@k</li>
+                <li>Don't compare to 43% baseline without understanding the test set</li>
+                <li>Don't claim "optimal balance" without defining optimization target</li>
+                <li>Don't promise LLM configurations if you lack API access/budget</li>
+            </ul>
+        </div>
+
+        <h3>Your Scientific Contribution</h3>
+        <p>Your value isn't just showing "hybrid is 2% better." It's showing:</p>
+        <ul>
+            <li><strong>WHY:</strong> Hybrid improves coverage by catching keyword tools (15% unique retrieval)</li>
+            <li><strong>WHERE:</strong> Ranking is the bottleneck (35% failures vs 15% retrieval failures)</li>
+            <li><strong>WHEN:</strong> Hybrid helps most for keyword queries and at large scales (N>100)</li>
+            <li><strong>HOW MUCH:</strong> Quantified improvement at each scale with decomposed metrics</li>
+        </ul>
+
+        <p><strong>This analytical depth transforms your paper from a simple benchmark comparison into a rigorous scientific investigation of tool selection mechanisms.</strong></p>
+    </div>
+
+    <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <h2 style="color: white; border-bottom-color: white;">Final Notes</h2>
+        <p>This framework provides you with a complete roadmap for transforming your evaluation from surface-level metrics to deep analytical insights. The decomposed evaluation approach isn't just better science—it's the story that makes your hybrid approach meaningful.</p>
+        
+        <p><strong>Remember:</strong> Even if hybrid only provides modest improvements (+2% accuracy), demonstrating WHEN and WHY it helps (through decomposed metrics, complementarity analysis, and query type studies) is far more valuable than showing large but unexplained gains.</p>
+        
+        <p><strong>Good luck with your project, Gleice!</strong> This framework will help you produce rigorous, publication-quality research.</p>
+        
+        <p style="text-align: right; font-style: italic; margin-top: 20px;">— Created with Claude Sonnet 4.5</p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midterm Proposal Analysis: RAG-MCP Hybrid Retrieval Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+        
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .problem-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .solution-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .option-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+        
+        .option-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .option-card h3 {
+            margin-top: 0;
+        }
+        
+        .option-1 {
+            border-left: 5px solid #dc3545;
+        }
+        
+        .option-2 {
+            border-left: 5px solid #28a745;
+        }
+        
+        .option-3 {
+            border-left: 5px solid #ffc107;
+        }
+        
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+        
+        pre {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+        }
+        
+        pre code {
+            background: none;
+            color: #333;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .comparison-table {
+            margin: 30px 0;
+        }
+        
+        .pros {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .cons {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .timeline {
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .timeline-item {
+            margin: 20px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: "●";
+            position: absolute;
+            left: -11px;
+            color: #667eea;
+            font-size: 20px;
+        }
+        
+        .recommendation {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .recommendation h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 3px solid #667eea;
+        }
+        
+        .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Midterm Proposal Analysis</h1>
+            <p>RAG-MCP Hybrid Retrieval System: What Went Wrong & How to Fix It</p>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#problems">❌ What We Did Wrong</a></li>
+                <li><a href="#fixes">🔧 How to Fix It</a></li>
+                <li><a href="#option1">🎯 Option 1: MCP-Universe Only</a></li>
+                <li><a href="#option2">🌟 Option 2: Hybrid Approach</a></li>
+                <li><a href="#option3">⚠️ Option 3: Continue Current</a></li>
+                <li><a href="#recommendation">💡 Recommendation</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <section id="problems" class="section">
+                <h2>❌ What We Did Wrong in the Current Midterm Proposal</h2>
+                
+                <div class="problem-box">
+                    <h3>🎯 Core Issues Identified</h3>
+                    <p>Our midterm proposal has several fundamental problems that make it difficult to execute and validate our research claims.</p>
+                </div>
+                
+                <h3>Problem 1: Assumed Ground Truth Existed</h3>
+                <div class="info-box">
+                    <p><strong>What we proposed:</strong> We would evaluate our hybrid retrieval system using standard information retrieval metrics like Precision@K, Recall@K, F1-Score, and NDCG.</p>
+                    
+                    <p><strong>The reality:</strong> RAG-MCP (the benchmark we chose) does NOT provide explicit lists of which tools are correct for each task. It only has:</p>
+                    <ul>
+                        <li>Dependency analysis (describes workflow patterns)</li>
+                        <li>Task success criteria (did the agent complete the task?)</li>
+                        <li><strong>NO explicit tool-level annotations</strong> needed to calculate retrieval metrics</li>
+                    </ul>
+                    
+                    <p><strong>Why this is a problem:</strong> We cannot calculate precision, recall, or F1-score without knowing which tools should have been retrieved. We designed experiments around metrics we cannot actually compute.</p>
+                </div>
+                
+                <h3>Problem 2: Conflated Two Different Evaluation Levels</h3>
+                <div class="problem-box">
+                    <p><strong>What we mixed up:</strong></p>
+                    <ul>
+                        <li><strong>Retrieval Quality:</strong> Did we retrieve the right tools? (Precision/Recall/F1)</li>
+                        <li><strong>Task Success:</strong> Did the agent complete the task successfully?</li>
+                    </ul>
+                    
+                    <p><strong>Why they're different:</strong></p>
+                    <ul>
+                        <li>An agent might succeed despite poor retrieval (got lucky with wrong tools)</li>
+                        <li>An agent might fail despite perfect retrieval (planning/execution errors)</li>
+                        <li>These are related but NOT the same measurement</li>
+                    </ul>
+                    
+                    <p><strong>Our mistake:</strong> We assumed measuring task success would prove our retrieval is better, but we have no way to isolate retrieval quality from other factors.</p>
+                </div>
+                
+                <h3>Problem 3: Didn't Plan for Annotation Work</h3>
+                <div class="danger-box">
+                    <p><strong>What we assumed:</strong> We could just run experiments and report metrics immediately.</p>
+                    
+                    <p><strong>The reality:</strong> To measure retrieval quality, someone (probably us) needs to manually annotate 30-50+ tasks with ground truth tool lists.</p>
+                    
+                    <p><strong>Time impact:</strong></p>
+                    <ul>
+                        <li>Each task annotation: 5-10 minutes</li>
+                        <li>30 tasks minimum: 2.5-5 hours of work</li>
+                        <li>50 tasks for better statistics: 4-8 hours of work</li>
+                        <li>Quality checking and refinement: 2-3 hours</li>
+                        <li><strong>Total: 6-11 hours of unplanned work</strong></li>
+                    </ul>
+                    
+                    <p>This wasn't budgeted in our timeline and would delay everything by at least a week.</p>
+                </div>
+                
+                <h3>Problem 4: Over-Promised on Metrics</h3>
+                <div class="problem-box">
+                    <p><strong>What we promised in the proposal:</strong></p>
+                    <ul>
+                        <li>Precision@K, Recall@K (K = 1, 3, 5)</li>
+                        <li>F1-Score</li>
+                        <li>Mean Reciprocal Rank (MRR)</li>
+                        <li>Normalized Discounted Cumulative Gain (NDCG)</li>
+                        <li>Hit Rate</li>
+                    </ul>
+                    
+                    <p><strong>What we can actually compute without ground truth:</strong></p>
+                    <ul>
+                        <li>Task success rate (yes/no per task)</li>
+                        <li>Execution time</li>
+                        <li>Number of tool calls</li>
+                    </ul>
+                    
+                    <p>All the IR metrics require relevance judgments that don't exist in the dataset.</p>
+                </div>
+                
+                <h3>Problem 5: Unclear Research Contribution</h3>
+                <div class="info-box">
+                    <p><strong>What we claimed:</strong> "Hybrid retrieval (BM25 + Semantic + ColBERT) improves tool selection accuracy in RAG-MCP systems."</p>
+                    
+                    <p><strong>What we can actually prove without ground truth:</strong> "Our system achieves X% task success rate compared to Y% baseline."</p>
+                    
+                    <p><strong>The gap:</strong> We cannot prove that <em>retrieval improvements</em> caused better outcomes vs. other factors (better prompting, better planning, better execution, random chance).</p>
+                </div>
+                
+                <h3>Problem 6: Scope Creep Risk with ColBERT</h3>
+                <div class="danger-box">
+                    <p>We proposed three components:</p>
+                    <ol>
+                        <li><strong>BM25:</strong> Sparse lexical matching (relatively simple)</li>
+                        <li><strong>Semantic embeddings:</strong> Dense retrieval (already implemented in RAG-MCP)</li>
+                        <li><strong>ColBERT reranking:</strong> Token-level late interaction (complex, time-intensive)</li>
+                    </ol>
+                    
+                    <p><strong>Reality check:</strong></p>
+                    <ul>
+                        <li>ColBERT requires training/fine-tuning on domain data</li>
+                        <li>Integration complexity is high</li>
+                        <li>May not provide significant gains over simpler fusion</li>
+                        <li>Could consume 40-50% of project time for marginal improvement</li>
+                    </ul>
+                    
+                    <p><strong>Risk:</strong> We might spend all our time on ColBERT and not finish the core BM25+semantic hybrid, which is the main contribution.</p>
+                </div>
+                
+                <h3>Problem 7: Comparison Baseline Mismatch</h3>
+                <div class="problem-box">
+                    <p><strong>What we proposed:</strong> Compare against RAG-MCP baseline of 43% accuracy.</p>
+                    
+                    <p><strong>The issue:</strong> That 43% might be from:</p>
+                    <ul>
+                        <li>Different task set than we're using</li>
+                        <li>Different evaluation criteria</li>
+                        <li>Different agent implementation</li>
+                        <li>Different experimental conditions</li>
+                    </ul>
+                    
+                    <p>We don't have enough details to ensure apples-to-apples comparison, so claiming "We improved from 43% to 50%" might not be valid.</p>
+                </div>
+            </section>
+            
+            <section id="fixes" class="section">
+                <h2>🔧 How to Fix It: Lessons from MCP-Universe</h2>
+                
+                <div class="success-box">
+                    <h3>🎓 What MCP-Universe Does Right</h3>
+                    <p>MCP-Universe (arxiv.org/abs/2508.14704) provides a model for how to properly evaluate retrieval and agent systems. Here's what they do that we should learn from:</p>
+                </div>
+                
+                <h3>Key Insight 1: Execution-Based Ground Truth</h3>
+                <div class="solution-box">
+                    <p><strong>MCP-Universe's approach:</strong> They create three types of evaluators:</p>
+                    
+                    <h4>1. Format Evaluators</h4>
+                    <p>Check if agent output follows the correct structure.</p>
+                    <pre><code>{
+  "evaluator": "format_check",
+  "expected_fields": ["restaurant_name", "place_id", "rating"]
+}</code></pre>
+                    
+                    <h4>2. Static Evaluators</h4>
+                    <p>Compare against manually collected ground truth for time-invariant content.</p>
+                    <pre><code>{
+  "evaluator": "static_match",
+  "field": "place_id",
+  "expected_value": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+  "match_type": "exact"
+}</code></pre>
+                    
+                    <h4>3. Dynamic Evaluators</h4>
+                    <p>Automatically fetch real-time ground truth at evaluation time.</p>
+                    <pre><code>{
+  "evaluator": "dynamic_fetch",
+  "fetch_function": "get_current_stock_price",
+  "compare_function": "within_5_percent",
+  "source": "yahoo_finance_api"
+}</code></pre>
+                    
+                    <p><strong>Why this matters:</strong> They have explicit expected outputs for each task, enabling objective evaluation without human judgment.</p>
+                </div>
+                
+                <h3>Key Insight 2: Domain-Specific Validation</h3>
+                <div class="solution-box">
+                    <p>MCP-Universe creates custom validators for each domain:</p>
+                    
+                    <h4>GitHub Domain</h4>
+                    <ul>
+                        <li>Check if PR was created: <code>github.check_pr_exists(repo, pr_number)</code></li>
+                        <li>Verify branch exists: <code>github.check_branch(repo, branch_name)</code></li>
+                        <li>Validate files modified: <code>github.get_pr_files(pr_number) == expected_files</code></li>
+                    </ul>
+                    
+                    <h4>Google Maps Domain</h4>
+                    <ul>
+                        <li>Validate place IDs: <code>maps.validate_place_id(place_id)</code></li>
+                        <li>Check restaurant rating: <code>maps.get_rating(place_id) >= 4.2</code></li>
+                        <li>Verify driving time: <code>maps.get_duration(A, B) ~= expected_minutes</code></li>
+                    </ul>
+                    
+                    <h4>Finance Domain</h4>
+                    <ul>
+                        <li>Compare stock prices: <code>abs(returned - actual) / actual < 0.05</code></li>
+                        <li>Validate transaction: <code>finance.check_transaction_status(id)</code></li>
+                    </ul>
+                    
+                    <p><strong>Why this matters:</strong> They validate actual outcomes, not just whether tools were called.</p>
+                </div>
+                
+                <h3>Key Insight 3: Separate Retrieval from Execution</h3>
+                <div class="info-box">
+                    <p>While MCP-Universe focuses on end-to-end task success, their framework allows us to:</p>
+                    <ol>
+                        <li><strong>Log which tools were retrieved</strong> at each step</li>
+                        <li><strong>Measure retrieval quality</strong> independently (if we add ground truth)</li>
+                        <li><strong>Measure task success</strong> via execution-based evaluation</li>
+                        <li><strong>Correlate</strong> retrieval quality with task outcomes</li>
+                    </ol>
+                    
+                    <p>This separation allows us to prove causation: better retrieval → better outcomes.</p>
+                </div>
+                
+                <h3>Key Insight 4: Realistic vs. Synthetic Tasks</h3>
+                <div class="solution-box">
+                    <p><strong>MCP-Universe philosophy:</strong> Use real-world MCP servers and authentic tasks.</p>
+                    
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Synthetic (RAG-MCP)</th>
+                            <th>Real-World (MCP-Universe)</th>
+                        </tr>
+                        <tr>
+                            <td>Tool descriptions</td>
+                            <td>Fixed text catalog</td>
+                            <td>Actual MCP server schemas</td>
+                        </tr>
+                        <tr>
+                            <td>Execution</td>
+                            <td>Simulated/mocked</td>
+                            <td>Real API calls</td>
+                        </tr>
+                        <tr>
+                            <td>Validation</td>
+                            <td>Dependency analysis</td>
+                            <td>Execution-based ground truth</td>
+                        </tr>
+                        <tr>
+                            <td>Errors</td>
+                            <td>Predictable</td>
+                            <td>Real-world (rate limits, timeouts, etc.)</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Trade-off:</strong> Real-world tasks are more convincing but harder to control and reproduce.</p>
+                </div>
+                
+                <h3>Key Insight 5: Extensible Framework</h3>
+                <div class="solution-box">
+                    <p>MCP-Universe provides:</p>
+                    <ul>
+                        <li><strong>UI for task management:</strong> Easy to add new tasks and evaluators</li>
+                        <li><strong>Modular agent integration:</strong> Plug in different agent systems</li>
+                        <li><strong>Standardized metrics:</strong> Consistent evaluation across experiments</li>
+                        <li><strong>Trace collection:</strong> Detailed logs of all agent actions</li>
+                    </ul>
+                    
+                    <p>This makes experimentation faster and results more reproducible.</p>
+                </div>
+            </section>
+            
+            <section id="option1" class="section">
+                <h2>🎯 Option 1: Switch Fully to MCP-Universe</h2>
+                
+                <div class="option-card option-1">
+                    <h3>📋 Overview</h3>
+                    <p>Abandon RAG-MCP entirely and switch to the MCP-Universe benchmark. Implement your hybrid retrieval system within their framework and evaluate on their 231 tasks across 6 domains.</p>
+                </div>
+                
+                <h3>What This Involves</h3>
+                <div class="info-box">
+                    <h4>Setup Requirements</h4>
+                    <ul>
+                        <li>Install MCP-Universe framework from GitHub</li>
+                        <li>Set up all 11 MCP servers (GitHub, Google Maps, Blender, Finance, Browser, Search)</li>
+                        <li>Configure API keys for:
+                            <ul>
+                                <li>GitHub API</li>
+                                <li>Google Maps API</li>
+                                <li>Financial data APIs (Yahoo Finance, etc.)</li>
+                                <li>OpenAI/Anthropic/Google for LLMs</li>
+                            </ul>
+                        </li>
+                        <li>Create a dedicated test GitHub account (required)</li>
+                    </ul>
+                    
+                    <h4>Implementation Work</h4>
+                    <ol>
+                        <li><strong>Week 1-2:</strong> Set up MCP-Universe environment and all servers</li>
+                        <li><strong>Week 3-4:</strong> Integrate your hybrid retrieval into their framework</li>
+                        <li><strong>Week 5-6:</strong> Run full benchmark (231 tasks) with baseline and hybrid</li>
+                        <li><strong>Week 7:</strong> Analyze results and write paper</li>
+                    </ol>
+                    
+                    <h4>Research Contribution</h4>
+                    <p>Your paper would claim: "We improve agent performance on real-world MCP tasks by implementing hybrid retrieval, achieving X% task success rate vs. Y% baseline across 6 domains."</p>
+                </div>
+                
+                <h3>✅ Advantages</h3>
+                <div class="success-box">
+                    <ol>
+                        <li><strong>Built-in Ground Truth:</strong> No annotation needed - MCP-Universe has execution-based evaluation for all tasks</li>
+                        <li><strong>Compelling Results:</strong> Real-world tasks are more impressive than synthetic benchmarks</li>
+                        <li><strong>Complete Framework:</strong> UI, logging, evaluation all provided</li>
+                        <li><strong>Direct Comparison:</strong> Can compare against published results (GPT-5: 43.72%, Claude-4: 29.44%)</li>
+                        <li><strong>Publication Value:</strong> Novel approach on an emerging benchmark</li>
+                        <li><strong>Reproducibility:</strong> Open-source framework makes results reproducible</li>
+                    </ol>
+                </div>
+                
+                <h3>❌ Disadvantages</h3>
+                <div class="danger-box">
+                    <ol>
+                        <li><strong>Massive Scope Increase:</strong> 231 tasks across 6 domains vs. focused retrieval study</li>
+                        <li><strong>Timeline Explosion:</strong> 6-8 weeks minimum vs. 2-4 weeks for original plan</li>
+                        <li><strong>Setup Complexity:</strong> Need to configure 11 different MCP servers and APIs</li>
+                        <li><strong>Cost:</strong> API calls to real services (Google Maps, GitHub, Finance) cost money</li>
+                        <li><strong>Different Research Question:</strong> Focuses on end-to-end agent performance, not specifically retrieval quality</li>
+                        <li><strong>Loss of Retrieval Focus:</strong> Hard to isolate retrieval contribution from other factors</li>
+                        <li><strong>Can't Compare to RAG-MCP:</strong> Loses connection to your original proposal and baseline</li>
+                        <li><strong>Risk of Failure:</strong> Full agent system has many failure points beyond retrieval</li>
+                    </ol>
+                </div>
+                
+                <h3>📊 Evaluation Approach</h3>
+                <div class="solution-box">
+                    <h4>What You Would Measure</h4>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Description</th>
+                            <th>MCP-Universe Support</th>
+                        </tr>
+                        <tr>
+                            <td>Task Success Rate</td>
+                            <td>% of tasks where agent produced correct output</td>
+                            <td>✅ Built-in execution-based evaluation</td>
+                        </tr>
+                        <tr>
+                            <td>Domain-wise Performance</td>
+                            <td>Success rate per domain (Maps, GitHub, Finance, etc.)</td>
+                            <td>✅ Automatic breakdown</td>
+                        </tr>
+                        <tr>
+                            <td>Average Steps</td>
+                            <td>Number of tool calls needed per task</td>
+                            <td>✅ Logged automatically</td>
+                        </tr>
+                        <tr>
+                            <td>Execution Time</td>
+                            <td>Time to complete each task</td>
+                            <td>✅ Logged automatically</td>
+                        </tr>
+                        <tr>
+                            <td>Retrieval Precision/Recall</td>
+                            <td>Quality of tool selection</td>
+                            <td>❌ Need to add instrumentation</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>How to Isolate Retrieval Impact</h4>
+                    <p>You would need to add custom logging:</p>
+                    <pre><code># Instrument the retrieval component
+class HybridRetrieverWithLogging:
+    def retrieve(self, query, available_tools):
+        # Your hybrid retrieval logic
+        retrieved_tools = self.hybrid_retrieval(query, available_tools)
+        
+        # Log what was retrieved
+        self.log_retrieval(query, retrieved_tools, available_tools)
+        
+        return retrieved_tools
+    
+    def log_retrieval(self, query, retrieved, available):
+        # Store for later analysis
+        self.retrieval_log.append({
+            "query": query,
+            "retrieved": [t.name for t in retrieved],
+            "available": [t.name for t in available],
+            "retrieval_method": "hybrid"
+        })</code></pre>
+                </div>
+                
+                <h3>⏱️ Realistic Timeline</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>Week 1: Environment Setup (20-30 hours)</strong>
+                        <ul>
+                            <li>Clone MCP-Universe repo</li>
+                            <li>Install dependencies</li>
+                            <li>Configure all 11 MCP servers</li>
+                            <li>Obtain and configure API keys</li>
+                            <li>Test basic functionality</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 2: Integration (25-35 hours)</strong>
+                        <ul>
+                            <li>Understand MCP-Universe agent interface</li>
+                            <li>Implement BM25 retrieval component</li>
+                            <li>Integrate with existing semantic retrieval</li>
+                            <li>Add RRF fusion logic</li>
+                            <li>Test on sample tasks</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 3: Baseline Experiments (15-20 hours)</strong>
+                        <ul>
+                            <li>Run semantic-only baseline on all 231 tasks</li>
+                            <li>Collect performance metrics</li>
+                            <li>Analyze failure cases</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 4: Hybrid Experiments (15-20 hours)</strong>
+                        <ul>
+                            <li>Run hybrid retrieval on all 231 tasks</li>
+                            <li>Collect performance metrics</li>
+                            <li>Compare against baseline</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 5: Analysis (20-25 hours)</strong>
+                        <ul>
+                            <li>Statistical analysis of results</li>
+                            <li>Per-domain performance breakdown</li>
+                            <li>Failure case analysis</li>
+                            <li>Create visualizations</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 6-7: Paper Writing (30-40 hours)</strong>
+                        <ul>
+                            <li>Write methodology section</li>
+                            <li>Create results tables and figures</li>
+                            <li>Write discussion and conclusion</li>
+                            <li>Revisions and editing</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p><strong>Total Time: 125-190 hours (6-8 weeks full-time)</strong></p>
+                
+                <h3>💰 Cost Estimate</h3>
+                <div class="info-box">
+                    <h4>API Costs</h4>
+                    <ul>
+                        <li><strong>Google Maps API:</strong> ~$0.005 per request × 50 tasks × 3 runs = $0.75</li>
+                        <li><strong>LLM API calls:</strong> ~$0.01 per task × 231 tasks × 3 runs = $6.93</li>
+                        <li><strong>Financial data APIs:</strong> May be free or ~$10-20/month</li>
+                        <li><strong>Total estimated: $20-50</strong> for full benchmark runs</li>
+                    </ul>
+                </div>
+                
+                <h3>📝 Example Results Table</h3>
+                <div class="solution-box">
+                    <table>
+                        <tr>
+                            <th>Method</th>
+                            <th>Overall</th>
+                            <th>Maps</th>
+                            <th>GitHub</th>
+                            <th>Finance</th>
+                            <th>Blender</th>
+                            <th>Browser</th>
+                            <th>Search</th>
+                        </tr>
+                        <tr>
+                            <td>GPT-5 (Published)</td>
+                            <td>43.72%</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Semantic Only (Baseline)</td>
+                            <td>38.5%</td>
+                            <td>45%</td>
+                            <td>35%</td>
+                            <td>42%</td>
+                            <td>28%</td>
+                            <td>40%</td>
+                            <td>41%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hybrid (Ours)</strong></td>
+                            <td><strong>47.2%</strong></td>
+                            <td><strong>52%</strong></td>
+                            <td><strong>43%</strong></td>
+                            <td><strong>48%</strong></td>
+                            <td><strong>35%</strong></td>
+                            <td><strong>46%</strong></td>
+                            <td><strong>49%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Improvement</td>
+                            <td>+8.7pp</td>
+                            <td>+7pp</td>
+                            <td>+8pp</td>
+                            <td>+6pp</td>
+                            <td>+7pp</td>
+                            <td>+6pp</td>
+                            <td>+8pp</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <h3>🎯 When to Choose This Option</h3>
+                <div class="info-box">
+                    <p>Choose Option 1 if:</p>
+                    <ul>
+                        <li>✅ You have 6-8 weeks available for the project</li>
+                        <li>✅ You want to evaluate complete agent systems, not just retrieval</li>
+                        <li>✅ You have budget for API costs ($20-50)</li>
+                        <li>✅ You want to publish on a brand-new benchmark</li>
+                        <li>✅ Your advisor agrees to the scope change</li>
+                        <li>✅ You're comfortable with higher risk / higher reward</li>
+                    </ul>
+                    
+                    <p>❌ Don't choose this if:</p>
+                    <ul>
+                        <li>You have less than 6 weeks</li>
+                        <li>You want to focus specifically on retrieval quality</li>
+                        <li>You need to compare against RAG-MCP baseline</li>
+                        <li>You want lower implementation risk</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="option2" class="section">
+                <h2>🌟 Option 2: Hybrid Approach (MCP-Universe Philosophy + RAG-MCP Data)</h2>
+                
+                <div class="option-card option-2">
+                    <h3>📋 Overview</h3>
+                    <p>Keep RAG-MCP as your benchmark but adopt MCP-Universe's evaluation philosophy. Create explicit ground truth annotations for a subset of tasks and measure both retrieval quality AND task success. This is the middle ground that gives you the best of both approaches.</p>
+                </div>
+                
+                <h3>What This Involves</h3>
+                <div class="success-box">
+                    <h4>Core Idea</h4>
+                    <p>Take the evaluation rigor from MCP-Universe but apply it to the simpler RAG-MCP benchmark:</p>
+                    <ol>
+                        <li><strong>Keep RAG-MCP:</strong> Use existing 216 tools across 28 servers</li>
+                        <li><strong>Add Ground Truth:</strong> Manually annotate 30-50 tasks with correct tool lists</li>
+                        <li><strong>Dual Evaluation:</strong> Measure both retrieval quality (Precision/Recall/F1) AND task success</li>
+                        <li><strong>Prove Causation:</strong> Show correlation between better retrieval and better outcomes</li>
+                    </ol>
+                </div>
+                
+                <h3>Implementation Details</h3>
+                <div class="solution-box">
+                    <h4>Step 1: Create MCP-Universe-Style Task Annotations</h4>
+                    <pre><code># Task annotation format
+{
+  "task_id": "task_001",
+  "query": "Find the weather forecast for New York City for the next 3 days",
+  "original_rag_mcp_task": {...},  # Original task data
+  
+  # NEW: Ground truth for retrieval evaluation
+  "ground_truth_tools": [
+    "weather_server.search_location",
+    "weather_server.get_forecast"
+  ],
+  
+  # NEW: Expected output for execution evaluation
+  "expected_output": {
+    "must_have_fields": ["location", "forecast", "temperature"],
+    "location_matches": "New York",
+    "forecast_days": 3,
+    "validation_function": "validate_weather_output"
+  }
+}</code></pre>
+                    
+                    <h4>Step 2: Implement Dual Evaluation System</h4>
+                    <pre><code>class HybridRAGEvaluator:
+    def evaluate_task(self, task, retrieval_method):
+        # 1. Retrieval Evaluation
+        retrieved_tools = self.retrieval_system.retrieve(
+            task.query, 
+            method=retrieval_method
+        )
+        
+        retrieval_metrics = self.compute_retrieval_metrics(
+            retrieved=retrieved_tools,
+            ground_truth=task.ground_truth_tools
+        )
+        
+        # 2. Task Execution
+        agent_output = self.agent.execute(
+            query=task.query,
+            available_tools=retrieved_tools
+        )
+        
+        # 3. Execution Evaluation
+        task_success = self.validate_output(
+            output=agent_output,
+            expected=task.expected_output
+        )
+        
+        # 4. Combined Results
+        return {
+            "task_id": task.task_id,
+            "retrieval": retrieval_metrics,  # P, R, F1
+            "task_success": task_success,     # True/False
+            "retrieval_method": retrieval_method
+        }
+    
+    def compute_retrieval_metrics(self, retrieved, ground_truth):
+        retrieved_set = set(retrieved)
+        gt_set = set(ground_truth)
+        
+        true_positives = len(retrieved_set & gt_set)
+        precision = true_positives / len(retrieved_set) if retrieved_set else 0
+        recall = true_positives / len(gt_set) if gt_set else 0
+        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0
+        
+        return {
+            "precision": precision,
+            "recall": recall,
+            "f1": f1,
+            "retrieved_count": len(retrieved_set),
+            "ground_truth_count": len(gt_set)
+        }</code></pre>
+                    
+                    <h4>Step 3: Correlation Analysis</h4>
+                    <pre><code># Show that better retrieval leads to better outcomes
+import scipy.stats as stats
+
+def analyze_retrieval_impact(results):
+    # Extract metrics
+    f1_scores = [r["retrieval"]["f1"] for r in results]
+    task_successes = [1 if r["task_success"] else 0 for r in results]
+    
+    # Compute correlation
+    correlation, p_value = stats.pearsonr(f1_scores, task_successes)
+    
+    print(f"Correlation between F1 and Task Success: {correlation:.3f}")
+    print(f"P-value: {p_value:.4f}")
+    
+    # Group by retrieval quality
+    high_f1 = [r for r in results if r["retrieval"]["f1"] >= 0.8]
+    low_f1 = [r for r in results if r["retrieval"]["f1"] < 0.5]
+    
+    high_f1_success_rate = sum(r["task_success"] for r in high_f1) / len(high_f1)
+    low_f1_success_rate = sum(r["task_success"] for r in low_f1) / len(low_f1)
+    
+    print(f"Task success when F1 >= 0.8: {high_f1_success_rate:.1%}")
+    print(f"Task success when F1 < 0.5: {low_f1_success_rate:.1%}")</code></pre>
+                </div>
+                
+                <h3>✅ Advantages</h3>
+                <div class="success-box">
+                    <ol>
+                        <li><strong>Focused Scope:</strong> Only annotate 30-50 tasks, not 231</li>
+                        <li><strong>Retrieval-Centered:</strong> Maintains focus on your core contribution</li>
+                        <li><strong>Manageable Timeline:</strong> 3-4 weeks instead of 6-8</li>
+                        <li><strong>Dual Metrics:</strong> Can report both retrieval quality AND task success</li>
+                        <li><strong>Causal Evidence:</strong> Correlation analysis proves retrieval improvements matter</li>
+                        <li><strong>Compare to RAG-MCP:</strong> Can still reference the 43% baseline</li>
+                        <li><strong>Lower Risk:</strong> Simpler setup, fewer dependencies</li>
+                        <li><strong>No API Costs:</strong> RAG-MCP uses static tool descriptions</li>
+                        <li><strong>Flexibility:</strong> Can adjust scope based on time constraints</li>
+                        <li><strong>Novel Contribution:</strong> First to add retrieval-level evaluation to RAG-MCP</li>
+                    </ol>
+                </div>
+                
+                <h3>❌ Disadvantages</h3>
+                <div class="danger-box">
+                    <ol>
+                        <li><strong>Manual Annotation:</strong> Still need 6-11 hours of annotation work</li>
+                        <li><strong>Smaller Scale:</strong> 30-50 tasks less impressive than 231 tasks</li>
+                        <li><strong>Not Real-World:</strong> RAG-MCP uses synthetic tool descriptions</li>
+                        <li><strong>Validation Complexity:</strong> Need to create output validators</li>
+                        <li><strong>Inter-Annotator Agreement:</strong> If you want to be rigorous, need multiple annotators</li>
+                    </ol>
+                </div>
+                
+                <h3>📊 Annotation Process</h3>
+                <div class="info-box">
+                    <h4>How to Annotate 30-50 Tasks Efficiently</h4>
+                    
+                    <p><strong>Step 1: Sample Selection (30 minutes)</strong></p>
+                    <ul>
+                        <li>Choose diverse tasks across different servers and complexity levels</li>
+                        <li>Aim for: 10 simple tasks, 15 medium tasks, 10 complex tasks, 5 edge cases</li>
+                        <li>Balance across domains (weather, maps, finance, etc.)</li>
+                    </ul>
+                    
+                    <p><strong>Step 2: Tool Annotation (5-10 minutes per task)</strong></p>
+                    <p>For each task, identify:</p>
+                    <ol>
+                        <li><strong>Essential tools:</strong> Must be used to complete the task</li>
+                        <li><strong>Helpful tools:</strong> Can assist but aren't required</li>
+                        <li><strong>Irrelevant tools:</strong> Shouldn't be retrieved</li>
+                    </ol>
+                    
+                    <p><strong>Annotation Template:</strong></p>
+                    <pre><code>Task: "Find restaurants near Times Square with rating > 4.5"
+
+Essential tools (must retrieve):
+- google_maps.search_nearby
+- google_maps.get_place_details
+
+Helpful tools (nice to have):
+- google_maps.get_reviews
+- google_maps.calculate_distance
+
+Reasoning:
+- Need search_nearby to find restaurants near Times Square
+- Need get_place_details to check ratings
+- Reviews and distance are helpful but not required for core task
+
+Time: 6 minutes</code></pre>
+                    
+                    <p><strong>Step 3: Expected Output Definition (3-5 minutes per task)</strong></p>
+                    <pre><code>Expected output:
+{
+  "must_have_fields": ["restaurant_name", "rating", "address"],
+  "rating_constraint": {"min": 4.5},
+  "location_constraint": {"near": "Times Square", "radius_km": 1},
+  "min_results": 3
+}
+
+Validation function: validate_restaurant_search</code></pre>
+                    
+                    <p><strong>Total Time Estimate:</strong></p>
+                    <ul>
+                        <li>30 tasks × 8-15 minutes = 4-7.5 hours</li>
+                        <li>50 tasks × 8-15 minutes = 6.7-12.5 hours</li>
+                    </ul>
+                    
+                    <p><strong>Annotation Tips:</strong></p>
+                    <ul>
+                        <li>Use <code>dataset_creator.py</code> to semi-automate the process</li>
+                        <li>Annotate in batches of 10 to avoid burnout</li>
+                        <li>Take breaks every hour</li>
+                        <li>Have a second person review 10-20% for quality control</li>
+                    </ul>
+                </div>
+                
+                <h3>⏱️ Realistic Timeline</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>Week 1: Annotation & Setup (15-20 hours)</strong>
+                        <ul>
+                            <li>Day 1-2: Select 30-50 representative tasks</li>
+                            <li>Day 3-4: Annotate ground truth tools (6-11 hours)</li>
+                            <li>Day 5: Define expected outputs and validators (3-4 hours)</li>
+                            <li>Day 6-7: Implement evaluation framework (5-6 hours)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 2: Baseline Experiments (12-15 hours)</strong>
+                        <ul>
+                            <li>Run RAG-only on annotated tasks (2-3 hours)</li>
+                            <li>Compute retrieval metrics (precision, recall, F1)</li>
+                            <li>Measure task success rates</li>
+                            <li>Analyze results and failure cases</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 3: Hybrid Implementation & Experiments (15-18 hours)</strong>
+                        <ul>
+                            <li>Implement BM25 component (4-5 hours)</li>
+                            <li>Implement RRF fusion (2-3 hours)</li>
+                            <li>Run hybrid retrieval experiments (3-4 hours)</li>
+                            <li>Compute all metrics</li>
+                            <li>Correlation analysis (2-3 hours)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 4: Analysis & Writing (20-25 hours)</strong>
+                        <ul>
+                            <li>Statistical analysis</li>
+                            <li>Create tables and visualizations</li>
+                            <li>Write methodology section</li>
+                            <li>Write results and discussion</li>
+                            <li>Final revisions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p><strong>Total Time: 62-78 hours (3-4 weeks)</strong></p>
+                
+                <h3>📝 Example Results</h3>
+                <div class="solution-box">
+                    <h4>Table 1: Retrieval Quality Metrics</h4>
+                    <table>
+                        <tr>
+                            <th>Method</th>
+                            <th>Precision@5</th>
+                            <th>Recall@5</th>
+                            <th>F1@5</th>
+                            <th>MRR</th>
+                        </tr>
+                        <tr>
+                            <td>Semantic Only (RAG-MCP)</td>
+                            <td>0.68</td>
+                            <td>0.72</td>
+                            <td>0.70</td>
+                            <td>0.65</td>
+                        </tr>
+                        <tr>
+                            <td>BM25 Only</td>
+                            <td>0.71</td>
+                            <td>0.68</td>
+                            <td>0.69</td>
+                            <td>0.68</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hybrid (BM25 + Semantic + RRF)</strong></td>
+                            <td><strong>0.78</strong></td>
+                            <td><strong>0.81</strong></td>
+                            <td><strong>0.79</strong></td>
+                            <td><strong>0.76</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Improvement vs. Semantic</td>
+                            <td>+0.10</td>
+                            <td>+0.09</td>
+                            <td>+0.09</td>
+                            <td>+0.11</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>Table 2: Task Success Rates</h4>
+                    <table>
+                        <tr>
+                            <th>Method</th>
+                            <th>Success Rate</th>
+                            <th>Avg. Steps</th>
+                            <th>Avg. Time (s)</th>
+                        </tr>
+                        <tr>
+                            <td>Semantic Only</td>
+                            <td>52.0%</td>
+                            <td>4.2</td>
+                            <td>12.3</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hybrid</strong></td>
+                            <td><strong>64.0%</strong></td>
+                            <td><strong>3.8</strong></td>
+                            <td><strong>11.1</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Improvement</td>
+                            <td>+12pp</td>
+                            <td>-0.4</td>
+                            <td>-1.2s</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>Table 3: Correlation Analysis</h4>
+                    <table>
+                        <tr>
+                            <th>Retrieval F1 Range</th>
+                            <th># Tasks</th>
+                            <th>Task Success Rate</th>
+                        </tr>
+                        <tr>
+                            <td>F1 ≥ 0.8 (High)</td>
+                            <td>18</td>
+                            <td>77.8%</td>
+                        </tr>
+                        <tr>
+                            <td>0.6 ≤ F1 < 0.8 (Medium)</td>
+                            <td>22</td>
+                            <td>59.1%</td>
+                        </tr>
+                        <tr>
+                            <td>F1 < 0.6 (Low)</td>
+                            <td>10</td>
+                            <td>30.0%</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Pearson Correlation:</strong> r = 0.73, p < 0.001</p>
+                    <p><strong>Interpretation:</strong> Strong positive correlation between retrieval quality and task success, proving that better retrieval causes better outcomes.</p>
+                </div>
+                
+                <h3>🎯 When to Choose This Option</h3>
+                <div class="recommendation">
+                    <h3>✨ RECOMMENDED OPTION ✨</h3>
+                    <p>Choose Option 2 if:</p>
+                    <ul>
+                        <li>✅ You want to focus on retrieval as your core contribution</li>
+                        <li>✅ You have 3-4 weeks for the project</li>
+                        <li>✅ You're willing to do 6-11 hours of annotation work</li>
+                        <li>✅ You want to prove causation (better retrieval → better outcomes)</li>
+                        <li>✅ You want manageable risk with clear deliverables</li>
+                        <li>✅ You want to compare against RAG-MCP baseline</li>
+                        <li>✅ You don't have budget for API costs</li>
+                    </ul>
+                    
+                    <p><strong>Why this is best:</strong> It gives you the rigor of MCP-Universe's evaluation approach while keeping the focused scope and simpler setup of RAG-MCP. You get both retrieval metrics AND task success metrics, proving your hypothesis end-to-end.</p>
+                </div>
+            </section>
+            
+            <section id="option3" class="section">
+                <h2>⚠️ Option 3: Continue with Current Approach</h2>
+                
+                <div class="option-card option-3">
+                    <h3>📋 Overview</h3>
+                    <p>Proceed with your original midterm proposal as-is: implement hybrid retrieval on RAG-MCP, measure task success rates, and compare against baseline without adding ground truth annotations.</p>
+                </div>
+                
+                <h3>What This Involves</h3>
+                <div class="info-box">
+                    <h4>Current Plan (from midterm proposal)</h4>
+                    <ol>
+                        <li><strong>Implement BM25:</strong> Add sparse retrieval component</li>
+                        <li><strong>Implement RRF Fusion:</strong> Combine BM25 + semantic embeddings</li>
+                        <li><strong>Implement ColBERT:</strong> Add reranking component</li>
+                        <li><strong>Run Experiments:</strong> Test on RAG-MCP benchmark</li>
+                        <li><strong>Measure:</strong> Task success rate, execution time, number of steps</li>
+                        <li><strong>Report:</strong> "We achieved X% task success vs. Y% baseline"</li>
+                    </ol>
+                </div>
+                
+                <h3>✅ Advantages</h3>
+                <div class="success-box">
+                    <ol>
+                        <li><strong>No Scope Change:</strong> Stick to original proposal</li>
+                        <li><strong>No Annotation Work:</strong> Skip 6-11 hours of manual annotation</li>
+                        <li><strong>Simple Evaluation:</strong> Just measure task success rates</li>
+                        <li><strong>Fast Timeline:</strong> Can complete in 2-3 weeks</li>
+                        <li><strong>Easy to Explain:</strong> Straightforward research question</li>
+                    </ol>
+                </div>
+                
+                <h3>❌ Disadvantages (Critical Issues)</h3>
+                <div class="danger-box">
+                    <h4>🚨 Major Problem 1: Cannot Report Promised Metrics</h4>
+                    <p>Your proposal promised:</p>
+                    <ul>
+                        <li>Precision@K, Recall@K, F1-Score</li>
+                        <li>Mean Reciprocal Rank (MRR)</li>
+                        <li>Normalized Discounted Cumulative Gain (NDCG)</li>
+                    </ul>
+                    <p><strong>But you CANNOT compute these without ground truth.</strong> You would need to either:</p>
+                    <ul>
+                        <li>Remove these metrics from your paper (looks bad, inconsistent with proposal)</li>
+                        <li>Admit you cannot evaluate retrieval quality (undermines your contribution)</li>
+                        <li>Only report task success (doesn't prove retrieval improvement)</li>
+                    </ul>
+                    
+                    <h4>🚨 Major Problem 2: Cannot Prove Retrieval Improvement</h4>
+                    <p>Without retrieval metrics, you can only say:</p>
+                    <blockquote>"Our system achieved 52% task success vs. 43% baseline."</blockquote>
+                    
+                    <p>But you CANNOT claim:</p>
+                    <blockquote>"Our hybrid retrieval improved tool selection quality by X%."</blockquote>
+                    
+                    <p>The improvement could be due to:</p>
+                    <ul>
+                        <li>Better retrieval (your hypothesis)</li>
+                        <li>Better prompting</li>
+                        <li>Better planning logic</li>
+                        <li>Random chance</li>
+                        <li>Different task selection</li>
+                    </ul>
+                    
+                    <p><strong>You have no way to isolate the retrieval contribution.</strong></p>
+                    
+                    <h4>🚨 Major Problem 3: Weak Research Contribution</h4>
+                    <p>Without proving that retrieval quality improved, your paper says:</p>
+                    <blockquote>"We added BM25+ColBERT to RAG-MCP and got slightly better task success."</blockquote>
+                    
+                    <p>Reviewers will ask:</p>
+                    <ul>
+                        <li>"How do you know the retrieval actually improved?"</li>
+                        <li>"What's the precision and recall of your retrieval?"</li>
+                        <li>"Could the improvement be from other factors?"</li>
+                        <li>"Why should we care if you can't measure retrieval quality?"</li>
+                    </ul>
+                    
+                    <p><strong>You won't have good answers.</strong></p>
+                    
+                    <h4>🚨 Major Problem 4: ColBERT Time Sink</h4>
+                    <p>Implementing ColBERT reranking will take:</p>
+                    <ul>
+                        <li>Understanding ColBERT architecture: 4-6 hours</li>
+                        <li>Integration with your system: 8-12 hours</li>
+                        <li>Training/fine-tuning: 10-15 hours</li>
+                        <li>Debugging: 5-10 hours</li>
+                        <li><strong>Total: 27-43 hours</strong></li>
+                    </ul>
+                    
+                    <p>That's 50-70% of your project time for a component that:</p>
+                    <ul>
+                        <li>Might not provide significant gains</li>
+                        <li>You can't properly evaluate (no retrieval metrics)</li>
+                        <li>Distracts from core BM25+semantic hybrid</li>
+                    </ul>
+                    
+                    <h4>🚨 Major Problem 5: Baseline Comparison Issues</h4>
+                    <p>The "43% RAG-MCP baseline" you want to compare against:</p>
+                    <ul>
+                        <li>May be from different tasks</li>
+                        <li>May use different evaluation criteria</li>
+                        <li>May use different agent implementation</li>
+                        <li>May not be reproducible</li>
+                    </ul>
+                    
+                    <p>Without running your own baseline on the same task set, the comparison is questionable.</p>
+                </div>
+                
+                <h3>What You Can Actually Report</h3>
+                <div class="info-box">
+                    <h4>Metrics You Can Compute (without ground truth)</h4>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Description</th>
+                            <th>Value for Paper</th>
+                        </tr>
+                        <tr>
+                            <td>Task Success Rate</td>
+                            <td>% of tasks completed successfully</td>
+                            <td>⚠️ Doesn't prove retrieval improved</td>
+                        </tr>
+                        <tr>
+                            <td>Average Steps</td>
+                            <td>Number of tool calls per task</td>
+                            <td>⚠️ Indirect measure, not conclusive</td>
+                        </tr>
+                        <tr>
+                            <td>Execution Time</td>
+                            <td>Time to complete tasks</td>
+                            <td>⚠️ Not related to retrieval quality</td>
+                        </tr>
+                        <tr>
+                            <td>Tool Diversity</td>
+                            <td>Number of unique tools used</td>
+                            <td>⚠️ Doesn't indicate correctness</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>Metrics You CANNOT Compute</h4>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Why You Can't Compute It</th>
+                        </tr>
+                        <tr>
+                            <td>Precision@K</td>
+                            <td>Need to know which tools are correct</td>
+                        </tr>
+                        <tr>
+                            <td>Recall@K</td>
+                            <td>Need to know all relevant tools</td>
+                        </tr>
+                        <tr>
+                            <td>F1-Score</td>
+                            <td>Requires precision and recall</td>
+                        </tr>
+                        <tr>
+                            <td>MRR</td>
+                            <td>Need ranked list of correct tools</td>
+                        </tr>
+                        <tr>
+                            <td>NDCG</td>
+                            <td>Need relevance scores for all tools</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <h3>Example Results (What You Can Report)</h3>
+                <div class="solution-box">
+                    <table>
+                        <tr>
+                            <th>Method</th>
+                            <th>Success Rate</th>
+                            <th>Avg Steps</th>
+                            <th>Avg Time (s)</th>
+                        </tr>
+                        <tr>
+                            <td>Semantic Only (Baseline)</td>
+                            <td>48.3%</td>
+                            <td>4.5</td>
+                            <td>13.2</td>
+                        </tr>
+                        <tr>
+                            <td>BM25 Only</td>
+                            <td>46.7%</td>
+                            <td>4.3</td>
+                            <td>11.8</td>
+                        </tr>
+                        <tr>
+                            <td>Hybrid (BM25 + Semantic)</td>
+                            <td>52.1%</td>
+                            <td>4.1</td>
+                            <td>12.5</td>
+                        </tr>
+                        <tr>
+                            <td>Hybrid + ColBERT</td>
+                            <td>53.8%</td>
+                            <td>4.0</td>
+                            <td>15.7</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Your claim:</strong> "We improved task success from 48.3% to 53.8% using hybrid retrieval."</p>
+                    
+                    <p><strong>Reviewer questions you can't answer:</strong></p>
+                    <ul>
+                        <li>"What was the precision and recall of your retrieval?"</li>
+                        <li>"How do you know the retrieval quality actually improved?"</li>
+                        <li>"Could the 5.5pp improvement be from better planning or luck?"</li>
+                        <li>"Why did you promise P/R/F1 metrics in the proposal but not report them?"</li>
+                    </ul>
+                </div>
+                
+                <h3>⏱️ Timeline</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>Week 1: BM25 Implementation (10-12 hours)</strong>
+                        <ul>
+                            <li>Implement BM25 indexing</li>
+                            <li>Implement BM25 scoring</li>
+                            <li>Test on sample tasks</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 2: RRF Fusion (8-10 hours)</strong>
+                        <ul>
+                            <li>Implement fusion logic</li>
+                            <li>Run baseline experiments</li>
+                            <li>Run hybrid experiments</li>
+                    </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 3-4: ColBERT Implementation (27-43 hours)</strong>
+                        <ul>
+                            <li>Study ColBERT architecture</li>
+                            <li>Integrate ColBERT</li>
+                            <li>Fine-tune on data</li>
+                            <li>Debug issues</li>
+                            <li>Run experiments</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <strong>Week 5: Writing (20-25 hours)</strong>
+                        <ul>
+                            <li>Write methodology (but can't explain how you evaluate retrieval)</li>
+                            <li>Write results (but only have task success rates)</li>
+                            <li>Write discussion (but can't prove retrieval improved)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p><strong>Total Time: 65-90 hours (3-5 weeks)</strong></p>
+                
+                <h3>🎯 When to Choose This Option</h3>
+                <div class="danger-box">
+                    <h3>❌ NOT RECOMMENDED</h3>
+                    <p>Only choose Option 3 if:</p>
+                    <ul>
+                        <li>You cannot do any annotation work (absolutely no time)</li>
+                        <li>You're okay with a weak paper that can't prove its claims</li>
+                        <li>You don't care about measuring retrieval quality</li>
+                        <li>You're comfortable defending weak results to reviewers</li>
+                    </ul>
+                    
+                    <p><strong>Problems you'll face:</strong></p>
+                    <ul>
+                        <li>❌ Can't report promised metrics (P/R/F1/MRR/NDCG)</li>
+                        <li>❌ Can't prove retrieval improved</li>
+                        <li>❌ Can't isolate retrieval contribution</li>
+                        <li>❌ Waste time on ColBERT with no way to properly evaluate it</li>
+                        <li>❌ Weak research contribution</li>
+                        <li>❌ Difficult to publish or defend</li>
+                    </ul>
+                </div>
+                
+                <h3>How to Make Option 3 Slightly Better (If You Must)</h3>
+                <div class="solution-box">
+                    <p>If you absolutely must proceed without annotation, at least do this:</p>
+                    
+                    <h4>1. Drop ColBERT</h4>
+                    <p>Focus on BM25+semantic hybrid only. Save 27-43 hours.</p>
+                    
+                    <h4>2. Add Qualitative Analysis</h4>
+                    <p>Manually examine 10-20 tasks and show examples where hybrid retrieval made a difference:</p>
+                    <pre><code>Example Case Study:
+Task: "Find weather forecast for Paris tomorrow"
+
+Semantic-only retrieved: [travel_api.paris_hotels, wiki.paris_history]
+Result: Failed (wrong tools)
+
+Hybrid retrieved: [weather.get_forecast, geocoding.city_to_coords]
+Result: Success (correct tools)
+
+This suggests hybrid retrieval improved tool selection.
+</code></pre>
+                    
+                    <h4>3. Run Your Own Baseline</h4>
+                    <p>Don't rely on the 43% number from elsewhere. Run semantic-only on the exact same tasks you test hybrid on.</p>
+                    
+                    <h4>4. Be Honest in Limitations</h4>
+                    <p>In your paper, explicitly state:</p>
+                    <blockquote>"Due to the lack of tool-level ground truth annotations in RAG-MCP, we evaluate our approach using task success rates rather than traditional IR metrics like precision and recall. Future work should create annotated datasets to enable more fine-grained evaluation of retrieval quality."</blockquote>
+                    
+                    <h4>5. Use Indirect Measures</h4>
+                    <p>Report metrics that correlate with retrieval quality:</p>
+                    <ul>
+                        <li><strong>Average steps to completion:</strong> Fewer steps suggests better initial retrieval</li>
+                        <li><strong>Tool usage diversity:</strong> Track if hybrid retrieves more varied tools</li>
+                        <li><strong>First-call success rate:</strong> Did the first retrieved tool work?</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="recommendation" class="section">
+                <h2>💡 Final Recommendation</h2>
+                
+                <div class="recommendation">
+                    <h3>🌟 Choose Option 2: Hybrid Approach</h3>
+                    
+                    <h4>Why Option 2 is Best:</h4>
+                    <ol>
+                        <li><strong>Balanced Scope:</strong> Not too big (Option 1), not too weak (Option 3)</li>
+                        <li><strong>Proves Your Hypothesis:</strong> Can show that better retrieval → better outcomes</li>
+                        <li><strong>Complete Metrics:</strong> Report both retrieval quality AND task success</li>
+                        <li><strong>Manageable Timeline:</strong> 3-4 weeks with clear milestones</li>
+                        <li><strong>Strong Contribution:</strong> First to add retrieval-level evaluation to RAG-MCP</li>
+                        <li><strong>Defendable Results:</strong> Can answer reviewer questions with data</li>
+                        <li><strong>Low Risk:</strong> No complex setup, no API costs, clear path to completion</li>
+                    </ol>
+                </div>
+                
+                <h3>Implementation Roadmap for Option 2</h3>
+                <div class="success-box">
+                    <h4>Week 1: Ground Truth Creation (15-20 hours)</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Monday-Tuesday:</strong> Select 30-50 diverse tasks from RAG-MCP
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Wednesday-Thursday:</strong> Annotate ground truth tools (6-11 hours of focused work)
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Friday:</strong> Define expected outputs and create validation functions
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Weekend:</strong> Implement dual evaluation framework (retrieval + execution)
+                        </div>
+                    </div>
+                    
+                    <h4>Week 2: Baseline Experiments (12-15 hours)</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Monday:</strong> Run semantic-only baseline on all 30-50 annotated tasks
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Tuesday-Wednesday:</strong> Compute retrieval metrics (P/R/F1) and task success rates
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Thursday-Friday:</strong> Analyze failure cases and document patterns
+                        </div>
+                    </div>
+                    
+                    <h4>Week 3: Hybrid Implementation (15-18 hours)</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Monday-Tuesday:</strong> Implement BM25 component
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Wednesday:</strong> Implement RRF fusion
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Thursday-Friday:</strong> Run hybrid experiments and compute all metrics
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Weekend:</strong> Correlation analysis (prove retrieval quality → task success)
+                        </div>
+                    </div>
+                    
+                    <h4>Week 4: Analysis & Writing (20-25 hours)</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Monday:</strong> Statistical significance tests, create visualizations
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Tuesday-Wednesday:</strong> Write methodology and results sections
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Thursday:</strong> Write discussion and related work
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Friday:</strong> Write abstract, introduction, conclusion
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Weekend:</strong> Revisions, proofreading, final polish
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>What Makes Option 2 Publishable</h3>
+                <div class="info-box">
+                    <h4>Strong Research Contributions:</h4>
+                    <ol>
+                        <li><strong>Methodological:</strong> First to create retrieval-level ground truth for RAG-MCP</li>
+                        <li><strong>Technical:</strong> Hybrid BM25+semantic retrieval with RRF fusion</li>
+                        <li><strong>Empirical:</strong> Prove causal relationship between retrieval quality and task success</li>
+                        <li><strong>Analytical:</strong> Correlation analysis showing F1 predicts task success</li>
+                    </ol>
+                    
+                    <h4>Key Claims You Can Make:</h4>
+                    <ul>
+                        <li>✅ "Our hybrid retrieval improves precision by X% and recall by Y%"</li>
+                        <li>✅ "Better retrieval quality strongly correlates with task success (r=0.73, p<0.001)"</li>
+                        <li>✅ "Tasks with F1 ≥ 0.8 succeed 78% of the time vs. 30% with F1 < 0.6"</li>
+                        <li>✅ "Hybrid retrieval improves task success from 52% to 64%"</li>
+                        <li>✅ "We created the first retrieval-level evaluation dataset for RAG-MCP"</li>
+                    </ul>
+                    
+                    <h4>Paper Structure:</h4>
+                    <pre><code>1. Introduction
+   - Problem: RAG systems lack retrieval-level evaluation
+   - Contribution: Hybrid retrieval + annotated evaluation set
+
+2. Related Work
+   - RAG-MCP and MCP-Universe
+   - Hybrid retrieval methods
+   - IR evaluation metrics
+
+3. Methodology
+   - Ground truth annotation process
+   - Hybrid retrieval architecture (BM25 + semantic + RRF)
+   - Dual evaluation framework (retrieval + execution)
+
+4. Experiments
+   - Dataset: 30-50 annotated RAG-MCP tasks
+   - Baselines: Semantic-only, BM25-only
+   - Metrics: P/R/F1, task success, correlation
+
+5. Results
+   - Retrieval quality improves (Table 1)
+   - Task success improves (Table 2)
+   - Strong correlation (Table 3, Figure 1)
+
+6. Discussion
+   - Why hybrid works: complementary signals
+   - When hybrid helps most: complex multi-step tasks
+   - Limitations: small annotated set, synthetic tasks
+
+7. Conclusion
+   - Hybrid retrieval improves both retrieval and outcomes
+   - First retrieval-level evaluation for RAG-MCP
+   - Future work: larger annotations, real-world tasks
+</code></pre>
+                </div>
+                
+                <h3>Comparison Table: All Three Options</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Option 1: MCP-Universe Only</th>
+                        <th>Option 2: Hybrid Approach ⭐</th>
+                        <th>Option 3: Current Plan</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Timeline</strong></td>
+                        <td>6-8 weeks</td>
+                        <td><strong>3-4 weeks</strong> ✅</td>
+                        <td>3-5 weeks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Setup Complexity</strong></td>
+                        <td>High (11 servers, APIs)</td>
+                        <td><strong>Low</strong> ✅</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annotation Work</strong></td>
+                        <td>None needed</td>
+                        <td><strong>6-11 hours</strong> ⚠️</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Retrieval Metrics</strong></td>
+                        <td>Need to add</td>
+                        <td><strong>Yes (P/R/F1)</strong> ✅</td>
+                        <td>No ❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Task Success Metrics</strong></td>
+                        <td>Yes (execution-based)</td>
+                        <td><strong>Yes</strong> ✅</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prove Causation</strong></td>
+                        <td>Difficult</td>
+                        <td><strong>Yes (correlation)</strong> ✅</td>
+                        <td>No ❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Research Contribution</strong></td>
+                        <td>Agent performance on real tasks</td>
+                        <td><strong>Retrieval quality + outcomes</strong> ✅</td>
+                        <td>Weak (no proof) ❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Number of Tasks</strong></td>
+                        <td>231 tasks (large)</td>
+                        <td><strong>30-50 tasks (focused)</strong> ✅</td>
+                        <td>Variable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>API Costs</strong></td>
+                        <td>$20-50</td>
+                        <td><strong>$0</strong> ✅</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Level</strong></td>
+                        <td>High (complex setup)</td>
+                        <td><strong>Low</strong> ✅</td>
+                        <td>High (weak results)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Compare to RAG-MCP</strong></td>
+                        <td>No ❌</td>
+                        <td><strong>Yes</strong> ✅</td>
+                        <td>Questionable ⚠️</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Publishability</strong></td>
+                        <td>High (if completed)</td>
+                        <td><strong>High</strong> ✅</td>
+                        <td>Low ❌</td>
+                    </tr>
+                </table>
+                
+                <h3>Decision Framework</h3>
+                <div class="info-box">
+                    <h4>Choose Option 1 if:</h4>
+                    <ul>
+                        <li>You have 6-8 weeks available</li>
+                        <li>You want to work on a brand-new benchmark</li>
+                        <li>You're comfortable with high complexity and risk</li>
+                        <li>Your advisor supports the scope change</li>
+                    </ul>
+                    
+                    <h4>Choose Option 2 if: ⭐ RECOMMENDED</h4>
+                    <ul>
+                        <li>You have 3-4 weeks available</li>
+                        <li>You want to focus on retrieval quality</li>
+                        <li>You're willing to invest 6-11 hours in annotation</li>
+                        <li>You want manageable risk with strong results</li>
+                        <li>You want to prove your hypothesis rigorously</li>
+                    </ul>
+                    
+                    <h4>Choose Option 3 if:</h4>
+                    <ul>
+                        <li>You absolutely cannot do any annotation</li>
+                        <li>You're okay with weak results</li>
+                        <li>You don't care about proving retrieval improved</li>
+                        <li><strong>NOT RECOMMENDED</strong></li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>📋 Action Items</h2>
+                
+                <div class="success-box">
+                    <h3>Immediate Next Steps (This Week)</h3>
+                    <ol>
+                        <li><strong>Discuss with advisor:</strong> Present these three options and get approval for Option 2</li>
+                        <li><strong>Update proposal:</strong> Add annotation phase to methodology section</li>
+                        <li><strong>Select tasks:</strong> Choose 30-50 diverse tasks from RAG-MCP for annotation</li>
+                        <li><strong>Start annotation:</strong> Begin creating ground truth tool lists (6-11 hours)</li>
+                        <li><strong>Download code:</strong> Use <code>enhanced_evaluation_READY_TO_USE.py</code> provided previously</li>
+                    </ol>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Key Deliverables for Option 2</h3>
+                    <ol>
+                        <li><strong>Annotated Dataset:</strong> 30-50 RAG-MCP tasks with ground truth tool lists</li>
+                        <li><strong>Dual Evaluation System:</strong> Measures both retrieval quality (P/R/F1) and task success</li>
+                        <li><strong>Baseline Results:</strong> Semantic-only retrieval performance on annotated tasks</li>
+                        <li><strong>Hybrid Results:</strong> BM25+semantic retrieval performance</li>
+                        <li><strong>Correlation Analysis:</strong> Proof that retrieval quality predicts task success</li>
+                        <li><strong>Research Paper:</strong> 6-8 pages with methodology, results, and analysis</li>
+                    </ol>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p><strong>Document created: October 28, 2025</strong></p>
+            <p>Analysis of RAG-MCP Hybrid Retrieval Midterm Proposal</p>
+            <p><em>Recommendation: Choose Option 2 (Hybrid Approach) for best results in 3-4 weeks</em></p>
+        </footer>
+    </div>
+</body>
+</html>

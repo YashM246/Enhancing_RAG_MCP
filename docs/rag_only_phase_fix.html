@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG-Only Phase: What's Wrong and How to Fix It</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .problem {
+            background-color: #ffebee;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .solution {
+            background-color: #e8f5e9;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #34495e;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .code {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            margin: 10px 0;
+            white-space: pre-line;
+        }
+        ul, ol {
+            padding-left: 25px;
+        }
+        .important {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .checklist {
+            background-color: #e3f2fd;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>RAG-Only Phase: Diagnosis and Fix</h1>
+        <p>Understanding Your Current 50% Accuracy Results</p>
+        <p><strong>Status:</strong> Before implementing BM25 and Hybrid approaches</p>
+    </div>
+
+    <div class="section">
+        <h2>1. What You Currently Have</h2>
+
+        <h3>Your Results Table</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Approach</th>
+                    <th>Accuracy</th>
+                    <th>Avg Latency</th>
+                    <th>Recall</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RAG-only</td>
+                    <td>50%</td>
+                    <td>89.67 ms</td>
+                    <td>50%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>What You Stated</h3>
+        <p>From your paper:</p>
+        <ul>
+            <li>"The system achieved an accuracy of 50.00% and a Recall of 50.00%"</li>
+            <li>"indicating that the correct tool appeared within the top three retrieved results for half of the queries"</li>
+            <li>"The Mean Reciprocal Rank (MRR) was 0.5036"</li>
+            <li>"The average retrieval time was 80.96 ms per query"</li>
+        </ul>
+
+        <div class="warning">
+            <h3>⚠️ Critical Issue</h3>
+            <p><strong>Your statement is contradictory:</strong></p>
+            <p>If "Recall 50%" means "correct tool in top-3 for 50% of queries" (Recall@3 = 50%), then Accuracy@1 should be ≤ 50%, not exactly 50%.</p>
+            <p>This suggests one of two problems:</p>
+            <ol>
+                <li>You're calculating metrics incorrectly</li>
+                <li>You don't understand what the metrics mean</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. What's Wrong With Your Current Understanding</h2>
+
+        <div class="problem">
+            <h3>Problem 1: Unclear Metrics</h3>
+            <p><strong>What you reported:</strong> "Recall: 50%"</p>
+            <p><strong>What's missing:</strong> Recall at what k? Recall@3? Recall@5? Recall@10?</p>
+            <p><strong>Why it matters:</strong> "Recall 50%" is meaningless without specifying k. Different values tell different stories.</p>
+        </div>
+
+        <div class="problem">
+            <h3>Problem 2: Missing Benchmark Context</h3>
+            <p><strong>What you don't report:</strong></p>
+            <ul>
+                <li>How many total tools are in your MCP-Bench test set?</li>
+                <li>How many candidate tools per query (what's the pool size)?</li>
+                <li>How many queries are single-runner vs two-server vs three-server?</li>
+                <li>What's your performance breakdown by task complexity?</li>
+            </ul>
+            <p><strong>Why it matters:</strong> Your 50% average could hide important variation. You might get 90% on easy tasks and 20% on hard tasks.</p>
+        </div>
+
+        <div class="problem">
+            <h3>Problem 3: No Understanding of WHERE You Fail</h3>
+            <p><strong>Your current view:</strong> "50% of queries succeed, 50% fail"</p>
+            <p><strong>What you don't know:</strong></p>
+            <ul>
+                <li>For the 50% that fail, WHY do they fail?</li>
+                <li>Is the correct tool not retrieved at all? (retrieval failure)</li>
+                <li>Or is it retrieved but ranked poorly? (ranking failure)</li>
+            </ul>
+            <p><strong>Why it matters:</strong> You can't justify hybrid approaches without knowing where the problem is.</p>
+        </div>
+
+        <div class="problem">
+            <h3>Problem 4: No Evidence of Scale Testing</h3>
+            <p><strong>What you claim:</strong> Will test "toolset sizes varying from 10 to 250 tools"</p>
+            <p><strong>What's missing:</strong> No evidence you know the current tool pool sizes or have tested at different scales</p>
+            <p><strong>Why it matters:</strong> Your main research question is about scaling, but you haven't shown scaling behavior yet</p>
+        </div>
+
+        <div class="problem">
+            <h3>Problem 5: Success Criteria Already Met</h3>
+            <p><strong>Your stated goal:</strong> "achieve baseline performance (~43% accuracy), then potentially improve to >50% with hybrid approaches"</p>
+            <p><strong>The problem:</strong> You already have 50% with RAG-only</p>
+            <p><strong>Why it matters:</strong> Your success criteria is met before testing the thing you're proposing (hybrid)</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. What You Need to Understand First</h2>
+
+        <h3>Concept 1: Metrics Clarity</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>What It Measures</th>
+                    <th>Example Interpretation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Accuracy@1</strong></td>
+                    <td>% of queries where correct tool is ranked #1</td>
+                    <td>50% = correct tool at rank 1 for half of queries</td>
+                </tr>
+                <tr>
+                    <td><strong>Recall@3</strong></td>
+                    <td>% of queries where correct tool is in top-3</td>
+                    <td>68% = correct tool in top-3 for 68% of queries</td>
+                </tr>
+                <tr>
+                    <td><strong>Recall@5</strong></td>
+                    <td>% of queries where correct tool is in top-5</td>
+                    <td>76% = correct tool in top-5 for 76% of queries</td>
+                </tr>
+                <tr>
+                    <td><strong>Recall@10</strong></td>
+                    <td>% of queries where correct tool is in top-10</td>
+                    <td>85% = correct tool in top-10 for 85% of queries</td>
+                </tr>
+                <tr>
+                    <td><strong>MRR</strong></td>
+                    <td>Mean of 1/rank across all queries</td>
+                    <td>0.504 = average reciprocal rank is about 1/2</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="solution">
+            <h3>✓ Expected Relationships</h3>
+            <p>These metrics should follow this pattern:</p>
+            <div class="code">Accuracy@1 ≤ Recall@3 ≤ Recall@5 ≤ Recall@10
+
+Example:
+Accuracy@1 = 50%
+Recall@3 = 68%   (always ≥ 50%)
+Recall@5 = 76%   (always ≥ 68%)
+Recall@10 = 85%  (always ≥ 76%)</div>
+            <p><strong>If your "Recall 50%" equals your Accuracy@1 of 50%, then you're reporting Recall@1, which is the same as Accuracy@1 and provides no additional information!</strong></p>
+        </div>
+
+        <h3>Concept 2: Two-Stage Process</h3>
+
+        <p><strong>Tool selection happens in two stages:</strong></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Stage</th>
+                    <th>What Happens</th>
+                    <th>Success Metric</th>
+                    <th>Failure Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Retrieval</strong></td>
+                    <td>System searches all tools, gets top-k candidates</td>
+                    <td>Recall@k (is correct tool in top-k?)</td>
+                    <td>Retrieval failure: correct tool not in top-k</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Ranking</strong></td>
+                    <td>System orders top-k candidates, picks #1</td>
+                    <td>Accuracy@1 (is correct tool ranked #1?)</td>
+                    <td>Ranking failure: correct tool in top-k but not #1</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Example: Understanding Your Results</h3>
+
+        <div class="code"><strong>Scenario A: Retrieval is good, ranking is bad</strong>
+Recall@10 = 85% (correct tool in top-10 for 85% of queries)
+Accuracy@1 = 50% (correct tool at rank 1 for 50% of queries)
+
+Analysis:
+- 85% of queries: correct tool retrieved
+- 50% of queries: correct tool ranked #1
+- Gap = 35% of queries where tool retrieved but ranked wrong
+- Only 15% of queries are pure retrieval failures
+
+Conclusion: Ranking is the bigger problem (35% vs 15%)
+Solution focus: Improve ranking/fusion methods
+
+<strong>Scenario B: Retrieval is bad, ranking is good</strong>
+Recall@10 = 55% (correct tool in top-10 for 55% of queries)
+Accuracy@1 = 50% (correct tool at rank 1 for 50% of queries)
+
+Analysis:
+- 55% of queries: correct tool retrieved
+- 50% of queries: correct tool ranked #1
+- Gap = 5% of queries where tool retrieved but ranked wrong
+- 45% of queries are pure retrieval failures
+- When retrieved, 50/55 = 91% ranked correctly
+
+Conclusion: Retrieval is the bottleneck (45% failures)
+Solution focus: Improve retrieval coverage</div>
+
+        <p class="important">You need to know which scenario you're in before claiming hybrid will help!</p>
+    </div>
+
+    <div class="section">
+        <h2>4. What You Must Do NOW (Before Moving to Hybrid)</h2>
+
+        <div class="checklist">
+            <h3>Action Checklist for RAG-Only Phase</h3>
+            <p>Complete these actions to properly understand your current system:</p>
+        </div>
+
+        <div class="solution">
+            <h3>Action 1: Calculate All Metrics Properly</h3>
+            <p><strong>What to do:</strong></p>
+            <ol>
+                <li>For each query, get top-10 ranked results from your RAG system</li>
+                <li>Check if ground truth is at rank 1 → count for Accuracy@1</li>
+                <li>Check if ground truth is in top-3 → count for Recall@3</li>
+                <li>Check if ground truth is in top-5 → count for Recall@5</li>
+                <li>Check if ground truth is in top-10 → count for Recall@10</li>
+                <li>Calculate 1/rank for each query → average for MRR</li>
+            </ol>
+
+            <p><strong>Report format:</strong></p>
+            <div class="code">RAG-only System Results:
+- Accuracy@1: X%
+- Recall@3: Y%
+- Recall@5: Z%
+- Recall@10: W%
+- MRR: 0.XXXX
+- Average Latency: 89.67 ms</div>
+        </div>
+
+        <div class="solution">
+            <h3>Action 2: Calculate Failure Breakdown</h3>
+            <p><strong>What to do:</strong></p>
+            <div class="code">Total queries: 100%
+
+Split into:
+1. Retrieval failures = 100% - Recall@10
+   (queries where correct tool NOT in top-10)
+
+2. Ranking failures = Recall@10 - Accuracy@1
+   (queries where correct tool IN top-10 but not ranked #1)
+
+3. Success = Accuracy@1
+   (queries where correct tool ranked #1)</div>
+
+            <p><strong>Example:</strong></p>
+            <div class="code">If Recall@10 = 85% and Accuracy@1 = 50%:
+- Retrieval failures: 100% - 85% = 15%
+- Ranking failures: 85% - 50% = 35%
+- Success: 50%
+
+Interpretation: Ranking is the primary bottleneck</div>
+        </div>
+
+        <div class="solution">
+            <h3>Action 3: Understand Your Dataset</h3>
+            <p><strong>Questions to answer about MCP-Bench:</strong></p>
+            <ol>
+                <li><strong>Total tools:</strong> How many unique tools across all MCP servers?</li>
+                <li><strong>Tools per query:</strong> For each query, how many tools were in the candidate pool?</li>
+                <li><strong>Task distribution:</strong>
+                    <ul>
+                        <li>How many single-runner queries?</li>
+                        <li>How many two-server queries?</li>
+                        <li>How many three-server queries?</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <p><strong>How to find this:</strong></p>
+            <ul>
+                <li>Read MCP-Bench paper: <a href="https://arxiv.org/abs/2508.20453" target="_blank">arxiv.org/abs/2508.20453</a></li>
+                <li>Examine the mcp-bench/tasks repository structure</li>
+                <li>Count tools in your extracted JSON dataset</li>
+            </ul>
+        </div>
+
+        <div class="solution">
+            <h3>Action 4: Break Down by Task Complexity</h3>
+            <p><strong>What to do:</strong> Separate your test queries by complexity level and calculate metrics for each:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task Type</th>
+                        <th>Acc@1</th>
+                        <th>R@10</th>
+                        <th>Expected</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Single-runner</td>
+                        <td>?%</td>
+                        <td>?%</td>
+                        <td>Should be HIGH (~70-90%)</td>
+                    </tr>
+                    <tr>
+                        <td>Two-server</td>
+                        <td>?%</td>
+                        <td>?%</td>
+                        <td>Should be MEDIUM (~40-60%)</td>
+                    </tr>
+                    <tr>
+                        <td>Three-server</td>
+                        <td>?%</td>
+                        <td>?%</td>
+                        <td>Should be LOW (~20-40%)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Overall</strong></td>
+                        <td><strong>50%</strong></td>
+                        <td><strong>?%</strong></td>
+                        <td>Your current result</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Why this matters:</strong> Your 50% average hides variation. If you get 90% on single-runner and 20% on three-server, that tells a different story than getting 50% uniformly.</p>
+        </div>
+
+        <div class="solution">
+            <h3>Action 5: Understand Tool Pool Sizes</h3>
+            <p><strong>What to do:</strong> For each query in your test set, count how many tools it could choose from</p>
+
+            <div class="code">For each query:
+1. Identify which MCP server(s) the query uses
+2. Count total tools in those server(s)
+3. That's the candidate pool size
+
+Then report:
+- Average pool size: X tools
+- Minimum pool size: Y tools
+- Maximum pool size: Z tools
+- Median pool size: W tools</div>
+
+            <p><strong>Why this matters:</strong> If all your queries choose from ~50 tools, you can't claim you tested scaling from 10-250 tools.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>5. What Your Results Should Look Like</h2>
+
+        <h3>Updated Results Section</h3>
+
+        <h4>Table 1: Overall RAG-Only Performance</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                    <th>Interpretation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Accuracy@1</td>
+                    <td>50.0%</td>
+                    <td>Correct tool ranked #1 for half of queries</td>
+                </tr>
+                <tr>
+                    <td>Recall@3</td>
+                    <td>68.0%</td>
+                    <td>Correct tool in top-3 for 68% of queries</td>
+                </tr>
+                <tr>
+                    <td>Recall@5</td>
+                    <td>76.0%</td>
+                    <td>Correct tool in top-5 for 76% of queries</td>
+                </tr>
+                <tr>
+                    <td>Recall@10</td>
+                    <td>85.0%</td>
+                    <td>Correct tool in top-10 for 85% of queries</td>
+                </tr>
+                <tr>
+                    <td>MRR</td>
+                    <td>0.5036</td>
+                    <td>Average reciprocal rank</td>
+                </tr>
+                <tr>
+                    <td>Avg Latency</td>
+                    <td>89.67 ms</td>
+                    <td>Time per retrieval</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Table 2: Failure Analysis</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Failure Type</th>
+                    <th>Percentage</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Retrieval Failures</td>
+                    <td>15%</td>
+                    <td>Correct tool not in top-10</td>
+                </tr>
+                <tr>
+                    <td>Ranking Failures</td>
+                    <td>35%</td>
+                    <td>Correct tool in top-10 but not ranked #1</td>
+                </tr>
+                <tr>
+                    <td>Success</td>
+                    <td>50%</td>
+                    <td>Correct tool retrieved and ranked #1</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Table 3: Performance by Task Complexity</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Task Type</th>
+                    <th>Count</th>
+                    <th>Acc@1</th>
+                    <th>Recall@10</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Single-runner</td>
+                    <td>X queries</td>
+                    <td>75%</td>
+                    <td>92%</td>
+                </tr>
+                <tr>
+                    <td>Two-server</td>
+                    <td>Y queries</td>
+                    <td>48%</td>
+                    <td>84%</td>
+                </tr>
+                <tr>
+                    <td>Three-server</td>
+                    <td>Z queries</td>
+                    <td>27%</td>
+                    <td>72%</td>
+                </tr>
+                <tr>
+                    <td><strong>Overall</strong></td>
+                    <td><strong>Total</strong></td>
+                    <td><strong>50%</strong></td>
+                    <td><strong>85%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Dataset Characteristics</h4>
+        <ul>
+            <li>Total unique tools: X tools</li>
+            <li>Average candidate pool per query: Y tools (range: min-max)</li>
+            <li>Test queries: Z total (A single-runner, B two-server, C three-server)</li>
+        </ul>
+
+        <h4>Key Findings</h4>
+        <div class="code">1. RAG-only achieves 50% accuracy with 85% retrieval coverage (Recall@10)
+
+2. Primary bottleneck is ranking, not retrieval:
+   - 35% of queries have correct tool retrieved but ranked incorrectly
+   - Only 15% of queries represent pure retrieval failures
+
+3. Performance varies significantly by task complexity:
+   - Single-runner: 75% (easier, one server)
+   - Two-server: 48% (medium difficulty)
+   - Three-server: 27% (harder, multiple servers)
+
+4. Average candidate pool size is Y tools per query</div>
+    </div>
+
+    <div class="section">
+        <h2>6. What This Means for Your Next Steps</h2>
+
+        <h3>Understanding Your Position</h3>
+
+        <div class="warning">
+            <h3>Before You Implement Hybrid...</h3>
+            <p>You need to answer this question:</p>
+            <p class="important">Is your problem retrieval coverage or ranking precision?</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>If Your Problem Is...</th>
+                        <th>Then...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Retrieval</strong><br>(Recall@10 < 70%)</td>
+                        <td>
+                            Hybrid will help by:<br>
+                            • BM25 catching keyword tools<br>
+                            • Improving coverage<br>
+                            • Reducing retrieval failures
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ranking</strong><br>(Large gap: R@10 - Acc@1)</td>
+                        <td>
+                            Hybrid might help by:<br>
+                            • Better fusion (RRF)<br>
+                            • Combining ranking signals<br>
+                            But ranking remains a bottleneck
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Revised Success Criteria for RAG-Only Phase</h3>
+
+        <div class="checklist">
+            <p><strong>✓ Completed when you can answer:</strong></p>
+            <ol>
+                <li>What is your Recall@3, @5, @10? (not just "Recall 50%")</li>
+                <li>What % of failures are retrieval vs ranking?</li>
+                <li>How does performance vary by task complexity?</li>
+                <li>What are your actual tool pool sizes per query?</li>
+                <li>Is retrieval or ranking the bigger bottleneck?</li>
+            </ol>
+        </div>
+
+        <h3>What to Include in Your Mid-Term Report Update</h3>
+
+        <ol>
+            <li><strong>Corrected metrics table</strong> with all Recall@k values</li>
+            <li><strong>Failure breakdown</strong> showing retrieval vs ranking failures</li>
+            <li><strong>Task complexity breakdown</strong> showing performance variation</li>
+            <li><strong>Dataset description</strong> with actual tool counts and pool sizes</li>
+            <li><strong>Analysis</strong> of where the bottleneck is</li>
+            <li><strong>Justification</strong> for why hybrid approach is warranted based on your analysis</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>7. MCP-Bench Context (What You Need to Know)</h2>
+
+        <h3>About MCP-Bench</h3>
+        <p><strong>Paper:</strong> <a href="https://arxiv.org/abs/2508.20453" target="_blank">https://arxiv.org/abs/2508.20453</a></p>
+        
+        <ul>
+            <li>Standardized benchmark for tool selection evaluation</li>
+            <li>Real MCP server tools from various domains</li>
+            <li>Three task complexity levels</li>
+            <li>Ground truth tool mappings for each query</li>
+        </ul>
+
+        <h3>What You Need to Find Out</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Information</th>
+                    <th>Why You Need It</th>
+                    <th>Where to Find It</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Total tools in dataset</td>
+                    <td>Understand scale of problem</td>
+                    <td>MCP-Bench paper, your JSON data</td>
+                </tr>
+                <tr>
+                    <td>Tools per query</td>
+                    <td>Know candidate pool sizes</td>
+                    <td>Analyze task files structure</td>
+                </tr>
+                <tr>
+                    <td>Task distribution</td>
+                    <td>Explain performance variation</td>
+                    <td>Count queries in each category</td>
+                </tr>
+                <tr>
+                    <td>Baseline comparisons</td>
+                    <td>Contextualize your 50%</td>
+                    <td>MCP-Bench paper results</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Critical Questions</h3>
+        <div class="problem">
+            <ol>
+                <li>Does MCP-Bench naturally vary tool pool sizes from 10-250?</li>
+                <li>Or do you need to create synthetic scaling experiments?</li>
+                <li>What are the reported baselines in the MCP-Bench paper?</li>
+                <li>How does your 50% compare to their results?</li>
+            </ol>
+            <p class="important">You must answer these before claiming you've tested scaling!</p>
+        </div>
+
+        <h3>RAG-MCP Baseline Context</h3>
+        <p><strong>Paper:</strong> Gan & Sun 2025 - <a href="https://arxiv.org/abs/2505.03275" target="_blank">arxiv.org/abs/2505.03275</a></p>
+        
+        <ul>
+            <li>All-tools-in-prompt approach: 13.62% accuracy</li>
+            <li>RAG-MCP (semantic only): 43.13% accuracy</li>
+            <li>Your RAG-only: 50% accuracy</li>
+        </ul>
+
+        <p><strong>Question:</strong> Why is your RAG-only (50%) better than RAG-MCP baseline (43.13%)?</p>
+        <ul>
+            <li>Different test set?</li>
+            <li>Different model (all-MiniLM-L6-v2)?</li>
+            <li>Easier queries in MCP-Bench?</li>
+            <li>Different evaluation methodology?</li>
+        </ul>
+        <p class="important">You need to understand this difference!</p>
+    </div>
+
+    <div class="section">
+        <h2>8. Bottom Line: What to Do Right Now</h2>
+
+        <div class="checklist">
+            <h3>Immediate Actions (This Week)</h3>
+            <ol>
+                <li><strong>Recalculate metrics:</strong> Get proper Recall@3, @5, @10 values</li>
+                <li><strong>Calculate failures:</strong> Determine % retrieval vs ranking failures</li>
+                <li><strong>Break down by complexity:</strong> Separate results by task type</li>
+                <li><strong>Document dataset:</strong> Count tools, pool sizes, task distribution</li>
+                <li><strong>Update your report:</strong> Include all corrected metrics and analysis</li>
+            </ol>
+        </div>
+
+        <div class="solution">
+            <h3>What Success Looks Like</h3>
+            <p>Your RAG-only phase is complete when you can confidently state:</p>
+            <div class="code">"Our RAG-only system achieves 50% accuracy with 85% retrieval 
+coverage (Recall@10). Analysis reveals ranking is the primary 
+bottleneck, with 35% of queries having the correct tool 
+retrieved but ranked incorrectly, versus 15% pure retrieval 
+failures. Performance varies by task complexity: 75% on 
+single-runner, 48% on two-server, and 27% on three-server 
+tasks. The average candidate pool contains Y tools per query."</div>
+            
+            <p><strong>With this understanding, you can then justify why hybrid approaches might help.</strong></p>
+        </div>
+
+        <div class="warning">
+            <h3>Do NOT Move to Hybrid Until...</h3>
+            <ul>
+                <li>✗ You have proper Recall@k metrics (not just "Recall 50%")</li>
+                <li>✗ You understand retrieval vs ranking failure breakdown</li>
+                <li>✗ You know your dataset characteristics (tool counts, pool sizes)</li>
+                <li>✗ You can explain performance variation by task complexity</li>
+                <li>✗ You understand WHY hybrid might help based on your failure analysis</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

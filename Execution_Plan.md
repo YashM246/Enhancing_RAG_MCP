@@ -18,7 +18,7 @@
 - [X] Create GitHub repository
 - [X] Set up project structure:
   ```
-  rag-mcp-project/
+  enhancing_rag_mcp/
   ├── data/
   │   ├── tools/
   │   ├── queries/

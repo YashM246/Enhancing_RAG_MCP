@@ -1,12 +1,33 @@
 # RAG-MCP Emulation Project - Execution Plan
 
 ## Project Overview
-**Goal:** Emulate RAG-MCP methodology on 50-100 tools to establish baseline performance
+**Goal:** Compare 6 different approaches to tool selection for LLMs on 50-100 tools
 
 **Success Criteria:**
-- Achieve ~40-45% accuracy with RAG-MCP
-- Demonstrate >50% token reduction vs. all-tools baseline
-- Complete reproducible implementation
+- Achieve ~40-45% accuracy with RAG-MCP (Approach 4)
+- Demonstrate >50% token reduction vs. all-tools baseline (Approach 3)
+- Hybrid approach (Approach 6) should achieve >50% accuracy
+- Complete reproducible implementation with comprehensive comparison
+
+---
+
+## 6 Comparison Approaches
+
+| # | Approach Name | Retrieval Method | Selection Method | Top-K | LLM Required | Expected Accuracy |
+|---|---------------|------------------|------------------|-------|--------------|-------------------|
+| 1 | Dense Retrieval Only | Embeddings (Cosine) | Direct (top-1) | 1 | No | Low (~20-30%) |
+| 2 | BM25 Only | BM25 (Lexical) | Direct (top-1) | 1 | No | Low (~15-25%) |
+| 3 | LLM Only (Full Context) | None (all tools) | LLM Selection | All | Yes | Low (~13%) |
+| 4 | Dense Retrieval + LLM | Embeddings (Cosine) | LLM Selection | 3-10 | Yes | Medium (~43%) |
+| 5 | BM25 + LLM | BM25 (Lexical) | LLM Selection | 3-10 | Yes | Medium (~35-40%) |
+| 6 | Hybrid Retrieval + LLM | Dense + BM25 Fusion | LLM Selection | 3-10 | Yes | **High (>50% goal)** |
+
+**Key Insights:**
+- Approaches 1-2: Fast but limited by pure retrieval quality
+- Approach 3: Suffers from prompt bloat (baseline from paper)
+- Approach 4: RAG-MCP from Gan & Sun (2025) - our validation target
+- Approach 5: Variant using lexical retrieval instead of semantic
+- Approach 6: Novel hybrid approach - our main contribution
 
 ---
 
@@ -123,12 +144,21 @@
 - [x] Test basic indexing on sample tools
 
 **Retrieval Module:**
-- [ ] Create `src/retrieval/retriever.py`
-- [ ] Implement `ToolRetriever` class:
-  - [ ] Query encoding
+- [ ] Create `src/retrieval/dense_retriever.py`
+- [ ] Implement `DenseRetriever` class:
+  - [ ] Query encoding with sentence-transformers
   - [ ] Top-k retrieval from FAISS
   - [ ] Result ranking and formatting
-  - [ ] Parameter tuning utilities (different k values)
+- [ ] Create `src/retrieval/sparse_retriever.py`
+- [ ] Implement `BM25Retriever` class:
+  - [ ] BM25 index building
+  - [ ] Query tokenization
+  - [ ] Top-k retrieval with BM25 scoring
+- [ ] Create `src/retrieval/hybrid_retriever.py`
+- [ ] Implement `HybridRetriever` class:
+  - [ ] Reciprocal Rank Fusion (RRF)
+  - [ ] Weighted combination option
+  - [ ] Top-k retrieval from fused results
 - [ ] Create `src/retrieval/retrieval_metrics.py` for Recall@k, MRR
 
 **LLM Integration Module:**
@@ -208,17 +238,17 @@
 - [ ] Create `src/main.py` with CLI interface
 - [ ] Implement end-to-end workflow:
   1. Load data
-  2. Build/load index
-  3. Initialize retriever
+  2. Build/load indexes (FAISS + BM25)
+  3. Initialize retrievers (dense, sparse, hybrid)
   4. Initialize LLM selector (connect to vLLM server)
   5. Run experiments
   6. Save results
 - [ ] Add command-line arguments:
-  - `--mode` (rag-mcp, all-tools, random)
-  - `--k` (top-k value)
+  - `--approach` (1-6: dense-only, bm25-only, llm-only, dense-llm, bm25-llm, hybrid-llm)
+  - `--k` (top-k value for LLM-based approaches)
   - `--output` (results directory)
-  - `--server-url` (vLLM server URL)
-- [ ] Test pipeline on 10 sample queries
+  - `--server-url` (vLLM server URL, only needed for approaches 3-6)
+- [ ] Test pipeline on 10 sample queries for each approach
 
 **Integration Testing:**
 - [ ] Create `tests/test_integration.py`
@@ -227,13 +257,21 @@
 - [ ] Check for error handling
 - [ ] Test server connection resilience
 
-**Baseline Implementations:**
-- [ ] Create `src/baselines/all_tools_baseline.py`
-  - Give LLM ALL tools at once
-- [ ] Create `src/baselines/random_baseline.py`
-  - Random k tools selection
-- [ ] Test baselines on sample queries
-- [ ] Compare baseline vs RAG-MCP qualitatively
+**All 6 Approach Implementations:**
+- [ ] **Approach 1:** `src/approaches/dense_only.py` - Dense Retrieval Only (top-1)
+  - Use cosine similarity on embeddings, return top-1 tool directly
+- [ ] **Approach 2:** `src/approaches/bm25_only.py` - BM25 Only (top-1)
+  - Use BM25 lexical search, return top-1 tool directly
+- [ ] **Approach 3:** `src/approaches/llm_only.py` - LLM Only (Full Context)
+  - Give LLM ALL tools at once (naive MCP baseline)
+- [ ] **Approach 4:** `src/approaches/dense_llm.py` - Dense Retrieval + LLM (top-k)
+  - RAG-MCP from paper: retrieve top-k with embeddings, LLM selects
+- [ ] **Approach 5:** `src/approaches/bm25_llm.py` - BM25 + LLM (top-k)
+  - Retrieve top-k with BM25, LLM selects
+- [ ] **Approach 6:** `src/approaches/hybrid_llm.py` - Hybrid Retrieval + LLM (top-k)
+  - Combine dense + BM25 with fusion, LLM selects from top-k
+- [ ] Test all approaches on sample queries
+- [ ] Verify correct behavior and output format consistency
 
 **Documentation:**
 - [ ] Update `README.md` with:
@@ -257,40 +295,49 @@
 - [ ] Configure logging and result saving
 - [ ] Create experiment tracking sheet
 
-**Experiment 1: RAG-MCP (k=3)**
+**Experiment 1: Dense Retrieval Only (top-1)**
 - [ ] Run full query dataset
-- [ ] Save results: `results/experiment_1_rag_k3.json`
-- [ ] Track:
-  - Accuracy
-  - Token usage (prompt + completion)
-  - Latency per query
-  - Server response times
-- [ ] Monitor for errors and handle gracefully
+- [ ] Save results: `results/exp1_dense_only.json`
+- [ ] Track: Accuracy, Latency (no LLM tokens)
+- [ ] Note: Fastest baseline, no reasoning
 
-**Experiment 2: RAG-MCP (k=5)**
+**Experiment 2: BM25 Only (top-1)**
 - [ ] Run full query dataset
-- [ ] Save results: `results/experiment_2_rag_k5.json`
-- [ ] Compare with k=3 results
-- [ ] Analyze if more tools help or hurt
+- [ ] Save results: `results/exp2_bm25_only.json`
+- [ ] Track: Accuracy, Latency (no LLM tokens)
+- [ ] Compare with dense retrieval
 
-**Experiment 3: All Tools Baseline**
+**Experiment 3: LLM Only (Full Context)**
 - [ ] Run full query dataset
-- [ ] Save results: `results/experiment_3_all_tools.json`
-- [ ] Expect:
-  - Much higher token usage
-  - Lower accuracy
-- [ ] Document performance degradation
+- [ ] Save results: `results/exp3_llm_only.json`
+- [ ] Track: Accuracy, Token usage (highest), Latency (slowest)
+- [ ] Expect: Low accuracy (~13%), prompt bloat
 
-**Experiment 4: Random Baseline**
-- [ ] Run full query dataset (should be quick)
-- [ ] Save results: `results/experiment_4_random.json`
-- [ ] Establish lower bound
+**Experiment 4: Dense Retrieval + LLM (k=3,5,10)**
+- [ ] Run with k=3: `results/exp4_dense_llm_k3.json`
+- [ ] Run with k=5: `results/exp4_dense_llm_k5.json`
+- [ ] Run with k=10: `results/exp4_dense_llm_k10.json`
+- [ ] Track: Accuracy (~43% expected), Token reduction (>50%), Latency
+- [ ] This is RAG-MCP from paper
 
-**Experiment 5: Ablation Studies**
+**Experiment 5: BM25 + LLM (k=3,5,10)**
+- [ ] Run with k=3: `results/exp5_bm25_llm_k3.json`
+- [ ] Run with k=5: `results/exp5_bm25_llm_k5.json`
+- [ ] Run with k=10: `results/exp5_bm25_llm_k10.json`
+- [ ] Track: Accuracy, Token reduction, Latency
+- [ ] Compare with dense+LLM
+
+**Experiment 6: Hybrid Retrieval + LLM (k=3,5,10)**
+- [ ] Run with k=3: `results/exp6_hybrid_llm_k3.json`
+- [ ] Run with k=5: `results/exp6_hybrid_llm_k5.json`
+- [ ] Run with k=10: `results/exp6_hybrid_llm_k10.json`
+- [ ] Track: Accuracy (>50% goal), Token reduction, Latency
+- [ ] Expected: Best overall performance
+
+**Experiment 7: Ablation Studies**
+- [ ] Test different fusion methods (RRF vs weighted)
 - [ ] Test different embedding models
-- [ ] Test different k values (1, 3, 5, 10)
-- [ ] Test different text combinations for indexing
-- [ ] Test different prompt formats for Mistral
+- [ ] Test different BM25 tokenization strategies
 - [ ] Save results: `results/ablation_studies.json`
 
 ---
@@ -396,24 +443,42 @@
 pip install -r requirements.txt
 python scripts/validate_data.py
 
-# Server setup (on GPU server)
+# Server setup (on GPU server - only needed for approaches 3-6)
 pip install vllm
 vllm serve mistralai/Mistral-7B-Instruct-v0.3 --host 0.0.0.0 --port 8000
 
-# Build index
-python src/main.py --build-index
+# Build indexes
+python src/main.py --build-index --index-type all  # Build both FAISS and BM25
 
-# Run experiments
-python src/main.py --mode rag-mcp --k 3 --server-url http://your-server:8000
-python src/main.py --mode rag-mcp --k 5 --server-url http://your-server:8000
-python src/main.py --mode all-tools --server-url http://your-server:8000
-python src/main.py --mode random --server-url http://your-server:8000
+# Run experiments - All 6 approaches
 
-# Run evaluation
+# Approach 1: Dense Retrieval Only (no LLM needed)
+python src/main.py --approach 1
+
+# Approach 2: BM25 Only (no LLM needed)
+python src/main.py --approach 2
+
+# Approach 3: LLM Only (Full Context)
+python src/main.py --approach 3 --server-url http://your-server:8000
+
+# Approach 4: Dense Retrieval + LLM (RAG-MCP)
+python src/main.py --approach 4 --k 3 --server-url http://your-server:8000
+python src/main.py --approach 4 --k 5 --server-url http://your-server:8000
+python src/main.py --approach 4 --k 10 --server-url http://your-server:8000
+
+# Approach 5: BM25 + LLM
+python src/main.py --approach 5 --k 3 --server-url http://your-server:8000
+python src/main.py --approach 5 --k 5 --server-url http://your-server:8000
+
+# Approach 6: Hybrid Retrieval + LLM
+python src/main.py --approach 6 --k 3 --server-url http://your-server:8000
+python src/main.py --approach 6 --k 5 --server-url http://your-server:8000
+
+# Run evaluation across all approaches
 python src/evaluation/evaluate.py --results results/
 
-# Generate reports
-python scripts/generate_report.py
+# Generate comparison reports
+python scripts/generate_report.py --compare-all
 
 # Run tests
 pytest tests/
@@ -421,14 +486,26 @@ pytest tests/
 
 ---
 
-## Next Steps: Phase 2 Preview
+## Key Implementation Notes
 
-After completing Phase 1, implement hybrid search:
-1. Add BM25 sparse retrieval
-2. Implement hybrid fusion (RRF, weighted)
-3. Add reranking models (optional)
-4. Compare hybrid vs. semantic-only
-5. Optimize for best accuracy/efficiency balance
+**Approach Dependencies:**
+- Approaches 1 & 4: Require FAISS dense index
+- Approaches 2 & 5: Require BM25 sparse index
+- Approach 3 & 6: Require both indexes
+- Approaches 3-6: Require vLLM server connection
+
+**Recommended Implementation Order:**
+1. Complete Approaches 1 & 2 (pure retrieval, no LLM needed)
+2. Complete Approach 3 (LLM-only baseline)
+3. Complete Approach 4 (RAG-MCP from paper - validate against published results)
+4. Complete Approach 5 (BM25+LLM variant)
+5. Complete Approach 6 (Hybrid - expected best performance)
+
+**Critical Success Factors:**
+- Approach 4 accuracy should match paper (~43%)
+- Approach 3 should show low accuracy (~13%) due to prompt bloat
+- Approach 6 should outperform all others (>50% target)
+- Token reduction consistent across approaches 4-6 (~50%)
 
 ---
 

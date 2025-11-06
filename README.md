@@ -15,42 +15,64 @@ As LLMs integrate with growing toolsets through protocols like Model Context Pro
 
 ## 💡 Solution Overview
 
-**Phase 1: RAG-MCP Baseline (Current)**
-- Use semantic retrieval to filter tools *before* presenting them to the LLM
-- Store tool descriptions in an external vector index
-- Retrieve only top-k most relevant tools for each query
-- Dramatically reduce prompt size while maintaining accuracy
+This project implements and compares **6 different approaches** to tool selection for LLMs:
 
-**Phase 2: Hybrid RAG-MCP (Planned)**
-- Extend semantic retrieval with BM25 sparse retrieval
-- Combine dense embeddings (semantic) + keyword matching (BM25)
-- Apply fusion techniques (Reciprocal Rank Fusion, weighted combination)
-- Optional: Add reranking models for further accuracy improvements
+**Pure Retrieval Methods (No LLM):**
+1. **Dense Retrieval Only (top-1)** - Cosine similarity on embeddings, select top-1 tool
+2. **BM25 Only (top-1)** - Lexical search, select top-1 tool
+
+**LLM-Based Methods:**
+3. **LLM Only (Full Context)** - All tools provided to LLM (naive MCP baseline)
+4. **Dense Retrieval + LLM (top-k)** - RAG-MCP: Embedding-based retrieval → LLM selects from top-k
+5. **BM25 + LLM (top-k)** - BM25 retrieval → LLM selects from top-k
+6. **Hybrid Retrieval + LLM (top-k)** - Combined dense + BM25 retrieval → LLM selects from top-k
+
+**Key Benefits:**
+- Systematic comparison from pure retrieval to hybrid approaches
+- Demonstrates trade-offs between speed, accuracy, and context efficiency
+- Validates RAG-MCP methodology and explores improvements
 
 ## 📊 Expected Results
 
-Based on Gan & Sun (2025), we expect:
+Based on Gan & Sun (2025) and our experimental design:
 
-| Approach | Accuracy | Token Reduction | Speed |
-|----------|----------|----------------|-------|
-| All Tools Baseline | ~13% | 0% (baseline) | Slow |
-| RAG-MCP (Semantic) | ~43% | >50% | Fast |
-| Hybrid RAG-MCP | **>50%** (goal) | >50% | Fast |
+| Approach | Accuracy (Expected) | Token Usage | Latency | Notes |
+|----------|---------------------|-------------|---------|-------|
+| 1. Dense Retrieval Only (top-1) | Low (~20-30%) | Minimal (0 LLM tokens) | Fastest | No reasoning, pure similarity |
+| 2. BM25 Only (top-1) | Low (~15-25%) | Minimal (0 LLM tokens) | Fastest | Keyword-only matching |
+| 3. LLM Only (Full Context) | ~13% | Highest (100% baseline) | Slowest | Prompt bloat baseline |
+| 4. Dense Retrieval + LLM (top-k) | ~43% | ~50% reduction | Fast | RAG-MCP from paper |
+| 5. BM25 + LLM (top-k) | ~35-40% | ~50% reduction | Fast | Lexical filtering |
+| 6. Hybrid Retrieval + LLM (top-k) | **>50%** (goal) | ~50% reduction | Fast | Best of both worlds |
+
+**Key Hypothesis:** Hybrid approach (6) should outperform both pure retrieval and single-retrieval methods by combining semantic understanding with keyword matching.
 
 ## 🏗️ Architecture
 
 ```
-User Query → Retriever → Top-k Tools → LLM → Tool Selection
-                ↑
-         Vector Index
-      (50-100 MCP Tools)
+                    User Query
+                        |
+        +---------------+---------------+
+        |               |               |
+   Dense Retrieval   BM25 Search   Hybrid Fusion
+   (Embeddings)      (Lexical)    (Both Combined)
+        |               |               |
+        +-------+-------+-------+-------+
+                |               |
+         Direct Selection   LLM Selection
+         (top-1 only)      (top-k reasoning)
+                |               |
+                v               v
+           Tool Selection   Tool Selection
 ```
 
 **Components:**
-1. **Tool Indexer:** Embeds tool descriptions into vector space (FAISS)
-2. **Retriever:** Semantic search to find relevant tools (top-k)
-3. **LLM Selector:** Final tool selection from retrieved candidates
-4. **Evaluator:** Measures accuracy, token usage, and latency
+1. **Tool Indexer:**
+   - Dense: Embeds tool descriptions into vector space (FAISS)
+   - Sparse: BM25 index for keyword matching
+2. **Retriever:** Multiple strategies (dense, BM25, hybrid)
+3. **LLM Selector:** Optional reasoning layer for top-k candidates
+4. **Evaluator:** Measures accuracy, token usage, and latency across all 6 approaches
 
 ## 📈 Evaluation Metrics
 
@@ -90,14 +112,16 @@ This project is based on:
 ## 🛠️ Technology Stack
 
 **Core Libraries:**
-- `sentence-transformers` - Text embeddings
+- `sentence-transformers` - Dense embeddings (semantic search)
 - `faiss-cpu` - Vector similarity search
+- `rank-bm25` - Sparse lexical search (BM25)
 - `vllm` or `ollama` - Open-source LLM serving
 - `pandas`, `numpy` - Data processing
 
-**Embedding Models:**
-- Phase 1: `all-MiniLM-L6-v2` (fast, baseline)
-- Optional: `all-mpnet-base-v2` (higher quality)
+**Retrieval Components:**
+- **Dense:** `all-MiniLM-L6-v2` (fast baseline) or `all-mpnet-base-v2` (higher quality)
+- **Sparse:** BM25 with custom tokenization
+- **Hybrid:** Reciprocal Rank Fusion (RRF) or weighted combination
 
 **LLMs (Self-Hosted):**
 - Primary: Mistral 7B Instruct / Mixtral 8x7B Instruct
@@ -111,12 +135,18 @@ This project is based on:
 
 ## 📊 Current Status
 
-**Phase 1 Progress:**
-- [x] Project setup and data collection
-- [x] Core implementation (indexing, retrieval, LLM integration)
-- [x] Baseline experiments completed
-- [x] Results analysis and validation
-- [x] Documentation
+**Implementation Progress:**
+- [x] Project setup and infrastructure
+- [x] Dense retrieval implementation (FAISS + embeddings)
+- [x] LLM integration (vLLM server + prompt engineering)
+- [ ] BM25 retrieval implementation
+- [ ] Hybrid fusion implementation
+- [ ] All 6 approaches implementation
+- [ ] Comprehensive evaluation framework
+- [ ] Experimental validation
 
-**Phase 2 Timeline:** 3-4 weeks (after Phase 1 completion)
+**Experimental Timeline:**
+1. **Baseline Methods** (Approaches 1-3): 1-2 weeks
+2. **LLM-Augmented Methods** (Approaches 4-6): 2-3 weeks
+3. **Analysis & Reporting**: 1 week
 

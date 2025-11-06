@@ -39,21 +39,35 @@
 - [X] Create GitHub repository
 - [X] Set up project structure:
   ```
-  enhancing_rag_mcp/
-  ├── data/
-  │   ├── tools/
-  │   ├── queries/
-  │   └── results/
+  Enhancing_RAG_MCP/
   ├── src/
-  │   ├── indexing/
-  │   ├── retrieval/
-  │   ├── llm/
-  │   ├── evaluation/
-  │   └── utils/
-  ├── notebooks/
-  ├── tests/
-  ├── configs/
-  └── docs/
+  │   ├── indexing/              # Index building components
+  │   │   ├── tool_indexer.py    # Dense embeddings (FAISS) [✓]
+  │   │   └── bm25_indexer.py    # Sparse BM25 index [✓]
+  │   ├── retrieval/             # Retrieval components
+  │   │   ├── dense_retriever.py # Dense/semantic retrieval [TODO]
+  │   │   ├── bm25_retriever.py  # Sparse/lexical retrieval [✓]
+  │   │   └── hybrid_retriever.py # Hybrid fusion (RRF) [TODO]
+  │   ├── approaches/            # Core implementations of 6 approaches
+  │   │   ├── dense_only.py      # Approach 1: Dense Retrieval Only [TODO]
+  │   │   ├── bm25_only.py       # Approach 2: BM25 Only [IN PROGRESS]
+  │   │   ├── llm_only.py        # Approach 3: LLM Only (Full Context) [TODO]
+  │   │   ├── dense_llm.py       # Approach 4: Dense + LLM [TODO]
+  │   │   ├── bm25_llm.py        # Approach 5: BM25 + LLM [TODO]
+  │   │   └── hybrid_llm.py      # Approach 6: Hybrid + LLM [TODO]
+  │   ├── llm/                   # LLM integration
+  │   │   └── llm_selector.py    # LLM tool selection logic [✓]
+  │   └── evaluation/            # Evaluation utilities [TODO]
+  ├── benchmarking/              # Evaluation framework
+  │   └── benchmarker.py         # Benchmarking suite (dense-only) [✓]
+  ├── data/
+  │   ├── tools/                 # Tool definitions (JSON)
+  │   ├── queries/               # Test queries with ground truth
+  │   ├── indexes/               # Pre-built FAISS and BM25 indexes
+  │   └── results/               # Experiment results
+  ├── tests/                     # Unit and integration tests
+  ├── notebooks/                 # Analysis notebooks [TODO]
+  └── configs/                   # Configuration files [TODO]
   ```
 - [x] Create requirements.txt with dependencies:
   - sentence-transformers

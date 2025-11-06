@@ -109,6 +109,37 @@ This project is based on:
 2. Semantic retrieval restores accuracy to ~43% while reducing tokens by >50%
 3. Hybrid approaches may further improve by combining semantic + keyword matching
 
+## 📁 Project Structure
+
+```
+Enhancing_RAG_MCP/
+├── src/
+│   ├── indexing/              # Index building components
+│   │   ├── tool_indexer.py    # Dense embeddings (FAISS)
+│   │   └── bm25_indexer.py    # Sparse BM25 index
+│   ├── retrieval/             # Retrieval components
+│   │   ├── dense_retriever.py # Dense/semantic retrieval
+│   │   ├── bm25_retriever.py  # Sparse/lexical retrieval
+│   │   └── hybrid_retriever.py # Hybrid fusion (RRF)
+│   ├── approaches/            # Core implementations of 6 approaches
+│   │   ├── dense_only.py      # Approach 1: Dense Retrieval Only
+│   │   ├── bm25_only.py       # Approach 2: BM25 Only
+│   │   ├── llm_only.py        # Approach 3: LLM Only (Full Context)
+│   │   ├── dense_llm.py       # Approach 4: Dense + LLM
+│   │   ├── bm25_llm.py        # Approach 5: BM25 + LLM
+│   │   └── hybrid_llm.py      # Approach 6: Hybrid + LLM
+│   └── llm/                   # LLM integration
+│       └── llm_selector.py    # LLM tool selection logic
+├── benchmarking/              # Evaluation framework
+│   └── benchmarker.py         # Unified benchmarking suite
+├── data/
+│   ├── tools/                 # Tool definitions (JSON)
+│   ├── queries/               # Test queries with ground truth
+│   ├── indexes/               # Pre-built FAISS and BM25 indexes
+│   └── results/               # Experiment results
+└── tests/                     # Unit and integration tests
+```
+
 ## 🛠️ Technology Stack
 
 **Core Libraries:**

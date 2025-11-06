@@ -6,3 +6,5 @@ tqdm
 python-dotenv
 requests
 pytest
+rank-bm25
+pickle

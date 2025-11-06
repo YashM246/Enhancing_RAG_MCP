@@ -3,7 +3,7 @@ Retrieval Module
 Handles semantic search and tool retrieval from FAISS indexes.
 """
 
-from .retriever import ToolRetriever
+from .dense_retriever import ToolRetriever
 from .retrieval_metrics import RetrievalMetrics
 
 __all__ = [

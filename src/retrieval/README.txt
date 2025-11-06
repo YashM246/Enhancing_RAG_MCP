@@ -1,7 +1,7 @@
 ✅ RETRIEVAL MODULE - IMPLEMENTATION COMPLETE
 
 Implemented files:
-✅ retriever.py: Main retrieval class for top-k tool selection
+✅ dense_retriever.py: Main retrieval class for top-k tool selection
 ✅ retrieval_metrics.py: Metrics calculation (Recall@k, MRR, Precision, NDCG)
 ✅ __init__.py: Module initialization with exports
 ✅ example_usage.py: Complete end-to-end demonstration
@@ -22,7 +22,8 @@ Implemented Features:
 
 Quick Start:
 -----------
-from retrieval import ToolRetriever, RetrievalMetrics
+from retrieval.dense_retriever import ToolRetriever
+from retrieval import RetrievalMetrics
 
 # Load and retrieve
 retriever = ToolRetriever(model_name='all-MiniLM-L6-v2')

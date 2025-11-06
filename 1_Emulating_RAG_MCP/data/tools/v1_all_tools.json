@@ -1,0 +1,3193 @@
+[
+  {
+    "tool_id": "bibliomantic_mcp_server_001",
+    "tool_name": "Bibliomantic Mcp Server",
+    "description": "Bibliomantic Mcp Server MCP server exposing 13 tool(s). * `i_ching_divination` — Perform I Ching divination using traditional three-coin method. * `bibliomantic_consultation` — Perform bibliomantic consultation following Philip K. Dick's approach. * `get_hexagram_details` — Get detailed information about a specific I Ching hexagram. * `server_statistics` — Get bibliomantic server statistics and system information. * `i_ching_divination` — Perform I Ching divination using traditional three-coin method. * `bibliomantic_consultation` — Perform bibliomantic consultation following Philip K. Dick's approach. * `get_hexagram_details` — Get detailed information about a specific I Ching hexagram. * `server_statistics` — Get bibliomantic server statistics and system information. * `i_ching_divination` — Enhanced I Ching divination with traditional three-coin method and changing lines. * `bibliomantic_consultation` — Enhanced bibliomantic consultation with full traditional I Ching elements. * `get_hexagram_details` — Enhanced hexagram details with traditional Chinese names, Unicode symbols, and rich commentary. * `server_statistics` — Enhanced server statistics * `server_error` — No description. Examples: - i_ching_divination(query=\"example\") - bibliomantic_consultation(query=\"example\") - get_hexagram_details(hexagram_number=123)",
+    "category": "fun_misc",
+    "parameters": {
+      "i_ching_divination": {
+        "query": {
+          "type": "Optional[str]",
+          "description": "",
+          "required": false
+        }
+      },
+      "bibliomantic_consultation": {
+        "query": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "get_hexagram_details": {
+        "hexagram_number": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      }
+    },
+    "usage_example": [
+      "i_ching_divination(query=\"example\")",
+      "bibliomantic_consultation(query=\"example\")",
+      "get_hexagram_details(hexagram_number=123)",
+      "server_statistics()",
+      "i_ching_divination(query=\"example\")"
+    ],
+    "server": "Bibliomantic"
+  },
+  {
+    "tool_id": "biomcp_001",
+    "tool_name": "Biomcp",
+    "description": "Biomcp MCP server. No @mcp.tool() functions detected.",
+    "category": "biology",
+    "server": "BioMCP"
+  },
+  {
+    "tool_id": "call_for_papers_mcp_001",
+    "tool_name": "Call For Papers",
+    "description": "Call For Papers MCP server exposing 1 tool(s). * `get_events` — Search for conferences matching specific keywords. Examples: - get_events(keywords=\"example\", limit=123)",
+    "category": "research",
+    "parameters": {
+      "get_events": {
+        "keywords": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "limit": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 10
+        }
+      }
+    },
+    "usage_example": [
+      "get_events(keywords=\"example\", limit=123)"
+    ],
+    "server": "Call for Papers"
+  },
+  {
+    "tool_id": "car_price_mcp_main_001",
+    "tool_name": "Car Price Mcp Main",
+    "description": "Car Price Mcp Main MCP server exposing 3 tool(s). * `get_car_brands` — Get all available car brands from FIPE API. * `search_car_price` — Search for car models and prices by brand name. * `get_vehicles_by_type` — Get vehicles by type (cars, motorcycles, trucks). Examples: - get_car_brands() - search_car_price(brand_name=\"example\") - get_vehicles_by_type(vehicle_type=\"example\")",
+    "category": "misc",
+    "parameters": {
+      "search_car_price": {
+        "brand_name": {
+          "type": "str",
+          "description": "The car brand name to search for (e.g., \"Toyota\", \"Honda\", \"Ford\")",
+          "required": true
+        }
+      },
+      "get_vehicles_by_type": {
+        "vehicle_type": {
+          "type": "str",
+          "description": "Type of vehicles to fetch (\"carros\"/\"cars\", \"motos\"/\"motorcycles\", \"caminhoes\"/\"trucks\")",
+          "required": false,
+          "default": "carros"
+        }
+      }
+    },
+    "usage_example": [
+      "get_car_brands()",
+      "search_car_price(brand_name=\"example\")",
+      "get_vehicles_by_type(vehicle_type=\"example\")"
+    ],
+    "server": "Car Price Evaluator"
+  },
+  {
+    "tool_id": "context7_mcp_001",
+    "tool_name": "Context7",
+    "description": "Context7 MCP server. No @mcp.tool() functions detected.",
+    "category": "devtools",
+    "server": "Context7"
+  },
+  {
+    "tool_id": "dexpaprika_mcp_001",
+    "tool_name": "Dexpaprika",
+    "description": "Dexpaprika MCP server. No @mcp.tool() functions detected.",
+    "category": "misc",
+    "server": "DEX Paprika"
+  },
+  {
+    "tool_id": "fruityvice_mcp_001",
+    "tool_name": "Fruityvice",
+    "description": "Fruityvice MCP server exposing 1 tool(s). * `get_fruit_nutrition` — Get nutritional information and details for a given fruit name. Examples: - get_fruit_nutrition(fruit_name=\"example\")",
+    "category": "misc",
+    "parameters": {
+      "get_fruit_nutrition": {
+        "fruit_name": {
+          "type": "str",
+          "description": "The name of the fruit to get information about (e.g., \"apple\", \"banana\", \"orange\")",
+          "required": true
+        }
+      }
+    },
+    "usage_example": [
+      "get_fruit_nutrition(fruit_name=\"example\")"
+    ],
+    "server": "FruityVice"
+  },
+  {
+    "tool_id": "game_trends_mcp_001",
+    "tool_name": "Game Trends",
+    "description": "Game Trends MCP server exposing 7 tool(s). * `get_steam_trending_games` — Get real trending games from Steam platform with live data from multiple sources. * `get_steam_top_sellers` — Get real top selling games from Steam platform with live sales data. * `get_steam_most_played` — Get real-time most played games from Steam with live player statistics from SteamCharts. * `get_epic_free_games` — Get current and upcoming free games from Epic Games Store with real promotion data. * `get_epic_trending_games` — Get trending games from Epic Games Store. * `get_all_trending_games` — Get comprehensive real-time gaming data from all platforms (Steam and Epic Games). * `get_api_health` — Check the health status of the Gaming Trend Analytics API. Examples: - get_steam_trending_games() - get_steam_top_sellers() - get_steam_most_played()",
+    "category": "misc",
+    "usage_example": [
+      "get_steam_trending_games()",
+      "get_steam_top_sellers()",
+      "get_steam_most_played()",
+      "get_epic_free_games()",
+      "get_epic_trending_games()"
+    ],
+    "server": "Game Trends"
+  },
+  {
+    "tool_id": "hugeicons_mcp_server_001",
+    "tool_name": "Hugeicons Mcp Server",
+    "description": "Hugeicons Mcp Server MCP server. No @mcp.tool() functions detected.",
+    "category": "design",
+    "server": "Huge Icons"
+  },
+  {
+    "tool_id": "huggingface_mcp_server_001",
+    "tool_name": "Huggingface Mcp Server",
+    "description": "Huggingface Mcp Server MCP server. No @mcp.tool() functions detected.",
+    "category": "ml_ai",
+    "server": "Hugging Face"
+  },
+  {
+    "tool_id": "math_mcp_001",
+    "tool_name": "Math",
+    "description": "Math MCP server. No @mcp.tool() functions detected.",
+    "category": "math",
+    "server": "Math MCP"
+  },
+  {
+    "tool_id": "mcp_google_map_001",
+    "tool_name": "Mcp Google Map",
+    "description": "Mcp Google Map MCP server. No @mcp.tool() functions detected.",
+    "category": "maps_gis",
+    "server": "Google Maps"
+  },
+  {
+    "tool_id": "mcp_nixos_001",
+    "tool_name": "Mcp Nixos",
+    "description": "Mcp Nixos MCP server exposing 18 tool(s). * `nixos_search` — Search NixOS packages, options, or programs. * `nixos_info` — Get detailed info about a NixOS package or option. * `nixos_channels` — List available NixOS channels with their status. * `nixos_stats` — Get NixOS statistics for a channel. * `home_manager_search` — Search Home Manager configuration options. * `home_manager_info` — Get detailed information about a specific Home Manager option. * `home_manager_stats` — Get statistics about Home Manager options. * `home_manager_list_options` — List all Home Manager option categories. * `home_manager_options_by_prefix` — Get Home Manager options matching a specific prefix. * `darwin_search` — Search nix-darwin (macOS) configuration options. * `darwin_info` — Get detailed information about a specific nix-darwin option. * `darwin_stats` — Get statistics about nix-darwin options. * `darwin_list_options` — List all nix-darwin option categories. * `darwin_options_by_prefix` — Get nix-darwin options matching a specific prefix. * `nixos_flakes_stats` — Get statistics about available NixOS flakes. * `nixos_flakes_search` — Search NixOS flakes by name, description, owner, or repository. * `nixhub_package_versions` — Get version history and nixpkgs commit hashes for a specific package from NixHub.io. * `nixhub_find_version` — Find a specific version of a package in NixHub with smart search. Examples: - nixos_search(query=\"example\", search_type=\"example\", limit=123, channel=\"example\") - nixos_info(name=\"example\", type=\"example\", channel=\"example\") - nixos_channels()",
+    "category": "misc",
+    "parameters": {
+      "nixos_search": {
+        "query": {
+          "type": "str",
+          "description": "Search term to look for",
+          "required": true
+        },
+        "search_type": {
+          "type": "str",
+          "description": "Type of search - \"packages\", \"options\", \"programs\", or \"flakes\"",
+          "required": false,
+          "default": "packages"
+        },
+        "limit": {
+          "type": "int",
+          "description": "Maximum number of results to return (1-100)",
+          "required": false,
+          "default": 20
+        },
+        "channel": {
+          "type": "str",
+          "description": "NixOS channel to search in (e.g., \"unstable\", \"stable\", \"25.05\")",
+          "required": false,
+          "default": "unstable"
+        }
+      },
+      "nixos_info": {
+        "name": {
+          "type": "str",
+          "description": "Name of the package or option to look up",
+          "required": true
+        },
+        "type": {
+          "type": "str",
+          "description": "Type of lookup - \"package\" or \"option\"",
+          "required": false,
+          "default": "package"
+        },
+        "channel": {
+          "type": "str",
+          "description": "NixOS channel to search in (e.g., \"unstable\", \"stable\", \"25.05\")",
+          "required": false,
+          "default": "unstable"
+        }
+      },
+      "nixos_stats": {
+        "channel": {
+          "type": "str",
+          "description": "NixOS channel to get stats for (e.g., \"unstable\", \"stable\", \"25.05\")",
+          "required": false,
+          "default": "unstable"
+        }
+      },
+      "home_manager_search": {
+        "query": {
+          "type": "str",
+          "description": "The search query string to match against option names and descriptions",
+          "required": true
+        },
+        "limit": {
+          "type": "int",
+          "description": "Maximum number of results to return (default: 20, max: 100)",
+          "required": false,
+          "default": 20
+        }
+      },
+      "home_manager_info": {
+        "name": {
+          "type": "str",
+          "description": "The exact option name (e.g., 'programs.git.enable')",
+          "required": true
+        }
+      },
+      "home_manager_options_by_prefix": {
+        "option_prefix": {
+          "type": "str",
+          "description": "The prefix to match (e.g., 'programs.git' or 'services')",
+          "required": true
+        }
+      },
+      "darwin_search": {
+        "query": {
+          "type": "str",
+          "description": "The search query string to match against option names and descriptions",
+          "required": true
+        },
+        "limit": {
+          "type": "int",
+          "description": "Maximum number of results to return (default: 20, max: 100)",
+          "required": false,
+          "default": 20
+        }
+      },
+      "darwin_info": {
+        "name": {
+          "type": "str",
+          "description": "The exact option name (e.g., 'system.defaults.dock.autohide')",
+          "required": true
+        }
+      },
+      "darwin_options_by_prefix": {
+        "option_prefix": {
+          "type": "str",
+          "description": "The prefix to match (e.g., 'system.defaults' or 'services')",
+          "required": true
+        }
+      },
+      "nixos_flakes_search": {
+        "query": {
+          "type": "str",
+          "description": "The search query (flake name, description, owner, or repository)",
+          "required": true
+        },
+        "limit": {
+          "type": "int",
+          "description": "Maximum number of results to return (default: 20, max: 100)",
+          "required": false,
+          "default": 20
+        },
+        "channel": {
+          "type": "str",
+          "description": "Ignored - flakes use a separate indexing system",
+          "required": false,
+          "default": "unstable"
+        }
+      },
+      "nixhub_package_versions": {
+        "package_name": {
+          "type": "str",
+          "description": "Name of the package to query (e.g., \"firefox\", \"python\")",
+          "required": true
+        },
+        "limit": {
+          "type": "int",
+          "description": "Maximum number of versions to return (default: 10, max: 50)",
+          "required": false,
+          "default": 10
+        }
+      },
+      "nixhub_find_version": {
+        "package_name": {
+          "type": "str",
+          "description": "Name of the package to query (e.g., \"ruby\", \"python\")",
+          "required": true
+        },
+        "version": {
+          "type": "str",
+          "description": "Specific version to find (e.g., \"2.6.7\", \"3.5.9\")",
+          "required": true
+        }
+      }
+    },
+    "usage_example": [
+      "nixos_search(query=\"example\", search_type=\"example\", limit=123, channel=\"example\")",
+      "nixos_info(name=\"example\", type=\"example\", channel=\"example\")",
+      "nixos_channels()",
+      "nixos_stats(channel=\"example\")",
+      "home_manager_search(query=\"example\", limit=123)"
+    ],
+    "server": "NixOS"
+  },
+  {
+    "tool_id": "mcp_osint_server_001",
+    "tool_name": "Mcp Osint Server",
+    "description": "Mcp Osint Server MCP server exposing 7 tool(s). * `whois_lookup` — No description. * `nmap_scan` — No description. * `dnsrecon_lookup` — No description. * `dnstwist_lookup` — No description. * `dig_lookup` — No description. * `host_lookup` — No description. * `osint_overview` — No description. Examples: - whois_lookup(target=\"example\") - nmap_scan(target=\"example\") - dnsrecon_lookup(target=\"example\")",
+    "category": "security",
+    "parameters": {
+      "whois_lookup": {
+        "target": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "nmap_scan": {
+        "target": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "dnsrecon_lookup": {
+        "target": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "dnstwist_lookup": {
+        "domain": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "dig_lookup": {
+        "target": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "host_lookup": {
+        "target": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "osint_overview": {
+        "target": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      }
+    },
+    "usage_example": [
+      "whois_lookup(target=\"example\")",
+      "nmap_scan(target=\"example\")",
+      "dnsrecon_lookup(target=\"example\")",
+      "dnstwist_lookup(domain=\"example\")",
+      "dig_lookup(target=\"example\")"
+    ]
+  },
+  {
+    "tool_id": "mcp_reddit_001",
+    "tool_name": "Mcp Reddit",
+    "description": "Mcp Reddit MCP server exposing 2 tool(s). * `fetch_reddit_hot_threads` — Fetch hot threads from a subreddit * `fetch_reddit_post_content` — Fetch detailed content of a specific post Examples: - fetch_reddit_hot_threads(subreddit=\"example\", limit=123) - fetch_reddit_post_content(post_id=\"example\", comment_limit=123, comment_depth=123)",
+    "category": "social",
+    "parameters": {
+      "fetch_reddit_hot_threads": {
+        "subreddit": {
+          "type": "str",
+          "description": "Name of the subreddit",
+          "required": true
+        },
+        "limit": {
+          "type": "int",
+          "description": "Number of posts to fetch (default: 10)",
+          "required": false,
+          "default": 10
+        }
+      },
+      "fetch_reddit_post_content": {
+        "post_id": {
+          "type": "str",
+          "description": "Reddit post ID",
+          "required": true
+        },
+        "comment_limit": {
+          "type": "int",
+          "description": "Number of top level comments to fetch",
+          "required": false,
+          "default": 20
+        },
+        "comment_depth": {
+          "type": "int",
+          "description": "Maximum depth of comment tree to traverse",
+          "required": false,
+          "default": 3
+        }
+      }
+    },
+    "usage_example": [
+      "fetch_reddit_hot_threads(subreddit=\"example\", limit=123)",
+      "fetch_reddit_post_content(post_id=\"example\", comment_limit=123, comment_depth=123)"
+    ],
+    "server": "Reddit"
+  },
+  {
+    "tool_id": "mcp_server_nationalparks_001",
+    "tool_name": "Mcp Server Nationalparks",
+    "description": "Mcp Server Nationalparks MCP server. No @mcp.tool() functions detected.",
+    "category": "travel",
+    "server": "National Parks"
+  },
+  {
+    "tool_id": "medcalc_001",
+    "tool_name": "Medcalc",
+    "description": "Medcalc MCP server exposing 73 tool(s). * `egfr_epi` — Estimated Glomerular Filtration Rate (eGFR) using the EPI formula (version 2021) * `egfr_epi_cr_cys` — Estimated Glomerular Filtration Rate (eGFR) using the 2021 CKD-EPI Creatinine-Cystatin C equation * `mdrd_gfr` — MDRD GFR Equation * `bp_children` — 혈압 센타일(percentile)을 계산하는 함수 * `bmi_calculator` — Calculates Body Mass Index (BMI) and Body Surface Area (BSA) * `bsa_calculator` — Calculates Body Mass Index (BMI) and Body Surface Area (BSA) * `crcl_cockcroft_gault` — Calculate Creatinine Clearance using the Cockcroft-Gault formula * `map_calculator` — Calculate Mean Arterial Pressure (MAP) * `chads2_vasc_score` — Calculate CHA₂DS₂-VASc Score for Atrial Fibrillation Stroke Risk * `prevent_cvd_risk` — Predicting Risk of Cardiovascular Disease EVENTs (PREVENT) * `corrected_calcium` — Calcium Correction for Hypoalbuminemia and Hyperalbuminemia * `qtc_calculator` — Corrected QT Interval (QTc) Calculator * `wells_pe_criteria` — Wells' Criteria for Pulmonary Embolism * `nihss_score` — NIH Stroke Scale (NIHSS) * `ibw_calculator` — Ideal Body Weight and Adjusted Body Weight Calculator * `abw_calculator` — Ideal Body Weight and Adjusted Body Weight Calculator * `pregnancy_calculator` — Pregnancy Due Dates Calculator * `heart_score` — HEART Score for Major Cardiac Events * `revised_cardiac_risk_index` — Revised Cardiac Risk Index for Pre-Operative Risk * `child_pugh_score` — Calculates the Child-Pugh Score for cirrhosis mortality assessment. * `phq9_score` — PHQ-9 (Patient Health Questionnaire-9) * `stop_bang_score` — STOP-BANG Score for Obstructive Sleep Apnea * `steroid_conversion` — Converts corticosteroid dosages using standard equivalencies. * `calculate_mme` — Calculates total daily Morphine Milligram Equivalents (MME). * `maintenance_fluids` — Calculates maintenance IV fluid rate (mL/hr) using the 4-2-1 Rule. * `corrected_sodium_katz` — Calculates corrected sodium level in the setting of hyperglycemia * ...",
+    "category": "math",
+    "parameters": {
+      "egfr_epi": {
+        "scr": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "male": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "egfr_epi_cr_cys": {
+        "scr": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "scys": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "male": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "mdrd_gfr": {
+        "scr": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "is_black": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "is_female": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "bp_children": {
+        "years": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "months": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "height": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "sex": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "systolic": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "diastolic": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "bmi_calculator": {
+        "weight": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "height": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "bsa_calculator": {
+        "weight": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "height": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "crcl_cockcroft_gault": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "weight": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "height": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "scr": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "sex": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "map_calculator": {
+        "sbp": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "dbp": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "chads2_vasc_score": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "female": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "chf": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "hypertension": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "stroke_history": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "vascular_disease": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "diabetes": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "prevent_cvd_risk": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "female": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "tc": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "hdl": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "sbp": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "diabetes": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "current_smoker": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "egfr": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "using_antihtn": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "using_statins": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "corrected_calcium": {
+        "serum_calcium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "patient_albumin": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "normal_albumin": {
+          "type": "float",
+          "description": "",
+          "required": false,
+          "default": 4.0
+        }
+      },
+      "qtc_calculator": {
+        "qt_interval": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "heart_rate": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "formula": {
+          "type": "str",
+          "description": "",
+          "required": false,
+          "default": "bazett"
+        }
+      },
+      "wells_pe_criteria": {
+        "clinical_signs_dvt": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "alternative_diagnosis_less_likely": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "heart_rate_over_100": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "immobilization_or_surgery": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "previous_dvt_or_pe": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "hemoptysis": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "malignancy": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        }
+      },
+      "nihss_score": {
+        "loc_alert": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "loc_questions": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "loc_commands": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "best_gaze": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "visual_fields": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "facial_palsy": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "motor_arm_left": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "motor_arm_right": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "motor_leg_left": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "motor_leg_right": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "limb_ataxia": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "sensory": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "best_language": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "dysarthria": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        },
+        "extinction_inattention": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 0
+        }
+      },
+      "ibw_calculator": {
+        "weight_kg": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "height_cm": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "male": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "abw_calculator": {
+        "weight_kg": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "height_cm": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "male": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "pregnancy_calculator": {
+        "calculation_method": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "date_value": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "cycle_length": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 28
+        },
+        "gestational_age_weeks": {
+          "type": "int",
+          "description": "",
+          "required": false
+        },
+        "gestational_age_days": {
+          "type": "int",
+          "description": "",
+          "required": false
+        }
+      },
+      "heart_score": {
+        "history": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "ekg": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "risk_factors": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "troponin": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "revised_cardiac_risk_index": {
+        "high_risk_surgery": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "ischemic_heart_disease": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "congestive_heart_failure": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "cerebrovascular_disease": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "insulin_treatment": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        },
+        "creatinine_over_2mg": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": false
+        }
+      },
+      "child_pugh_score": {
+        "bilirubin": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "albumin": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "inr": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "ascites": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "encephalopathy_grade": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "phq9_score": {
+        "interest": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "feeling_down": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "sleep": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "tired": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "appetite": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "feeling_bad": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "concentration": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "movement": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "self_harm": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "stop_bang_score": {
+        "snoring": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "tired": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "observed_apnea": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "pressure": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "bmi_over_35": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "age_over_50": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "neck_over_40cm": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "male": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "steroid_conversion": {
+        "from_steroid": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "from_dose_mg": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "to_steroid": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "calculate_mme": {
+        "opioid": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "dose_per_administration": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "doses_per_day": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "maintenance_fluids": {
+        "weight_kg": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "corrected_sodium_katz": {
+        "measured_sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "serum_glucose": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "corrected_sodium_hillier": {
+        "measured_sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "serum_glucose": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "has_bled_score": {
+        "hypertension": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "abnormal_renal_function": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "abnormal_liver_function": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "stroke_history": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "bleeding_history": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "labile_inr": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "elderly": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "drugs": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "alcohol": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "centor_score_modified": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "tonsillar_exudate": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "swollen_lymph_nodes": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "fever": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "cough_absent": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "glasgow_coma_scale": {
+        "eye_response": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 4
+        },
+        "verbal_response": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 5
+        },
+        "motor_response": {
+          "type": "int",
+          "description": "",
+          "required": false,
+          "default": 6
+        }
+      },
+      "caprini_score": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "sex": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "surgery_type": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "recent_major_surgery": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "chf": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "sepsis": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "pneumonia": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "immobilizing_cast": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "fracture": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "stroke": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "multiple_trauma": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "spinal_cord_injury": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "varicose_veins": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "swollen_legs": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "central_venous_access": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "history_dvt_pe": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "family_history_thrombosis": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "factor_v_leiden": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "prothrombin_20210a": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "homocysteine": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "lupus_anticoagulant": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "anticardiolipin_antibody": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "hit": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "other_thrombophilia": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "mobility_status": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "ibd": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "bmi_over_25": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "acute_mi": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "copd": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "malignancy": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "other_risk_factors": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "ldl_calculated": {
+        "total_cholesterol": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "hdl": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "triglycerides": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "sofa_score": {
+        "pao2_fio2": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "mechanically_ventilated": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "platelets": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "gcs": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "bilirubin": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "map_mmHg": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "dopamine": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "dobutamine": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "epinephrine": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "norepinephrine": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "creatinine": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "urine_output_ml_per_day": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "perc_rule": {
+        "age_over_50": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "heart_rate_100_or_more": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "oxygen_sat_below_95": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "unilateral_leg_swelling": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "hemoptysis": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "recent_trauma_or_surgery": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "prior_pe_or_dvt": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "hormone_use": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "gad7_score": {
+        "q1": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "q2": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "q3": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "q4": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "q5": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "q6": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "q7": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "curb65_score": {
+        "confusion": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "bun_over_19": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "respiratory_rate_30_or_more": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "low_blood_pressure": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "age_65_or_more": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "meld_3": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "female": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "bilirubin": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "inr": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "creatinine": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "albumin": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "dialysis": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "framingham_risk_score": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "total_cholesterol": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "hdl_cholesterol": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "systolic_bp": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "treated_for_bp": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "smoker": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "gender": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "homa_ir": {
+        "fasting_insulin": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "fasting_glucose": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "fib4_index": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "ast": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "alt": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "platelets": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "ariscat_score": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "spo2": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "recent_respiratory_infection": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "preop_anemia": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "surgical_site": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "surgery_duration_hrs": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "emergency_surgery": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "sepsis_criteria": {
+        "temp_abnormal": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "heart_rate_gt_90": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "rr_gt_20_or_paco2_lt_32": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "wbc_abnormal": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "suspected_infection": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "organ_dysfunction": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "fluid_resistant_hypotension": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "multi_organ_failure": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "fractional_excretion_of_sodium": {
+        "serum_creatinine": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "urine_sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "serum_sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "urine_creatinine": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "free_water_deficit": {
+        "weight_kg": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "current_sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "is_male": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "is_elderly": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "gupta_perioperative_mica": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "functional_status": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "asa_class": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "creatinine_status": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "procedure_type": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      },
+      "duke_activity_status_index": {
+        "self_care": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "walk_indoors": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "walk_1_2_blocks": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "climb_stairs": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "run_short_distance": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "light_work": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "moderate_work": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "heavy_work": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "yardwork": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "sexual_relations": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "moderate_recreational": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "strenuous_sports": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "ciwa_ar_score": {
+        "nausea_vomiting": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "tremor": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "paroxysmal_sweats": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "anxiety": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "agitation": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "tactile_disturbances": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "auditory_disturbances": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "visual_disturbances": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "headache_fullness": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "orientation": {
+          "type": "int",
+          "description": "",
+          "required": true
+        }
+      },
+      "psi_port_score": {
+        "age": {
+          "type": "int",
+          "description": "",
+          "required": true
+        },
+        "sex": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "nursing_home_resident": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "neoplastic_disease": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "liver_disease": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "chf_history": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "cerebrovascular_disease": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "renal_disease": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "altered_mental_status": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "resp_rate_30": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "sbp_90": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "temp_35_39_9": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "pulse_125": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "ph_735": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "bun_30": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "sodium_130": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "glucose_250": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "hematocrit_30": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "pao2_60": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        },
+        "pleural_effusion": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "serum_anion_gap": {
+        "sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "chloride": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "bicarbonate": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "albumin": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "serum_osmolarity": {
+        "sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "bun": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "glucose": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "ethanol": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "bmi_bsa_calculator": {
+        "weight_kg": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "height_cm": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      },
+      "ibw_abw_calculator": {
+        "weight_kg": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "height_inches": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "male": {
+          "type": "bool",
+          "description": "",
+          "required": true
+        }
+      },
+      "corrected_sodium": {
+        "measured_sodium": {
+          "type": "float",
+          "description": "",
+          "required": true
+        },
+        "serum_glucose": {
+          "type": "float",
+          "description": "",
+          "required": true
+        }
+      }
+    },
+    "usage_example": [
+      "egfr_epi(scr=3.14, age=123, male=true)",
+      "egfr_epi_cr_cys(scr=3.14, scys=3.14, age=123, male=true)",
+      "mdrd_gfr(scr=3.14, age=123, is_black=true, is_female=true)",
+      "bp_children(years=123, months=123, height=123, sex=\"example\", systolic=123, diastolic=123)",
+      "bmi_calculator(weight=3.14, height=3.14)"
+    ],
+    "server": "Medical Calculator"
+  },
+  {
+    "tool_id": "metmuseum_mcp_001",
+    "tool_name": "Metmuseum",
+    "description": "Metmuseum MCP server. No @mcp.tool() functions detected.",
+    "category": "misc",
+    "server": "Metropolitan Museum"
+  },
+  {
+    "tool_id": "movie_recommender_mcp_001",
+    "tool_name": "Movie Recommender",
+    "description": "Movie Recommender MCP server exposing 1 tool(s). * `get_movies` — Get movie suggestions based on keyword. Examples: - get_movies(keyword=\"example\")",
+    "category": "media",
+    "parameters": {
+      "get_movies": {
+        "keyword": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      }
+    },
+    "usage_example": [
+      "get_movies(keyword=\"example\")"
+    ],
+    "server": "Movie Recommender"
+  },
+  {
+    "tool_id": "nasa_mcp_001",
+    "tool_name": "Nasa",
+    "description": "Nasa MCP server exposing 21 tool(s). * `get_astronomy_picture_of_day` — Get NASA's astronomy picture of the day. * `get_asteroids_feed` — Get a list of asteroids based on their closest approach date to Earth. * `get_asteroid_lookup` — Look up a specific asteroid based on its NASA JPL ID. * `browse_asteroids` — Browse the asteroid dataset. * `get_coronal_mass_ejection` — Get coronal mass ejection (CME) data. * `get_geomagnetic_storm` — Get geomagnetic storm (GST) data. * `get_solar_flare` — Get solar flare (FLR) data. * `get_solar_energetic_particle` — Get solar energetic particle (SEP) data. * `get_magnetopause_crossing` — Get magnetopause crossing (MPC) data. * `get_radiation_belt_enhancement` — Get radiation belt enhancement (RBE) data. * `get_hight_speed_stream` — Get high speed stream (HSS) data. * `get_wsa_enlil_simulation` — Get WSA+Enlil simulation data. * `get_notifications` — Get DONKI notifications. * `get_earth_imagery` — Get Earth imagery from Landsat 8 satellite. * `get_earth_assets` — Get information about available imagery assets for a specific location and date. * `get_epic_imagery` — Get images from the EPIC (Earth Polychromatic Imaging Camera). * `get_epic_imagery_by_date` — Get images from the EPIC (Earth Polychromatic Imaging Camera) for a specific date. * `get_epic_dates` — Get available dates for EPIC images. * `get_exoplanet_data` — Get data from NASA's Exoplanet Archive. * `get_mars_rover_photos` — Get photos from a Mars rover (Curiosity, Opportunity, Spirit). * `get_mars_rover_manifest` — Get the mission manifest for a Mars rover (Curiosity, Opportunity, Spirit). Examples: - get_astronomy_picture_of_day(date=\"example\", count=123, thumbs=true) - get_asteroids_feed(start_date=\"example\", end_date=\"example\") - get_asteroid_lookup(asteroid_id=\"example\")",
+    "category": "space",
+    "parameters": {
+      "get_astronomy_picture_of_day": {
+        "date": {
+          "type": "str",
+          "description": "Date of the image in YYYY-MM-DD format. If not specified, the current date is used.",
+          "required": false
+        },
+        "count": {
+          "type": "int",
+          "description": "If specified, returns 'count' random images. Cannot be used with 'date'.",
+          "required": false
+        },
+        "thumbs": {
+          "type": "bool",
+          "description": "If True, returns the thumbnail URL for videos. If APOD is not a video, this parameter is ignored.",
+          "required": false,
+          "default": false
+        }
+      },
+      "get_asteroids_feed": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date for asteroid search in YYYY-MM-DD format.",
+          "required": true
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date for asteroid search in YYYY-MM-DD format. The Feed date limit is only 7 Days. If not specified, 7 days after start_date is used.",
+          "required": false
+        }
+      },
+      "get_asteroid_lookup": {
+        "asteroid_id": {
+          "type": "str",
+          "description": "Asteroid ID in the NASA JPL small body (SPK-ID) system.",
+          "required": true
+        }
+      },
+      "get_coronal_mass_ejection": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 30 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        }
+      },
+      "get_geomagnetic_storm": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 30 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        }
+      },
+      "get_solar_flare": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 30 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        }
+      },
+      "get_solar_energetic_particle": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 30 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        }
+      },
+      "get_magnetopause_crossing": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 30 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        }
+      },
+      "get_radiation_belt_enhancement": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 30 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        }
+      },
+      "get_hight_speed_stream": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 30 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        }
+      },
+      "get_wsa_enlil_simulation": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 7 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        }
+      },
+      "get_notifications": {
+        "start_date": {
+          "type": "str",
+          "description": "Start date in YYYY-MM-DD format. Defaults to 7 days before current date.",
+          "required": false
+        },
+        "end_date": {
+          "type": "str",
+          "description": "End date in YYYY-MM-DD format. Defaults to current date.",
+          "required": false
+        },
+        "notification_type": {
+          "type": "str",
+          "description": "Notification type. Options: all, FLR, SEP, CME, IPS, MPC, GST, RBE, report.",
+          "required": false,
+          "default": "all"
+        }
+      },
+      "get_earth_imagery": {
+        "lat": {
+          "type": "float",
+          "description": "Latitude.",
+          "required": true
+        },
+        "lon": {
+          "type": "float",
+          "description": "Longitude.",
+          "required": true
+        },
+        "date": {
+          "type": "str",
+          "description": "Image date in YYYY-MM-DD format. If not specified, the most recent image is used.",
+          "required": false
+        },
+        "dim": {
+          "type": "float",
+          "description": "Width and height of the image in degrees (0.025 degrees is approximately 2.7 km).",
+          "required": false,
+          "default": 0.025
+        },
+        "cloud_score": {
+          "type": "bool",
+          "description": "Calculate the percentage of the image covered by clouds (currently not available).",
+          "required": false,
+          "default": false
+        }
+      },
+      "get_earth_assets": {
+        "lat": {
+          "type": "float",
+          "description": "Latitude.",
+          "required": true
+        },
+        "lon": {
+          "type": "float",
+          "description": "Longitude.",
+          "required": true
+        },
+        "date": {
+          "type": "str",
+          "description": "Date in YYYY-MM-DD format.",
+          "required": true
+        },
+        "dim": {
+          "type": "float",
+          "description": "Width and height of the image in degrees (0.025 degrees is approximately 2.7 km).",
+          "required": false,
+          "default": 0.025
+        }
+      },
+      "get_epic_imagery": {
+        "collection": {
+          "type": "str",
+          "description": "Collection type. Options: natural, enhanced.",
+          "required": false,
+          "default": "natural"
+        }
+      },
+      "get_epic_imagery_by_date": {
+        "date": {
+          "type": "str",
+          "description": "Date in YYYY-MM-DD format.",
+          "required": true
+        },
+        "collection": {
+          "type": "str",
+          "description": "Collection type. Options: natural, enhanced.",
+          "required": false,
+          "default": "natural"
+        }
+      },
+      "get_epic_dates": {
+        "collection": {
+          "type": "str",
+          "description": "Collection type. Options: natural, enhanced.",
+          "required": false,
+          "default": "natural"
+        }
+      },
+      "get_exoplanet_data": {
+        "query": {
+          "type": "str",
+          "description": "Specific query to filter results using Exoplanet Archive syntax. Example: \"pl_orbper > 300 and pl_rade < 2\"",
+          "required": false
+        },
+        "table": {
+          "type": "str",
+          "description": "Table to query. Common options: exoplanets (confirmed planets), cumulative (Kepler Objects of Interest), koi (subset of cumulative), tce (Threshold Crossing Events).",
+          "required": false,
+          "default": "exoplanets"
+        },
+        "format": {
+          "type": "str",
+          "description": "Output format. Options: json, csv, xml, ipac. Default: json.",
+          "required": false,
+          "default": "json"
+        }
+      },
+      "get_mars_rover_photos": {
+        "rover_name": {
+          "type": "str",
+          "description": "Name of the rover (curiosity, opportunity, spirit).",
+          "required": true
+        },
+        "sol": {
+          "type": "int",
+          "description": "Martian sol (day number, starting from landing). Use if not using earth_date.",
+          "required": false
+        },
+        "earth_date": {
+          "type": "str",
+          "description": "Earth date in YYYY-MM-DD format. Use if not using sol.",
+          "required": false
+        },
+        "camera": {
+          "type": "str",
+          "description": "Filter by camera abbreviation (e.g., FHAZ, RHAZ, MAST, NAVCAM, PANCAM). See documentation for full list per rover.",
+          "required": false
+        },
+        "page": {
+          "type": "int",
+          "description": "Page number for results (25 photos per page).",
+          "required": false,
+          "default": 1
+        }
+      },
+      "get_mars_rover_manifest": {
+        "rover_name": {
+          "type": "str",
+          "description": "Name of the rover (curiosity, opportunity, spirit).",
+          "required": true
+        }
+      }
+    },
+    "usage_example": [
+      "get_astronomy_picture_of_day(date=\"example\", count=123, thumbs=true)",
+      "get_asteroids_feed(start_date=\"example\", end_date=\"example\")",
+      "get_asteroid_lookup(asteroid_id=\"example\")",
+      "browse_asteroids()",
+      "get_coronal_mass_ejection(start_date=\"example\", end_date=\"example\")"
+    ],
+    "server": "NASA Data"
+  },
+  {
+    "tool_id": "okx_mcp_001",
+    "tool_name": "Okx",
+    "description": "Okx MCP server. No @mcp.tool() functions detected.",
+    "category": "misc",
+    "server": "OKX Exchange"
+  },
+  {
+    "tool_id": "openapi_mcp_server_001",
+    "tool_name": "Openapi Mcp Server",
+    "description": "Openapi Mcp Server MCP server. No @mcp.tool() functions detected.",
+    "category": "api_util",
+    "server": "OpenAPI Explorer"
+  },
+  {
+    "tool_id": "paper_search_mcp_001",
+    "tool_name": "Paper Search",
+    "description": "Paper Search MCP server exposing 19 tool(s). * `search_arxiv` — Search academic papers from arXiv. * `search_pubmed` — Search academic papers from PubMed. * `search_biorxiv` — Search academic papers from bioRxiv. * `search_medrxiv` — Search academic papers from medRxiv. * `search_google_scholar` — Search academic papers from Google Scholar. * `search_iacr` — Search academic papers from IACR ePrint Archive. * `download_arxiv` — Download PDF of an arXiv paper. * `download_pubmed` — Attempt to download PDF of a PubMed paper. * `download_biorxiv` — Download PDF of a bioRxiv paper. * `download_medrxiv` — Download PDF of a medRxiv paper. * `download_iacr` — Download PDF of an IACR ePrint paper. * `read_arxiv_paper` — Read and extract text content from an arXiv paper PDF. * `read_pubmed_paper` — Read and extract text content from a PubMed paper. * `read_biorxiv_paper` — Read and extract text content from a bioRxiv paper PDF. * `read_medrxiv_paper` — Read and extract text content from a medRxiv paper PDF. * `read_iacr_paper` — Read and extract text content from an IACR ePrint paper PDF. * `search_semantic` — Search academic papers from Semantic Scholar. * `download_semantic` — Download PDF of a Semantic Scholar paper. * `read_semantic_paper` — Read and extract text content from a Semantic Scholar paper. Examples: - search_arxiv(query=\"example\", max_results=123) - search_pubmed(query=\"example\", max_results=123) - search_biorxiv(query=\"example\", max_results=123)",
+    "category": "web_search",
+    "parameters": {
+      "search_arxiv": {
+        "query": {
+          "type": "str",
+          "description": "Search query string (e.g., 'machine learning').",
+          "required": true
+        },
+        "max_results": {
+          "type": "int",
+          "description": "Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+          "required": false,
+          "default": 10
+        }
+      },
+      "search_pubmed": {
+        "query": {
+          "type": "str",
+          "description": "Search query string (e.g., 'machine learning').",
+          "required": true
+        },
+        "max_results": {
+          "type": "int",
+          "description": "Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+          "required": false,
+          "default": 10
+        }
+      },
+      "search_biorxiv": {
+        "query": {
+          "type": "str",
+          "description": "Search query string (e.g., 'machine learning').",
+          "required": true
+        },
+        "max_results": {
+          "type": "int",
+          "description": "Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+          "required": false,
+          "default": 10
+        }
+      },
+      "search_medrxiv": {
+        "query": {
+          "type": "str",
+          "description": "Search query string (e.g., 'machine learning').",
+          "required": true
+        },
+        "max_results": {
+          "type": "int",
+          "description": "Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+          "required": false,
+          "default": 10
+        }
+      },
+      "search_google_scholar": {
+        "query": {
+          "type": "str",
+          "description": "Search query string (e.g., 'machine learning').",
+          "required": true
+        },
+        "max_results": {
+          "type": "int",
+          "description": "Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+          "required": false,
+          "default": 10
+        }
+      },
+      "search_iacr": {
+        "query": {
+          "type": "str",
+          "description": "Search query string (e.g., 'cryptography', 'secret sharing').",
+          "required": true
+        },
+        "max_results": {
+          "type": "int",
+          "description": "Maximum number of papers to return (default: 10).",
+          "required": false,
+          "default": 10
+        },
+        "fetch_details": {
+          "type": "bool",
+          "description": "Whether to fetch detailed information for each paper (default: True). Returns: List of paper metadata in dictionary format.",
+          "required": false,
+          "default": true
+        }
+      },
+      "download_arxiv": {
+        "paper_id": {
+          "type": "str",
+          "description": "arXiv paper ID (e.g., '2106.12345').",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "download_pubmed": {
+        "paper_id": {
+          "type": "str",
+          "description": "PubMed ID (PMID).",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory to save the PDF (default: './downloads'). Returns:",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "download_biorxiv": {
+        "paper_id": {
+          "type": "str",
+          "description": "bioRxiv DOI.",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "download_medrxiv": {
+        "paper_id": {
+          "type": "str",
+          "description": "medRxiv DOI.",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "download_iacr": {
+        "paper_id": {
+          "type": "str",
+          "description": "IACR paper ID (e.g., '2009/101').",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "read_arxiv_paper": {
+        "paper_id": {
+          "type": "str",
+          "description": "arXiv paper ID (e.g., '2106.12345').",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory where the PDF is/will be saved (default: './downloads'). Returns:",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "read_pubmed_paper": {
+        "paper_id": {
+          "type": "str",
+          "description": "PubMed ID (PMID).",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory where the PDF would be saved (unused). Returns:",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "read_biorxiv_paper": {
+        "paper_id": {
+          "type": "str",
+          "description": "bioRxiv DOI.",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory where the PDF is/will be saved (default: './downloads'). Returns:",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "read_medrxiv_paper": {
+        "paper_id": {
+          "type": "str",
+          "description": "medRxiv DOI.",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory where the PDF is/will be saved (default: './downloads'). Returns:",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "read_iacr_paper": {
+        "paper_id": {
+          "type": "str",
+          "description": "IACR paper ID (e.g., '2009/101').",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory where the PDF is/will be saved (default: './downloads'). Returns:",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "search_semantic": {
+        "query": {
+          "type": "str",
+          "description": "Search query string (e.g., 'machine learning').",
+          "required": true
+        },
+        "year": {
+          "type": "Optional[str]",
+          "description": "Optional year filter (e.g., '2019', '2016-2020', '2010-', '-2015').",
+          "required": false
+        },
+        "max_results": {
+          "type": "int",
+          "description": "Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+          "required": false,
+          "default": 10
+        }
+      },
+      "download_semantic": {
+        "paper_id": {
+          "type": "str",
+          "description": "Semantic Scholar paper ID, Paper identifier in one of the following formats: - Semantic Scholar ID (e.g., \"649def34f8be52c8b66281af98ae884c09aef38b\") - DOI:<doi> (e.g., \"DOI:10.18653/v1/N18-3011\") - ARXIV:<id> (e.g., \"ARXIV:2106.15928\") - MAG:<id> (e.g., \"MAG:112218234\") - ACL:<id> (e.g., \"ACL:W12-3903\") - PMID:<id> (e.g., \"PMID:19872477\") - PMCID:<id> (e.g., \"PMCID:2323736\") - URL:<url> (e.g., \"URL:https://arxiv.org/abs/2106.15928v1\")",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+          "required": false,
+          "default": "./downloads"
+        }
+      },
+      "read_semantic_paper": {
+        "paper_id": {
+          "type": "str",
+          "description": "Semantic Scholar paper ID, Paper identifier in one of the following formats: - Semantic Scholar ID (e.g., \"649def34f8be52c8b66281af98ae884c09aef38b\") - DOI:<doi> (e.g., \"DOI:10.18653/v1/N18-3011\") - ARXIV:<id> (e.g., \"ARXIV:2106.15928\") - MAG:<id> (e.g., \"MAG:112218234\") - ACL:<id> (e.g., \"ACL:W12-3903\") - PMID:<id> (e.g., \"PMID:19872477\") - PMCID:<id> (e.g., \"PMCID:2323736\") - URL:<url> (e.g., \"URL:https://arxiv.org/abs/2106.15928v1\")",
+          "required": true
+        },
+        "save_path": {
+          "type": "str",
+          "description": "Directory where the PDF is/will be saved (default: './downloads'). Returns:",
+          "required": false,
+          "default": "./downloads"
+        }
+      }
+    },
+    "usage_example": [
+      "search_arxiv(query=\"example\", max_results=123)",
+      "search_pubmed(query=\"example\", max_results=123)",
+      "search_biorxiv(query=\"example\", max_results=123)",
+      "search_medrxiv(query=\"example\", max_results=123)",
+      "search_google_scholar(query=\"example\", max_results=123)"
+    ],
+    "server": "Paper Search"
+  },
+  {
+    "tool_id": "scientific_computation_mcp_001",
+    "tool_name": "Scientific Computation",
+    "description": "Scientific Computation MCP server exposing 26 tool(s). * `add_matrices` — Adds two stored tensors element-wise. * `subtract_matrices` — Adds two stored tensors element-wise. * `multiply_matrices` — Performs matrix multiplication between two stored tensors. * `scale_matrix` — Scales a stored tensor by a scalar factor. * `matrix_inverse` — Computes the inverse of a stored square matrix. * `transpose` — Computes the transpose of a stored tensor. * `determinant` — Computes the determinant of a stored square matrix. * `rank` — Computes the rank of a stored tensor. * `compute_eigen` — Computes the eigenvalues and right eigenvectors of a stored square matrix. * `qr_decompose` — Computes the QR decomposition of a stored matrix. * `svd_decompose` — Computes the Singular Value Decomposition (SVD) of a stored matrix. * `find_orthonormal_basis` — Finds an orthonormal basis for the column space of a stored matrix using QR decomposition. * `change_basis` — Changes the basis of a stored square matrix. * `create_tensor` — Creates a NumPy array (matrix) with a specified shape and values. * `view_tensor` — Returns an immutable view of a previously stored NumPy tensor from the in-memory tensor store. * `delete_tensor` — Deletes a tensor from the in-memory tensor store. * `plot_vector_field` — Plots a 3D vector field from a string \"[u(x,y,z), v(x,y,z), w(x,y,z)]\" * `plot_function` — Plots a 2D or 3D mathematical function from a symbolic expression string. * `vector_project` — Projects a stored vector onto another vector. * `vector_dot_product` — Computes the dot product between two stored vectors. * `vector_cross_product` — Computes the cross product of two stored vectors. * `gradient` — Computes the symbolic gradient of a scalar function. * `curl` — Computes the symbolic curl of a vector field, optionally evaluated at a point. * `divergence` — Computes the symbolic divergence of a vector field, optionally evaluated at a point. * `laplacian` — Computes the Laplacian of a scalar or ...",
+    "category": "misc",
+    "parameters": {
+      "add_matrices": {
+        "name_a": {
+          "type": "str",
+          "description": "The name of the first tensor.",
+          "required": true
+        },
+        "name_b": {
+          "type": "str",
+          "description": "The name of the second tensor.",
+          "required": true
+        }
+      },
+      "subtract_matrices": {
+        "name_a": {
+          "type": "str",
+          "description": "The name of the first tensor.",
+          "required": true
+        },
+        "name_b": {
+          "type": "str",
+          "description": "The name of the second tensor.",
+          "required": true
+        }
+      },
+      "multiply_matrices": {
+        "name_a": {
+          "type": "str",
+          "description": "The name of the first tensor.",
+          "required": true
+        },
+        "name_b": {
+          "type": "str",
+          "description": "The name of the second tensor.",
+          "required": true
+        }
+      },
+      "scale_matrix": {
+        "name": {
+          "type": "str",
+          "description": "The name of the tensor to scale.",
+          "required": true
+        },
+        "scale_factor": {
+          "type": "float",
+          "description": "The scalar value to multiply the tensor by.",
+          "required": true
+        },
+        "in_place": {
+          "type": "bool",
+          "description": "If True, updates the stored tensor; otherwise, returns a new scaled tensor.",
+          "required": false,
+          "default": true
+        }
+      },
+      "matrix_inverse": {
+        "name": {
+          "type": "str",
+          "description": "The name of the tensor to invert.",
+          "required": true
+        }
+      },
+      "transpose": {
+        "name": {
+          "type": "str",
+          "description": "The name of the tensor to transpose.",
+          "required": true
+        }
+      },
+      "determinant": {
+        "name": {
+          "type": "str",
+          "description": "The name of the matrix.",
+          "required": true
+        }
+      },
+      "rank": {
+        "name": {
+          "type": "str",
+          "description": "The name of the tensor.",
+          "required": true
+        }
+      },
+      "compute_eigen": {
+        "name": {
+          "type": "str",
+          "description": "The name of the tensor to analyze.",
+          "required": true
+        }
+      },
+      "qr_decompose": {
+        "name": {
+          "type": "str",
+          "description": "The name of the matrix to decompose.",
+          "required": true
+        }
+      },
+      "svd_decompose": {
+        "name": {
+          "type": "str",
+          "description": "The name of the matrix to decompose.",
+          "required": true
+        }
+      },
+      "find_orthonormal_basis": {
+        "name": {
+          "type": "str",
+          "description": "The name of the matrix.",
+          "required": true
+        }
+      },
+      "change_basis": {
+        "name": {
+          "type": "str",
+          "description": "Name of the matrix in the tensor store.",
+          "required": true
+        },
+        "new_basis": {
+          "type": "list[list[float]]",
+          "description": "Columns are new basis vectors.",
+          "required": true
+        }
+      },
+      "create_tensor": {
+        "shape": {
+          "type": "list[int]",
+          "description": "The shape of the resulting array as a tuple(e.g., (2, 3)).",
+          "required": true
+        },
+        "values": {
+          "type": "list[float]",
+          "description": "A flat list of values to populate the array.",
+          "required": true
+        },
+        "name": {
+          "type": "str",
+          "description": "The name of the tensor to be stored.",
+          "required": true
+        }
+      },
+      "view_tensor": {
+        "name": {
+          "type": "str",
+          "description": "The name of the tensor as stored in the in-store dictionary Returns:",
+          "required": true
+        }
+      },
+      "delete_tensor": {
+        "name": {
+          "type": "str",
+          "description": "The name of the tensor to delete.",
+          "required": true
+        }
+      },
+      "plot_vector_field": {
+        "f_str": {
+          "type": "str",
+          "description": "string representation of 3D field, e.g. \"[z, -y, x]\".",
+          "required": true
+        },
+        "bounds": {
+          "type": "string",
+          "description": "(xmin, xmax, ymin, ymax, zmin, zmax)",
+          "required": false
+        },
+        "n": {
+          "type": "int",
+          "description": "grid resolution per axis",
+          "required": false,
+          "default": 10
+        }
+      },
+      "plot_function": {
+        "expr_str": {
+          "type": "str",
+          "description": "string representation of a function in x or x and y, e.g. \"x**2\" or \"sin(sqrt(x**2 + y**2))\"",
+          "required": true
+        },
+        "xlim": {
+          "type": "tuple[int, int]",
+          "description": "(xmin, xmax) range for x-axis",
+          "required": false
+        },
+        "ylim": {
+          "type": "tuple[int, int]",
+          "description": "(ymin, ymax) range for y-axis (used in 2D or 3D)",
+          "required": false
+        },
+        "grid": {
+          "type": "string",
+          "description": "resolution of the plot grid",
+          "required": false,
+          "default": 200
+        }
+      },
+      "vector_project": {
+        "name": {
+          "type": "str",
+          "description": "Name of the stored vector to project.",
+          "required": true
+        },
+        "new_vector": {
+          "type": "list[float]",
+          "description": "The vector to project onto.",
+          "required": true
+        }
+      },
+      "vector_dot_product": {
+        "name_a": {
+          "type": "str",
+          "description": "Name of the first vector in the tensor store.",
+          "required": true
+        },
+        "name_b": {
+          "type": "str",
+          "description": "Name of the second vector in the tensor store.",
+          "required": true
+        }
+      },
+      "vector_cross_product": {
+        "name_a": {
+          "type": "str",
+          "description": "Name of the first vector in the tensor store.",
+          "required": true
+        },
+        "name_b": {
+          "type": "str",
+          "description": "Name of the second vector in the tensor store.",
+          "required": true
+        }
+      },
+      "gradient": {
+        "f_str": {
+          "type": "str",
+          "description": "A string representing a scalar function (e.g., \"x**2 + y*z\").",
+          "required": true
+        }
+      },
+      "curl": {
+        "f_str": {
+          "type": "str",
+          "description": "A string representing the vector field in list format (e.g., \"[x+y, x, 2*z]\").",
+          "required": true
+        },
+        "point": {
+          "type": "list[float], optional",
+          "description": "A list of coordinates [x, y, z] to evaluate the curl numerically.",
+          "required": false
+        }
+      },
+      "divergence": {
+        "f_str": {
+          "type": "str",
+          "description": "A string representing the vector field in list format (e.g., \"[x+y, x, 2*z]\").",
+          "required": true
+        },
+        "point": {
+          "type": "list[float], optional",
+          "description": "A list of coordinates [x, y, z] to evaluate the divergence numerically.",
+          "required": false
+        }
+      },
+      "laplacian": {
+        "f_str": {
+          "type": "str",
+          "description": "Scalar function as \"x**2 + y*z\" or vector \"[Fx, Fy, Fz]\".",
+          "required": true
+        },
+        "is_vector": {
+          "type": "bool",
+          "description": "Set True to compute vector Laplacian.",
+          "required": false,
+          "default": false
+        }
+      },
+      "directional_deriv": {
+        "f_str": {
+          "type": "str",
+          "description": "",
+          "required": true
+        },
+        "u": {
+          "type": "list[float]",
+          "description": "",
+          "required": true
+        },
+        "unit": {
+          "type": "bool",
+          "description": "",
+          "required": false,
+          "default": true
+        }
+      }
+    },
+    "usage_example": [
+      "add_matrices(name_a=\"example\", name_b=\"example\")",
+      "subtract_matrices(name_a=\"example\", name_b=\"example\")",
+      "multiply_matrices(name_a=\"example\", name_b=\"example\")",
+      "scale_matrix(name=\"example\", scale_factor=3.14, in_place=true)",
+      "matrix_inverse(name=\"example\")"
+    ],
+    "server": "Scientific Computing"
+  },
+  {
+    "tool_id": "time_mcp_001",
+    "tool_name": "Time",
+    "description": "Time MCP server. No @mcp.tool() functions detected.",
+    "category": "time_utils",
+    "server": "Time MCP"
+  },
+  {
+    "tool_id": "unit_converter_mcp_001",
+    "tool_name": "Unit Converter",
+    "description": "Unit Converter MCP server. No @mcp.tool() functions detected.",
+    "category": "conversion",
+    "server": "Unit Converter"
+  },
+  {
+    "tool_id": "weather_mcp_001",
+    "tool_name": "Weather",
+    "description": "Weather MCP server exposing 7 tool(s). * `get_current_weather_tool` — Get current weather information for a specific city. * `get_weather_forecast_tool` — Get weather forecast for a specific city. * `search_locations_tool` — Search for locations by name. * `get_live_temp` — Legacy tool: Get current temperature for a city (for backward compatibility). * `get_current_weather_tool` — Get current weather information for a specific city. * `get_weather_forecast_tool` — Get weather forecast for a specific city. * `search_locations_tool` — Search for locations by name. Examples: - get_current_weather_tool(city=\"example\") - get_weather_forecast_tool(city=\"example\", days=123) - search_locations_tool(query=\"example\")",
+    "category": "weather",
+    "parameters": {
+      "get_current_weather_tool": {
+        "city": {
+          "type": "str",
+          "description": "Name of the city to get weather for",
+          "required": true
+        }
+      },
+      "get_weather_forecast_tool": {
+        "city": {
+          "type": "str",
+          "description": "Name of the city to get forecast for",
+          "required": true
+        },
+        "days": {
+          "type": "int",
+          "description": "Number of days to forecast (1-10, default: 3)",
+          "required": false,
+          "default": 3
+        }
+      },
+      "search_locations_tool": {
+        "query": {
+          "type": "str",
+          "description": "Location name or partial name to search for",
+          "required": true
+        }
+      },
+      "get_live_temp": {
+        "city": {
+          "type": "str",
+          "description": "",
+          "required": true
+        }
+      }
+    },
+    "usage_example": [
+      "get_current_weather_tool(city=\"example\")",
+      "get_weather_forecast_tool(city=\"example\", days=123)",
+      "search_locations_tool(query=\"example\")",
+      "get_live_temp(city=\"example\")",
+      "get_current_weather_tool(city=\"example\")"
+    ],
+    "server": "Weather Data"
+  },
+  {
+    "tool_id": "wikipedia_mcp_001",
+    "tool_name": "Wikipedia",
+    "description": "Wikipedia MCP server. No @mcp.tool() functions detected.",
+    "category": "knowledge",
+    "server": "Wikipedia"
+  }
+]

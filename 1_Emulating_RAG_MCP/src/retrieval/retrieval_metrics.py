@@ -49,7 +49,8 @@ class RetrievalMetrics:
         k: Optional[int] = None
     ) -> float:
         """
-        Calculate Recall@k - whether the ground truth item is in top-k results.
+        Calculate per-instance recall - whether the first (top) retrieved item matches ground truth.
+        This is used as a building block for macro-average recall calculation.
 
         Args:
             retrieved_items: List of retrieved items (servers or IDs, ordered by relevance)
@@ -57,12 +58,13 @@ class RetrievalMetrics:
             k: Number of top results to consider (None = all)
 
         Returns:
-            1.0 if ground truth is in top-k, 0.0 otherwise
+            1.0 if first retrieved item matches ground truth, 0.0 otherwise
         """
-        if k is not None:
-            retrieved_items = retrieved_items[:k]
-
-        return 1.0 if ground_truth_item in retrieved_items else 0.0
+        if not retrieved_items:
+            return 0.0
+            
+        # Check if the first (top) retrieved item matches ground truth
+        return 1.0 if retrieved_items[0] == ground_truth_item else 0.0
 
     @staticmethod
     def reciprocal_rank(
@@ -125,28 +127,72 @@ class RetrievalMetrics:
         k: int
     ) -> float:
         """
-        Calculate average Recall@k across multiple queries.
+        Calculate macro-average Recall@k across all server classes.
+        
+        Treats this as a multi-class classification problem where:
+        - Each server is a class
+        - The top-ranked retrieved tool's server is the predicted class
+        - Calculates recall for each server class individually
+        - Returns the unweighted average (macro-average) of per-class recalls
+        
+        Formula: Macro-average recall = (1/N) * Σ Recall_i
+        where N is the number of classes (servers) and Recall_i is recall for class i
 
         Args:
             results: List of dictionaries with retrieved items and ground truth
-            k: Number of top results to consider
+            k: Number of top results to consider (not used, always considers top-1)
 
         Returns:
-            Average recall across all queries
+            Macro-average recall across all server classes
         """
         if not results:
             return 0.0
 
-        recall_sum = 0.0
+        # Step 1: Collect all unique server classes (both ground truth and predicted)
+        all_servers = set()
         for result in results:
-            # Support both old (IDs) and new (servers) format
-            retrieved = result.get('retrieved_servers', result.get('retrieved_ids', []))
             ground_truth = result.get('ground_truth_server', result.get('ground_truth_id', ''))
-
-            recall = RetrievalMetrics.recall_at_k(retrieved, ground_truth, k)
-            recall_sum += recall
-
-        return recall_sum / len(results)
+            retrieved = result.get('retrieved_servers', result.get('retrieved_ids', []))
+            
+            all_servers.add(ground_truth)
+            if retrieved:
+                all_servers.add(retrieved[0])  # Add predicted server (top-1)
+        
+        # Step 2: Calculate recall for each server class
+        per_class_recall = {}
+        
+        for server_class in all_servers:
+            true_positives = 0  # Correctly predicted as this class
+            false_negatives = 0  # Should be this class but predicted as another
+            
+            for result in results:
+                ground_truth = result.get('ground_truth_server', result.get('ground_truth_id', ''))
+                retrieved = result.get('retrieved_servers', result.get('retrieved_ids', []))
+                predicted_server = retrieved[0] if retrieved else None
+                
+                # Count TP and FN for this server class
+                if ground_truth == server_class:
+                    if predicted_server == server_class:
+                        true_positives += 1
+                    else:
+                        false_negatives += 1
+            
+            # Calculate recall for this class
+            # Recall = TP / (TP + FN)
+            total_actual = true_positives + false_negatives
+            if total_actual > 0:
+                per_class_recall[server_class] = true_positives / total_actual
+            else:
+                # No instances of this class in ground truth (only in predictions)
+                per_class_recall[server_class] = 0.0
+        
+        # Step 3: Calculate macro-average (unweighted mean of per-class recalls)
+        if not per_class_recall:
+            return 0.0
+        
+        macro_avg_recall = sum(per_class_recall.values()) / len(per_class_recall)
+        
+        return macro_avg_recall
 
     @staticmethod
     def precision_at_k(
@@ -212,14 +258,14 @@ class RetrievalMetrics:
     @staticmethod
     def calculate_all_metrics(
         results: List[Dict[str, Any]],
-        k_values: List[int] = [1, 3, 5, 10]
+        k_values: List[int] = [1]
     ) -> Dict[str, float]:
         """
         Calculate all common retrieval metrics.
 
         Args:
             results: List of dictionaries with 'retrieved_ids' and 'ground_truth_id'
-            k_values: List of k values to evaluate
+            k_values: List of k values to evaluate (default: [1] for first tool only)
 
         Returns:
             Dictionary with all calculated metrics
@@ -229,12 +275,12 @@ class RetrievalMetrics:
         # Calculate Accuracy@1 (first result must match)
         metrics['accuracy@1'] = RetrievalMetrics.accuracy_at_1(results)
 
-        # Calculate Recall@k for each k value
+        # Calculate Recall@k for each k value (only k=1 by default)
         for k in k_values:
             recall = RetrievalMetrics.average_recall_at_k(results, k)
             metrics[f'recall@{k}'] = recall
 
-        # Calculate MRR for each k value
+        # Calculate MRR for each k value (only k=1 by default)
         for k in k_values:
             mrr = RetrievalMetrics.mean_reciprocal_rank(results, k)
             metrics[f'mrr@{k}'] = mrr
@@ -247,7 +293,7 @@ class RetrievalMetrics:
     @staticmethod
     def analyze_by_category(
         results: List[Dict[str, Any]],
-        k_values: List[int] = [1, 3, 5, 10]
+        k_values: List[int] = [1]
     ) -> Dict[str, Dict[str, float]]:
         """
         Calculate metrics broken down by category.
@@ -277,7 +323,7 @@ class RetrievalMetrics:
     @staticmethod
     def analyze_by_difficulty(
         results: List[Dict[str, Any]],
-        k_values: List[int] = [1, 3, 5, 10]
+        k_values: List[int] = [1]
     ) -> Dict[str, Dict[str, float]]:
         """
         Calculate metrics broken down by difficulty level.

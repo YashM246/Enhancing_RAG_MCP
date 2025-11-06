@@ -57,7 +57,7 @@ class Benchmarker:
         tools_json_path: str,
         queries_json_path: str,
         model_name: str = 'all-MiniLM-L6-v2',
-        k_values: List[int] = [1, 3, 5],
+        k_values: List[int] = [3],
         batch_size: int = 8,
         save_results: bool = True,
         results_filename: Optional[str] = None
@@ -323,7 +323,7 @@ class Benchmarker:
         print(f"  - Tools indexed: {len(tools)}")
         print(f"  - Queries processed: {len(test_queries)}")
         print(f"  - Accuracy@1 (first result correct): {metrics['accuracy@1']:.2%}")
-        print(f"  - Overall Recall@3: {metrics['recall@3']:.2%}")
+        print(f"  - Overall Recall@3 (first tool correct): {metrics['recall@3']:.2%}")
         print(f"  - Overall MRR: {metrics['mrr']:.4f}")
         print(f"  - Success rate (accuracy@1): {(len(test_queries) - len(failures)) / len(test_queries):.2%}")
         print(f"  - Avg retrieval time: {metrics['avg_retrieval_time_ms']:.2f}ms")
@@ -361,14 +361,14 @@ def main():
         tools_json_path="data/tools/all_tools.json",
         queries_json_path="data/queries/mcp_task_description.json",
         model_name='all-MiniLM-L6-v2',
-        k_values=[1, 3, 5],
+        k_values=[3],
         batch_size=8,
         save_results=True
     )
     
     print(f"\n✓ Benchmark completed successfully!")
     print(f"  Accuracy@1 (first result correct): {results['metrics']['accuracy@1']:.2%}")
-    print(f"  Overall Recall@3: {results['metrics']['recall@3']:.2%}")
+    print(f"  Overall Recall@3 (first tool correct): {results['metrics']['recall@3']:.2%}")
     print(f"  Overall MRR: {results['metrics']['mrr']:.4f}")
 
 

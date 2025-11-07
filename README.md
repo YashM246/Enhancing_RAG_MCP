@@ -164,20 +164,82 @@ Enhancing_RAG_MCP/
 - Model serving: vLLM / Text Generation Inference / Ollama
 - GPU Requirements: 40GB+ VRAM (A100 or equivalent)
 
+## 🚀 Quick Start
+
+### Local Development & Testing
+
+**1. Install Dependencies:**
+```bash
+pip install -r requirements.txt
+```
+
+**2. Install Ollama for Local Testing:**
+```bash
+# See Ollama_Setup_Guide.md for detailed instructions
+ollama run mistral:7b-instruct-q4_0
+```
+
+**3. Test Individual Approaches:**
+```bash
+# Test Approach 1 (Dense Retrieval Only - no LLM needed)
+python src/approaches/dense_only.py
+
+# Test Approach 2 (BM25 Only - no LLM needed)
+python src/approaches/bm25_only.py
+
+# Test Approach 3-6 (LLM-based - requires Ollama running)
+python src/approaches/llm_only.py
+python src/approaches/dense_llm.py
+python src/approaches/bm25_llm.py
+python src/approaches/hybrid_llm.py
+```
+
+**4. Run on HPC Cluster (after local testing):**
+```bash
+# Create benchmarking script
+python scripts/run_full_benchmark.py
+
+# Submit SLURM job
+sbatch scripts/submit_benchmark.sh
+```
+
+### Development vs Production
+
+| Environment | Purpose | Tools | Dataset |
+|-------------|---------|-------|---------|
+| **Local** | Development & debugging | Sample tools (3-5) | Ollama (CPU/small GPU) |
+| **HPC** | Final benchmarking | Full dataset (200+ tools) | vLLM (A100 GPU) |
+
+---
+
 ## 📊 Current Status
 
 **Implementation Progress:**
 - [x] Project setup and infrastructure
 - [x] Dense retrieval implementation (FAISS + embeddings)
-- [x] LLM integration (vLLM server + prompt engineering)
-- [ ] BM25 retrieval implementation
-- [ ] Hybrid fusion implementation
-- [ ] All 6 approaches implementation
-- [ ] Comprehensive evaluation framework
-- [ ] Experimental validation
+- [x] BM25 retrieval implementation (sparse lexical search)
+- [x] LLM integration (vLLM + Ollama support, multi-tool selection)
+- [x] Approach 1: Dense Retrieval Only (100% on sample data)
+- [x] Approach 2: BM25 Only (75% on sample data)
+- [ ] Approach 3: LLM Only (Full Context)
+- [ ] Approach 4: Dense + LLM (RAG-MCP)
+- [ ] Approach 5: BM25 + LLM
+- [ ] Approach 6: Hybrid Retrieval + LLM
+- [ ] Unified benchmarking script for all 6 approaches
+- [ ] HPC cluster deployment & large-scale evaluation
 
-**Experimental Timeline:**
-1. **Baseline Methods** (Approaches 1-3): 1-2 weeks
-2. **LLM-Augmented Methods** (Approaches 4-6): 2-3 weeks
-3. **Analysis & Reporting**: 1 week
+**Development Workflow:**
+
+**Phase 1: Local Development** (Current)
+1. Build all 6 approaches with modular design
+2. Test each approach locally with Ollama (3-5 sample tools)
+3. Debug and validate implementation
+4. Commit each working approach
+
+**Phase 2: HPC Benchmarking** (After all approaches complete)
+1. Create unified benchmarking script
+2. Prepare SLURM job submission script
+3. Deploy to university HPC cluster
+4. Run comprehensive evaluation on full dataset (200+ tools)
+5. Collect results and perform analysis
 

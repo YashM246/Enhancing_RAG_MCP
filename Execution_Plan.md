@@ -9,6 +9,12 @@
 - Hybrid approach (Approach 6) should achieve >50% accuracy
 - Complete reproducible implementation with comprehensive comparison
 
+**Development Strategy:**
+- **Phase 1:** Build all 6 approaches locally, test with Ollama on sample data (3-5 tools)
+- **Phase 2:** Create unified benchmarking script + SLURM job for HPC cluster
+- **Phase 3:** Run comprehensive evaluation on full dataset (200+ tools) on HPC
+- **Phase 4:** Analyze results and compare all approaches
+
 ---
 
 ## 6 Comparison Approaches
@@ -28,6 +34,74 @@
 - Approach 4: RAG-MCP from Gan & Sun (2025) - our validation target
 - Approach 5: Variant using lexical retrieval instead of semantic
 - Approach 6: Novel hybrid approach - our main contribution
+
+---
+
+## Development & Testing Workflow
+
+### Phase 1: Local Development (CURRENT)
+
+**Environment:** Local machine with Ollama
+**Dataset:** Sample data (3-5 tools)
+**Goal:** Build and test all 6 approaches
+
+**Steps:**
+1. ✅ Implement Approach 1 (Dense Only) - DONE
+2. ✅ Implement Approach 2 (BM25 Only) - DONE
+3. ⏳ Implement Approach 3 (LLM Only)
+4. ⏳ Implement Approach 4 (Dense + LLM)
+5. ⏳ Implement Approach 5 (BM25 + LLM)
+6. ⏳ Implement Approach 6 (Hybrid + LLM)
+7. ⏳ Test each approach with `if __name__ == "__main__":` blocks
+8. ⏳ Commit each working approach
+
+**Testing Strategy:**
+- Run each approach file directly: `python src/approaches/dense_only.py`
+- Verify output format is consistent across all approaches
+- Check accuracy on 3-5 sample queries
+- Debug any issues locally (fast iteration)
+
+### Phase 2: Unified Benchmarking Script
+
+**Goal:** Create scripts to run all 6 approaches systematically
+
+**Files to Create:**
+1. `scripts/run_full_benchmark.py` - Main benchmarking script
+   - Loads full dataset
+   - Runs all 6 approaches with multiple k values
+   - Saves results in standardized format
+
+2. `scripts/submit_benchmark.sh` - SLURM job script
+   - Requests GPU resources (A100, 40GB VRAM)
+   - Starts vLLM server
+   - Runs benchmarking script
+   - Handles cleanup
+
+3. `scripts/analyze_results.py` - Results analysis
+   - Compares all 6 approaches
+   - Generates visualizations
+   - Creates comparison tables
+
+### Phase 3: HPC Cluster Evaluation
+
+**Environment:** University HPC cluster with A100 GPU
+**Dataset:** Full dataset (200+ tools, 100+ queries)
+**Goal:** Comprehensive evaluation and comparison
+
+**Steps:**
+1. Deploy code to HPC cluster
+2. Load full dataset
+3. Submit SLURM job
+4. Monitor job execution
+5. Collect results
+6. Analyze and visualize
+
+**Expected Output:**
+- Accuracy comparison across all 6 approaches
+- Token usage analysis
+- Latency measurements
+- Statistical significance tests
+- Visualization plots
 
 ---
 
@@ -452,50 +526,59 @@
 
 ## Key Commands Reference
 
+### Local Development & Testing
+
 ```bash
 # Setup
 pip install -r requirements.txt
-python scripts/validate_data.py
 
-# Server setup (on GPU server - only needed for approaches 3-6)
+# Install Ollama for local LLM testing
+# See Ollama_Setup_Guide.md for details
+ollama run mistral:7b-instruct-q4_0
+
+# Test individual approaches locally (with sample data)
+python src/approaches/dense_only.py      # Approach 1 (no LLM)
+python src/approaches/bm25_only.py       # Approach 2 (no LLM)
+python src/approaches/llm_only.py        # Approach 3 (needs Ollama)
+python src/approaches/dense_llm.py       # Approach 4 (needs Ollama)
+python src/approaches/bm25_llm.py        # Approach 5 (needs Ollama)
+python src/approaches/hybrid_llm.py      # Approach 6 (needs Ollama)
+
+# Run unit tests
+pytest tests/
+```
+
+### HPC Cluster Benchmarking (After Local Testing)
+
+```bash
+# On HPC: Setup vLLM server
 pip install vllm
 vllm serve mistralai/Mistral-7B-Instruct-v0.3 --host 0.0.0.0 --port 8000
 
-# Build indexes
-python src/main.py --build-index --index-type all  # Build both FAISS and BM25
+# Submit benchmarking job
+sbatch scripts/submit_benchmark.sh
 
-# Run experiments - All 6 approaches
+# Monitor job status
+squeue -u $USER
 
-# Approach 1: Dense Retrieval Only (no LLM needed)
-python src/main.py --approach 1
+# Check results
+python scripts/analyze_results.py --results-dir results/
+```
 
-# Approach 2: BM25 Only (no LLM needed)
-python src/main.py --approach 2
+### Benchmarking Script Structure
 
-# Approach 3: LLM Only (Full Context)
-python src/main.py --approach 3 --server-url http://your-server:8000
+```bash
+# scripts/run_full_benchmark.py
+# - Loads full dataset (200+ tools, 100+ queries)
+# - Runs all 6 approaches
+# - Tests multiple k values (3, 5, 10)
+# - Saves comprehensive results
 
-# Approach 4: Dense Retrieval + LLM (RAG-MCP)
-python src/main.py --approach 4 --k 3 --server-url http://your-server:8000
-python src/main.py --approach 4 --k 5 --server-url http://your-server:8000
-python src/main.py --approach 4 --k 10 --server-url http://your-server:8000
-
-# Approach 5: BM25 + LLM
-python src/main.py --approach 5 --k 3 --server-url http://your-server:8000
-python src/main.py --approach 5 --k 5 --server-url http://your-server:8000
-
-# Approach 6: Hybrid Retrieval + LLM
-python src/main.py --approach 6 --k 3 --server-url http://your-server:8000
-python src/main.py --approach 6 --k 5 --server-url http://your-server:8000
-
-# Run evaluation across all approaches
-python src/evaluation/evaluate.py --results results/
-
-# Generate comparison reports
-python scripts/generate_report.py --compare-all
-
-# Run tests
-pytest tests/
+# scripts/submit_benchmark.sh (SLURM job)
+# - Requests GPU resources
+# - Starts vLLM server
+# - Runs benchmarking script
+# - Saves results to shared storage
 ```
 
 ---

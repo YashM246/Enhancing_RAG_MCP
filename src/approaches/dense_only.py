@@ -41,6 +41,7 @@ class DenseOnlyApproach:
             "query": query,
             "selected_tool_id": top_tool["tool_id"],
             "selected_tool_name": top_tool["tool_name"],
+            "selected_server": top_tool.get("server", "Unknown"),
             "similarity_score": top_tool["similarity_score"],
             "latency_seconds": latency,
             "approach": self.approach_name,
@@ -50,17 +51,17 @@ class DenseOnlyApproach:
 
         return result
     
-    def evaluate_query(self, query:str, ground_truth_tool_id: str)-> Dict[str, Any]:
+    def evaluate_query(self, query:str, ground_truth_server: str)-> Dict[str, Any]:
         # Evaluate tool selection for single query
 
         result = self.select_tool(query)
 
         # Check if correct
-        is_correct = result["selected_tool_id"] == ground_truth_tool_id
+        is_correct = result["selected_server"] == ground_truth_server
 
         evaluation = {
             **result,
-            "ground_truth_tool_id": ground_truth_tool_id,
+            "ground_truth_server": ground_truth_server,
             "is_correct": is_correct,
             "accuracy": 1.0 if is_correct else 0.0
         }
@@ -83,19 +84,22 @@ if __name__ == "__main__":
             "tool_id": "tool_001",
             "tool_name": "Weather API",
             "description": "Get current weather data for any location",
-            "usage_example": "Get weather for New York"
+            "usage_example": "Get weather for New York",
+            "server": "Weather API"
         },
         {
             "tool_id": "tool_002",
             "tool_name": "Database Query",
             "description": "Execute SQL queries on the database",
-            "usage_example": "Query user table"
+            "usage_example": "Query user table",
+            "server": "Database Tools"
         },
         {
             "tool_id": "tool_003",
             "tool_name": "File Reader",
             "description": "Read contents from files",
-            "usage_example": "Read config.json"
+            "usage_example": "Read config.json",
+            "server": "File Operations"
         }
     ]
     
@@ -125,22 +129,22 @@ if __name__ == "__main__":
     test_cases = [
         {
             "query": "get current weather data",
-            "ground_truth": "tool_001",
+            "ground_truth": "Weather API",
             "description": "Should select Weather API"
         },
         {
             "query": "run SQL query on database",
-            "ground_truth": "tool_002",
+            "ground_truth": "Database Tools",
             "description": "Should select Database Query"
         },
         {
             "query": "read file from disk",
-            "ground_truth": "tool_003",
+            "ground_truth": "File Operations",
             "description": "Should select File Reader"
         },
         {
             "query": "what is the temperature outside",
-            "ground_truth": "tool_001",
+            "ground_truth": "Weather API",
             "description": "Semantic query - should work better than BM25"
         }
     ]
@@ -159,7 +163,7 @@ if __name__ == "__main__":
         
         results.append(evaluation)
         
-        print(f"Selected: {evaluation['selected_tool_id']} - {evaluation['selected_tool_name']}")
+        print(f"Selected: {evaluation['selected_server']} (Tool: {evaluation['selected_tool_name']})")
         print(f"Similarity Score: {evaluation['similarity_score']:.4f}")
         print(f"Correct: {'✓' if evaluation['is_correct'] else '✗'}")
         print(f"Latency: {evaluation['latency_seconds']*1000:.2f}ms")

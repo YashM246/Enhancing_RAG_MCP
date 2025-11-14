@@ -36,6 +36,7 @@ class BM25OnlyApproach:
             "query": query,
             "selected_tool_id": top_tool["tool_id"],
             "selected_tool_name": top_tool["tool_name"],
+            "selected_server": top_tool.get("server", "Unknown"),
             "bm25_score": top_tool["bm25_score"],
             "latency_seconds": latency,
             "approach": self.approach_name,
@@ -45,16 +46,16 @@ class BM25OnlyApproach:
         return result
     
 
-    def evaluate_query(self, query:str, ground_truth_tool_id: str)-> Dict[str, Any]:
+    def evaluate_query(self, query:str, ground_truth_server: str)-> Dict[str, Any]:
 
         result = self.select_tool(query)
 
-        # Check if selection is correct
-        is_correct = result["selected_tool_id"] == ground_truth_tool_id
+        # Check if selection is correct (compare server names)
+        is_correct = result["selected_server"] == ground_truth_server
 
         evaluation = {
             **result,
-            "ground_truth_tool_id": ground_truth_tool_id,
+            "ground_truth_server": ground_truth_server,
             "is_correct": is_correct,
             "accuracy": 1.0 if is_correct else 0.0
         }
@@ -64,30 +65,74 @@ class BM25OnlyApproach:
 if __name__ == "__main__":
     print("Testing Approach 2: BM25 Only (top-1)")
     print("=" * 60)
-    
+
+    # First, build a BM25 index with sample tools
+    print("\nStep 1: Building BM25 index with sample tools...")
+    print("-" * 60)
+
+    from src.indexing.bm25_indexer import BM25Indexer
+
+    sample_tools = [
+        {
+            "tool_id": "tool_001",
+            "tool_name": "Weather API",
+            "description": "Get current weather data for any location",
+            "usage_example": "Get weather for New York",
+            "server": "Weather API"
+        },
+        {
+            "tool_id": "tool_002",
+            "tool_name": "Database Query",
+            "description": "Execute SQL queries on the database",
+            "usage_example": "Query user table",
+            "server": "Database Tools"
+        },
+        {
+            "tool_id": "tool_003",
+            "tool_name": "File Reader",
+            "description": "Read contents from files",
+            "usage_example": "Read config.json",
+            "server": "File Operations"
+        }
+    ]
+
+    # Build index
+    indexer = BM25Indexer()
+    indexer.build_index(sample_tools)
+
+    # Save index
+    index_path = "data/indexes/bm25_index.pkl"
+    indexer.save_index(index_path)
+    print(f"✓ Index saved to {index_path}")
+
     # Initialize approach
-    approach = BM25OnlyApproach(index_path="data/indexes/bm25_index.pkl")
-    
+    print("\nStep 2: Initializing Approach 2...")
+    print("-" * 60)
+    approach = BM25OnlyApproach(index_path=index_path)
+
     # Test queries with ground truth
+    print("\nStep 3: Testing queries...")
+    print("-" * 60)
+
     test_cases = [
         {
             "query": "get current weather data",
-            "ground_truth": "tool_001",
+            "ground_truth": "Weather API",
             "description": "Should select Weather API"
         },
         {
             "query": "run SQL query on database",
-            "ground_truth": "tool_002",
+            "ground_truth": "Database Tools",
             "description": "Should select Database Query"
         },
         {
             "query": "read file from disk",
-            "ground_truth": "tool_003",
+            "ground_truth": "File Operations",
             "description": "Should select File Reader"
         },
         {
             "query": "what is the temperature",
-            "ground_truth": "tool_001",
+            "ground_truth": "Weather API",
             "description": "Semantic query - might fail (no 'weather' keyword)"
         }
     ]
@@ -105,8 +150,8 @@ if __name__ == "__main__":
         )
         
         results.append(evaluation)
-        
-        print(f"Selected: {evaluation['selected_tool_id']} - {evaluation['selected_tool_name']}")
+
+        print(f"Selected: {evaluation['selected_server']} (Tool: {evaluation['selected_tool_name']})")
         print(f"BM25 Score: {evaluation['bm25_score']:.4f}")
         print(f"Correct: {'✓' if evaluation['is_correct'] else '✗'}")
         print(f"Latency: {evaluation['latency_seconds']*1000:.2f}ms")

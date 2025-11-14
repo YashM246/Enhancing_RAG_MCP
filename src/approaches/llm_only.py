@@ -78,13 +78,16 @@ class LLMOnlyApproach:
         result = self.select_tool(query)
 
         # Check if selection is correct (server-level comparison)
-        # Extract server names from selected tool IDs
+        # Extract server names from selected tool names
         selected_servers = []
-        for tool_id in result["selected_tools"]:
-            # Find the tool in self.tools
-            tool = next((t for t in self.tools if t["tool_id"] == tool_id), None)
+        for tool_name in result["selected_tools"]:
+            # Find the tool in self.tools by matching tool_name exactly
+            tool = next((t for t in self.tools if t["tool_name"] == tool_name), None)
             if tool:
                 selected_servers.append(tool.get("server", "Unknown"))
+            else:
+                # LLM returned a tool name that doesn't match exactly - mark as Unknown
+                selected_servers.append("Unknown")
 
         is_correct = ground_truth_server in selected_servers
 
@@ -150,13 +153,13 @@ if __name__ == "__main__":
             },
             {
                 "query": "run SQL query on database",
-                "ground_truth": "Database Query",
-                "description": "Should select Database Query"
+                "ground_truth": "Database Tools",
+                "description": "Should select Database Tools"
             },
             {
                 "query": "read file from disk",
-                "ground_truth": "File Reader",
-                "description": "Should select File Reader"
+                "ground_truth": "File Operations",
+                "description": "Should select File Operations"
             },
             {
                 "query": "what is the temperature outside",

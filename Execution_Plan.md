@@ -48,12 +48,12 @@
 **Steps:**
 1. ✅ Implement Approach 1 (Dense Only) - DONE
 2. ✅ Implement Approach 2 (BM25 Only) - DONE
-3. ⏳ Implement Approach 3 (LLM Only)
-4. ⏳ Implement Approach 4 (Dense + LLM)
-5. ⏳ Implement Approach 5 (BM25 + LLM)
-6. ⏳ Implement Approach 6 (Hybrid + LLM)
-7. ⏳ Test each approach with `if __name__ == "__main__":` blocks
-8. ⏳ Commit each working approach
+3. ✅ Implement Approach 3 (LLM Only) - DONE
+4. ✅ Implement Approach 4 (Dense + LLM) - DONE
+5. ✅ Implement Approach 5 (BM25 + LLM) - DONE
+6. ⏳ Implement Approach 6 (Hybrid + LLM) - IN PROGRESS
+7. ✅ Test each approach with `if __name__ == "__main__":` blocks - DONE (Approaches 1-5)
+8. ✅ Commit each working approach - DONE (Approaches 1-5)
 
 **Testing Strategy:**
 - Run each approach file directly: `python src/approaches/dense_only.py`
@@ -119,15 +119,15 @@
   │   │   ├── tool_indexer.py    # Dense embeddings (FAISS) [✓]
   │   │   └── bm25_indexer.py    # Sparse BM25 index [✓]
   │   ├── retrieval/             # Retrieval components
-  │   │   ├── dense_retriever.py # Dense/semantic retrieval [TODO]
+  │   │   ├── dense_retriever.py # Dense/semantic retrieval [✓]
   │   │   ├── bm25_retriever.py  # Sparse/lexical retrieval [✓]
   │   │   └── hybrid_retriever.py # Hybrid fusion (RRF) [TODO]
   │   ├── approaches/            # Core implementations of 6 approaches
-  │   │   ├── dense_only.py      # Approach 1: Dense Retrieval Only [TODO]
-  │   │   ├── bm25_only.py       # Approach 2: BM25 Only [IN PROGRESS]
-  │   │   ├── llm_only.py        # Approach 3: LLM Only (Full Context) [TODO]
-  │   │   ├── dense_llm.py       # Approach 4: Dense + LLM [TODO]
-  │   │   ├── bm25_llm.py        # Approach 5: BM25 + LLM [TODO]
+  │   │   ├── dense_only.py      # Approach 1: Dense Retrieval Only [✓]
+  │   │   ├── bm25_only.py       # Approach 2: BM25 Only [✓]
+  │   │   ├── llm_only.py        # Approach 3: LLM Only (Full Context) [✓]
+  │   │   ├── dense_llm.py       # Approach 4: Dense + LLM [✓]
+  │   │   ├── bm25_llm.py        # Approach 5: BM25 + LLM [✓]
   │   │   └── hybrid_llm.py      # Approach 6: Hybrid + LLM [TODO]
   │   ├── llm/                   # LLM integration
   │   │   └── llm_selector.py    # LLM tool selection logic [✓]
@@ -346,20 +346,20 @@
 - [ ] Test server connection resilience
 
 **All 6 Approach Implementations:**
-- [ ] **Approach 1:** `src/approaches/dense_only.py` - Dense Retrieval Only (top-1)
+- [x] **Approach 1:** `src/approaches/dense_only.py` - Dense Retrieval Only (top-1)
   - Use cosine similarity on embeddings, return top-1 tool directly
-- [ ] **Approach 2:** `src/approaches/bm25_only.py` - BM25 Only (top-1)
+- [x] **Approach 2:** `src/approaches/bm25_only.py` - BM25 Only (top-1)
   - Use BM25 lexical search, return top-1 tool directly
-- [ ] **Approach 3:** `src/approaches/llm_only.py` - LLM Only (Full Context)
+- [x] **Approach 3:** `src/approaches/llm_only.py` - LLM Only (Full Context)
   - Give LLM ALL tools at once (naive MCP baseline)
-- [ ] **Approach 4:** `src/approaches/dense_llm.py` - Dense Retrieval + LLM (top-k)
+- [x] **Approach 4:** `src/approaches/dense_llm.py` - Dense Retrieval + LLM (top-k)
   - RAG-MCP from paper: retrieve top-k with embeddings, LLM selects
-- [ ] **Approach 5:** `src/approaches/bm25_llm.py` - BM25 + LLM (top-k)
+- [x] **Approach 5:** `src/approaches/bm25_llm.py` - BM25 + LLM (top-k)
   - Retrieve top-k with BM25, LLM selects
 - [ ] **Approach 6:** `src/approaches/hybrid_llm.py` - Hybrid Retrieval + LLM (top-k)
   - Combine dense + BM25 with fusion, LLM selects from top-k
-- [ ] Test all approaches on sample queries
-- [ ] Verify correct behavior and output format consistency
+- [x] Test all approaches on sample queries (Approaches 1-5 tested)
+- [x] Verify correct behavior and output format consistency (Approaches 1-5 verified)
 
 **Documentation:**
 - [ ] Update `README.md` with:
@@ -588,15 +588,15 @@ python scripts/analyze_results.py --results-dir results/
 **Approach Dependencies:**
 - Approaches 1 & 4: Require FAISS dense index
 - Approaches 2 & 5: Require BM25 sparse index
-- Approach 3 & 6: Require both indexes
-- Approaches 3-6: Require vLLM server connection
+- Approach 6: Requires both indexes (dense + BM25)
+- Approaches 3-6: Require LLM server connection (Ollama or vLLM)
 
 **Recommended Implementation Order:**
-1. Complete Approaches 1 & 2 (pure retrieval, no LLM needed)
-2. Complete Approach 3 (LLM-only baseline)
-3. Complete Approach 4 (RAG-MCP from paper - validate against published results)
-4. Complete Approach 5 (BM25+LLM variant)
-5. Complete Approach 6 (Hybrid - expected best performance)
+1. ✅ Complete Approaches 1 & 2 (pure retrieval, no LLM needed) - DONE
+2. ✅ Complete Approach 3 (LLM-only baseline) - DONE
+3. ✅ Complete Approach 4 (RAG-MCP from paper - validate against published results) - DONE
+4. ✅ Complete Approach 5 (BM25+LLM variant) - DONE
+5. ⏳ Complete Approach 6 (Hybrid - expected best performance) - IN PROGRESS
 
 **Critical Success Factors:**
 - Approach 4 accuracy should match paper (~43%)

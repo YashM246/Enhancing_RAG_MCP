@@ -77,17 +77,27 @@ class LLMOnlyApproach:
 
         result = self.select_tool(query)
 
-        # Check if selection is correct (server-level comparison)
+        # Check if selection is correct (server-level comparison) with strict validation
         # Extract server names from selected tool names
         selected_servers = []
+        mismatched_tools = []
+        valid_tool_names = [t["tool_name"] for t in self.tools]
+
         for tool_name in result["selected_tools"]:
-            # Find the tool in self.tools by matching tool_name exactly
+            # Find the tool in self.tools by EXACT matching (case-sensitive)
             tool = next((t for t in self.tools if t["tool_name"] == tool_name), None)
             if tool:
                 selected_servers.append(tool.get("server", "Unknown"))
             else:
-                # LLM returned a tool name that doesn't match exactly - mark as Unknown
+                # LLM returned a tool name that doesn't match exactly - STRICT VALIDATION FAILURE
                 selected_servers.append("Unknown")
+                mismatched_tools.append({
+                    "llm_returned": tool_name,
+                    "valid_options": valid_tool_names
+                })
+                print(f"⚠️  WARNING: LLM returned invalid tool name: '{tool_name}'")
+                print(f"   Valid options: {valid_tool_names}")
+                print(f"   The LLM must return EXACT tool names (case-sensitive)!")
 
         is_correct = ground_truth_server in selected_servers
 
@@ -96,7 +106,8 @@ class LLMOnlyApproach:
             "selected_servers": selected_servers,
             "ground_truth_server": ground_truth_server,
             "is_correct": is_correct,
-            "accuracy": 1.0 if is_correct else 0.0
+            "accuracy": 1.0 if is_correct else 0.0,
+            "mismatched_tools": mismatched_tools  # Track LLM tool name errors
         }
 
         return evaluation

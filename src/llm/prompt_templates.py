@@ -55,13 +55,12 @@ Rules:
 - Use 1 tool if the query has a single, clear objective
 - Use 2-3 tools only if the query explicitly requires multiple distinct actions
 - Return tools in priority order (most important first)
+- YOU MUST use the EXACT tool_name as listed (case-sensitive, including spaces and capitalization)
+- DO NOT modify, abbreviate, or reformat tool names
 
-Return ONLY JSON: {"selected_tools": ["tool_name1", "tool_name2", ...]}
+Return ONLY JSON: {"selected_tools": ["Exact Tool Name", "Another Tool Name", ...]}
 
-Examples:
-- "Search for papers" -> {"selected_tools": ["arxiv_search"]}
-- "Search papers and check weather" -> {"selected_tools": ["arxiv_search", "weather_api"]}
-- "Find papers, save to file, and email results" -> {"selected_tools": ["arxiv_search", "file_writer", "email_sender"]}"""
+CRITICAL: Copy tool names EXACTLY as shown in the tool list. Do not lowercase, add underscores, or change formatting."""
 
     # Format the tool list as numbered items
     # Example output:
@@ -76,10 +75,10 @@ Examples:
     # The LLM will analyze this to make its selection
     user_msg = f"""Query: {query}
 
-Tools:
+Available Tools (use EXACT names as shown):
 {tool_list}
 
-JSON response:"""
+Return JSON with EXACT tool names:"""
 
     # Return in OpenAI chat completion format
     # This format is compatible with vLLM and most LLM APIs
@@ -115,17 +114,17 @@ Instructions:
    - Use 2-3 tools only if the query explicitly requires MULTIPLE distinct actions
 4. Return ONLY a JSON object with this exact format: {"selected_tools": ["tool1", "tool2", ...]}
 
-Important:
+CRITICAL REQUIREMENTS:
+- YOU MUST use the EXACT tool_name as listed (case-sensitive, including all spaces and capitalization)
+- DO NOT modify, lowercase, abbreviate, add underscores, or reformat tool names in ANY way
+- COPY tool names EXACTLY character-for-character from the provided list
 - Prefer fewer tools when possible (minimize, don't maximize)
-- Use exact tool names as provided
 - Return tools in priority order (most important first)
 - Do not add any explanation or additional text
 - Maximum 3 tools allowed
 
-Examples:
-- Single objective: {"selected_tools": ["brave_search"]}
-- Two objectives: {"selected_tools": ["arxiv_search", "file_writer"]}
-- Three objectives: {"selected_tools": ["database_query", "file_writer", "email_sender"]}"""
+WRONG: {"selected_tools": ["weather_api"]}  <- modified name
+RIGHT: {"selected_tools": ["Weather API"]}  <- exact name from list"""
 
     # Format tools with more detail including usage examples
     tool_list = []
@@ -146,10 +145,10 @@ Examples:
 
     user_msg = f"""User Query: "{query}"
 
-Available Tools:
+Available Tools (copy names EXACTLY as shown):
 {tools_formatted}
 
-Select the minimum tools needed (1-3 max) and respond with JSON: {{"selected_tools": ["tool1", "tool2", ...]}}"""
+Select the minimum tools needed (1-3 max) and respond with JSON using EXACT tool names: {{"selected_tools": ["Exact Name", "Another Exact Name", ...]}}"""
 
     return [
         {"role": "system", "content": system_msg},

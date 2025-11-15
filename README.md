@@ -221,9 +221,9 @@ sbatch scripts/submit_benchmark.sh
 - [x] LLM integration (vLLM + Ollama support, multi-tool selection)
 - [x] Approach 1: Dense Retrieval Only (100% on sample data)
 - [x] Approach 2: BM25 Only (75% on sample data)
-- [ ] Approach 3: LLM Only (Full Context)
-- [ ] Approach 4: Dense + LLM (RAG-MCP)
-- [ ] Approach 5: BM25 + LLM
+- [x] Approach 3: LLM Only (Full Context)
+- [x] Approach 4: Dense + LLM (RAG-MCP) (100% on sample data)
+- [x] Approach 5: BM25 + LLM (100% on sample data)
 - [ ] Approach 6: Hybrid Retrieval + LLM
 - [ ] Unified benchmarking script for all 6 approaches
 - [ ] HPC cluster deployment & large-scale evaluation

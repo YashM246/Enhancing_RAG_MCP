@@ -68,7 +68,8 @@
 **Files to Create:**
 1. `scripts/run_full_benchmark.py` - Main benchmarking script
    - Loads full dataset
-   - Runs all 6 approaches with multiple k values
+   - Runs all 6 approaches (k=3,5,7 for approaches 4-6; retrieve top-7 for approaches 1-2)
+   - Calculates Accuracy, Recall@1/3/5/7, MRR, token usage, latency
    - Saves results in standardized format
 
 2. `scripts/submit_benchmark.sh` - SLURM job script
@@ -264,11 +265,11 @@
 **Evaluation Module:**
 - [ ] Create `src/evaluation/evaluator.py`
 - [ ] Implement `Evaluator` class:
-  - [ ] Accuracy calculation (exact match)
-  - [ ] Top-k accuracy
-  - [ ] Mean Reciprocal Rank (MRR)
-  - [ ] Token usage tracking
-  - [ ] Latency measurement
+  - [ ] Accuracy calculation (server-level comparison, not exact tool match)
+  - [ ] Recall@k (k = 1, 3, 5, 7) - Is correct server in top-k candidates?
+  - [ ] Mean Reciprocal Rank (MRR) - Average rank of correct server
+  - [ ] Token usage tracking (LLM approaches only)
+  - [ ] Latency measurement (retrieval + LLM stages)
 - [ ] Create `src/evaluation/experiment_runner.py`
 
 **Utilities:**
@@ -383,17 +384,17 @@
 - [ ] Configure logging and result saving
 - [ ] Create experiment tracking sheet
 
-**Experiment 1: Dense Retrieval Only (top-1)**
+**Experiment 1: Dense Retrieval Only (retrieve top-7, select top-1)**
 - [ ] Run full query dataset
 - [ ] Save results: `results/exp1_dense_only.json`
-- [ ] Track: Accuracy, Latency (no LLM tokens)
-- [ ] Note: Fastest baseline, no reasoning
+- [ ] Track: Accuracy, Recall@1/3/5/7, MRR, Latency (no LLM tokens)
+- [ ] Note: Fastest baseline, no reasoning. Retrieves top-7 to enable retrieval quality analysis
 
-**Experiment 2: BM25 Only (top-1)**
+**Experiment 2: BM25 Only (retrieve top-7, select top-1)**
 - [ ] Run full query dataset
 - [ ] Save results: `results/exp2_bm25_only.json`
-- [ ] Track: Accuracy, Latency (no LLM tokens)
-- [ ] Compare with dense retrieval
+- [ ] Track: Accuracy, Recall@1/3/5/7, MRR, Latency (no LLM tokens)
+- [ ] Compare with dense retrieval. Retrieves top-7 to enable retrieval quality analysis
 
 **Experiment 3: LLM Only (Full Context)**
 - [ ] Run full query dataset
@@ -401,25 +402,25 @@
 - [ ] Track: Accuracy, Token usage (highest), Latency (slowest)
 - [ ] Expect: Low accuracy (~13%), prompt bloat
 
-**Experiment 4: Dense Retrieval + LLM (k=3,5,10)**
+**Experiment 4: Dense Retrieval + LLM (k=3,5,7)**
 - [ ] Run with k=3: `results/exp4_dense_llm_k3.json`
 - [ ] Run with k=5: `results/exp4_dense_llm_k5.json`
-- [ ] Run with k=10: `results/exp4_dense_llm_k10.json`
-- [ ] Track: Accuracy (~43% expected), Token reduction (>50%), Latency
+- [ ] Run with k=7: `results/exp4_dense_llm_k7.json`
+- [ ] Track: Accuracy (~43% expected), Token reduction (>50%), Latency, Recall@1/3/5/7, MRR
 - [ ] This is RAG-MCP from paper
 
-**Experiment 5: BM25 + LLM (k=3,5,10)**
+**Experiment 5: BM25 + LLM (k=3,5,7)**
 - [ ] Run with k=3: `results/exp5_bm25_llm_k3.json`
 - [ ] Run with k=5: `results/exp5_bm25_llm_k5.json`
-- [ ] Run with k=10: `results/exp5_bm25_llm_k10.json`
-- [ ] Track: Accuracy, Token reduction, Latency
+- [ ] Run with k=7: `results/exp5_bm25_llm_k7.json`
+- [ ] Track: Accuracy, Token reduction, Latency, Recall@1/3/5/7, MRR
 - [ ] Compare with dense+LLM
 
-**Experiment 6: Hybrid Retrieval + LLM (k=3,5,10)**
+**Experiment 6: Hybrid Retrieval + LLM (k=3,5,7)**
 - [ ] Run with k=3: `results/exp6_hybrid_llm_k3.json`
 - [ ] Run with k=5: `results/exp6_hybrid_llm_k5.json`
-- [ ] Run with k=10: `results/exp6_hybrid_llm_k10.json`
-- [ ] Track: Accuracy (>50% goal), Token reduction, Latency
+- [ ] Run with k=7: `results/exp6_hybrid_llm_k7.json`
+- [ ] Track: Accuracy (>50% goal), Token reduction, Latency, Recall@1/3/5/7, MRR
 - [ ] Expected: Best overall performance
 
 **Experiment 7: Ablation Studies**

@@ -36,14 +36,14 @@ This project implements and compares **6 different approaches** to tool selectio
 
 Based on Gan & Sun (2025) and our experimental design:
 
-| Approach | Accuracy (Expected) | Token Usage | Latency | Notes |
-|----------|---------------------|-------------|---------|-------|
-| 1. Dense Retrieval Only (top-1) | Low (~20-30%) | Minimal (0 LLM tokens) | Fastest | No reasoning, pure similarity |
-| 2. BM25 Only (top-1) | Low (~15-25%) | Minimal (0 LLM tokens) | Fastest | Keyword-only matching |
-| 3. LLM Only (Full Context) | ~13% | Highest (100% baseline) | Slowest | Prompt bloat baseline |
-| 4. Dense Retrieval + LLM (top-k) | ~43% | ~50% reduction | Fast | RAG-MCP from paper |
-| 5. BM25 + LLM (top-k) | ~35-40% | ~50% reduction | Fast | Lexical filtering |
-| 6. Hybrid Retrieval + LLM (top-k) | **>50%** (goal) | ~50% reduction | Fast | Best of both worlds |
+| Approach | Accuracy (Expected) | Token Usage | Latency | k Values Tested | Notes |
+|----------|---------------------|-------------|---------|----------------|-------|
+| 1. Dense Retrieval Only | Low (~20-30%) | Minimal (0 LLM tokens) | Fastest | Retrieve top-7, select top-1 | Reports Recall@1/3/5/7 |
+| 2. BM25 Only | Low (~15-25%) | Minimal (0 LLM tokens) | Fastest | Retrieve top-7, select top-1 | Reports Recall@1/3/5/7 |
+| 3. LLM Only (Full Context) | ~13% | Highest (100% baseline) | Slowest | All tools | Prompt bloat baseline |
+| 4. Dense Retrieval + LLM | ~43% | ~50% reduction | Fast | k = 3, 5, 7 | RAG-MCP from paper |
+| 5. BM25 + LLM | ~35-40% | ~50% reduction | Fast | k = 3, 5, 7 | Lexical filtering |
+| 6. Hybrid Retrieval + LLM | **>50%** (goal) | ~50% reduction | Fast | k = 3, 5, 7 | Best of both worlds |
 
 **Key Hypothesis:** Hybrid approach (6) should outperform both pure retrieval and single-retrieval methods by combining semantic understanding with keyword matching.
 
@@ -76,21 +76,26 @@ Based on Gan & Sun (2025) and our experimental design:
 
 ## 📈 Evaluation Metrics
 
-**Accuracy Metrics:**
-- Tool Selection Accuracy (exact match)
-- Top-k Accuracy (ground truth in top-k)
-- Mean Reciprocal Rank (MRR)
+**Comparison Level:**
+- Server-level comparison (not individual tool level)
+- Evaluates if the approach selects tools from the correct server
 
-**Efficiency Metrics:**
+**Accuracy Metrics:**
+- **Accuracy**: Top-1 server selection correctness (%)
+- **Recall@k**: Is correct server in top-k candidates? (k = 1, 3, 5, 7)
+- **Mean Reciprocal Rank (MRR)**: Average rank of correct server (0-1, higher is better)
+
+**Efficiency Metrics (LLM approaches only):**
 - Average Prompt Tokens
 - Average Completion Tokens
-- Query Latency (seconds)
+- Total Token Usage
+- Token Reduction vs Baseline (%)
 - Cost per Query ($)
 
-**Retrieval Quality:**
-- Recall@k (is correct tool retrieved?)
-- Precision@k
-- Retrieval latency
+**Latency Metrics:**
+- Total Query Latency (seconds)
+- Retrieval Latency (approaches 1, 2, 4, 5, 6)
+- LLM Inference Latency (approaches 3, 4, 5, 6)
 
 ## 📚 Research Background
 

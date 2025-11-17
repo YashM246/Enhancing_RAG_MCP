@@ -1,0 +1,12 @@
+{
+  "approach": "dense_llm",
+  "config": {
+    "embedding_model": "all-MiniLM-L6-v2",
+    "llm_model": "mistral:7b-instruct-q4_0",
+    "k": 5,
+    "num_tools": 297,
+    "num_queries": 56
+  },
+  "metrics": {},
+  "results": []
+}

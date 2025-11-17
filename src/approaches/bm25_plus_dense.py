@@ -9,9 +9,9 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 from src.retrieval.bm25_plus_dense_retriever import HybridRetriever
 
 
-class HybridApproach:
+class BM25PlusDenseApproach:
     """
-    Approach 3: Hybrid BM25 + Dense Retrieval using Reciprocal Rank Fusion (RRF).
+    Approach 3: BM25 + Dense Retrieval using Reciprocal Rank Fusion (RRF).
     
     Combines BM25 lexical search and dense semantic search using RRF.
     No LLM involved - combines strengths of both retrieval methods.
@@ -26,7 +26,7 @@ class HybridApproach:
         rrf_k: int = 60
     ):
         """
-        Initialize Hybrid Approach.
+        Initialize BM25 + Dense Approach.
         
         Args:
             bm25_index_path: Path to BM25 index file
@@ -42,13 +42,13 @@ class HybridApproach:
             model_name=model_name,
             rrf_k=rrf_k
         )
-        self.approach_name = f"Hybrid (BM25 + Dense) with RRF (k={rrf_k})"
+        self.approach_name = f"BM25 + Dense with RRF (k={rrf_k})"
         self.model_name = model_name
         self.rrf_k = rrf_k
 
     def select_tool(self, query: str) -> Dict[str, Any]:
         """
-        Select tool using hybrid RRF approach.
+        Select tool using BM25 + Dense RRF approach.
         
         Args:
             query: User query string
@@ -139,14 +139,14 @@ class HybridApproach:
 
 
 if __name__ == "__main__":
-    print("Testing Approach 3: Hybrid (BM25 + Dense) with RRF")
+    print("Testing Approach 3: BM25 + Dense with RRF")
     print("=" * 60)
     
     # Initialize approach
-    print("\nInitializing Hybrid Approach...")
+    print("\nInitializing BM25 + Dense Approach...")
     print("-" * 60)
     
-    approach = HybridApproach(
+    approach = BM25PlusDenseApproach(
         bm25_index_path="data/indexes/bm25_index.pkl",
         dense_index_path="data/indexes/tools_all-MiniLM-L6-v2.index",
         dense_metadata_path="data/indexes/tools_all-MiniLM-L6-v2.metadata.json",
@@ -247,12 +247,12 @@ if __name__ == "__main__":
             marker = "→" if tool["tool_id"] == test_cases[0]["ground_truth"] else " "
             print(f"  {marker}[{i}] {tool['tool_name']} (Score: {tool.get('similarity_score', 0):.4f})")
         
-        print(f"\nHybrid RRF Top-3:")
+        print(f"\nBM25 + Dense RRF Top-3:")
         for i, tool in enumerate(detailed["hybrid_top3"][:3], 1):
             marker = "→" if tool["tool_id"] == test_cases[0]["ground_truth"] else " "
             print(f"  {marker}[{i}] {tool['tool_name']} (RRF: {tool.get('rrf_score', 0):.4f})")
             print(f"      BM25 Rank: {tool.get('bm25_rank', 'N/A')}, Dense Rank: {tool.get('dense_rank', 'N/A')}")
     
     print(f"\n{'='*60}")
-    print("✓ Hybrid approach testing complete!")
+    print("✓ BM25 + Dense approach testing complete!")
     print(f"{'='*60}")

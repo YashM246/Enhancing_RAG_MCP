@@ -136,6 +136,16 @@ class BM25LLMApproach:
         # Get selection result
         result = self.select_tool(query)
 
+        # Extract server names from candidate tools (for recall@k metrics)
+        # This represents what the retrieval stage retrieved
+        candidate_servers = []
+        for tool_name in result["candidate_tools"]:
+            tool = next((t for t in self.retriever.indexer.tools if t["tool_name"] == tool_name), None)
+            if tool:
+                candidate_servers.append(tool.get("server", "Unknown"))
+            else:
+                candidate_servers.append("Unknown")
+
         # Extract server names from selected tools with strict validation
         selected_servers = []
         mismatched_tools = []
@@ -163,6 +173,7 @@ class BM25LLMApproach:
         # Build evaluation dictionary
         evaluation = {
             **result,
+            "retrieved_servers": candidate_servers,  # For recall@k metrics (retrieval stage)
             "selected_servers": selected_servers,
             "ground_truth_server": ground_truth_server,
             "is_correct": is_correct,

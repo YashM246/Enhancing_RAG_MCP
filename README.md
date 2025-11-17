@@ -15,22 +15,24 @@ As LLMs integrate with growing toolsets through protocols like Model Context Pro
 
 ## 💡 Solution Overview
 
-This project implements and compares **6 different approaches** to tool selection for LLMs:
+This project implements and compares **7 different approaches** to tool selection for LLMs:
 
 **Pure Retrieval Methods (No LLM):**
 1. **Dense Retrieval Only (top-1)** - Cosine similarity on embeddings, select top-1 tool
 2. **BM25 Only (top-1)** - Lexical search, select top-1 tool
+3. **BM25 + Dense Hybrid (top-1)** - RRF fusion of BM25 + Dense, select top-1 (ablation study)
 
 **LLM-Based Methods:**
-3. **LLM Only (Full Context)** - All tools provided to LLM (naive MCP baseline)
-4. **Dense Retrieval + LLM (top-k)** - RAG-MCP: Embedding-based retrieval → LLM selects from top-k
-5. **BM25 + LLM (top-k)** - BM25 retrieval → LLM selects from top-k
-6. **Hybrid Retrieval + LLM (top-k)** - Combined dense + BM25 retrieval → LLM selects from top-k
+4. **LLM Only (Full Context)** - All tools provided to LLM (naive MCP baseline, demonstrates prompt bloat)
+5. **Dense Retrieval + LLM (top-k)** - RAG-MCP: Embedding-based retrieval → LLM selects from top-k
+6. **BM25 + LLM (top-k)** - BM25 retrieval → LLM selects from top-k
+7. **Hybrid Retrieval + LLM (top-k)** - Combined dense + BM25 retrieval → LLM selects from top-k
 
 **Key Benefits:**
 - Systematic comparison from pure retrieval to hybrid approaches
 - Demonstrates trade-offs between speed, accuracy, and context efficiency
 - Validates RAG-MCP methodology and explores improvements
+- Ablation study (Approach 3) isolates retrieval quality from LLM contribution
 
 ## 📊 Expected Results
 

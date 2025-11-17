@@ -75,7 +75,24 @@ class LLMOnlyApproach:
         # Evaluate tool selection for a single query
         # ground_truth_server: Server name (e.g., "Weather API", "Unit Converter")
 
-        result = self.select_tool(query)
+        try:
+            result = self.select_tool(query)
+        except (ValueError, Exception) as e:
+            # If LLM response can't be parsed or other error, count as wrong answer
+            return {
+                "query": query,
+                "selected_tools": [],
+                "selected_servers": [],
+                "ground_truth_server": ground_truth_server,
+                "is_correct": False,
+                "accuracy": 0.0,
+                "parse_error": str(e),
+                "num_tools_selected": 0,
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "total_tokens": 0,
+                "latency_seconds": 0
+            }
 
         # Check if selection is correct (server-level comparison) with strict validation
         # Extract server names from selected tool names
@@ -89,15 +106,12 @@ class LLMOnlyApproach:
             if tool:
                 selected_servers.append(tool.get("server", "Unknown"))
             else:
-                # LLM returned a tool name that doesn't match exactly - STRICT VALIDATION FAILURE
+                # LLM returned a tool name that doesn't match exactly
                 selected_servers.append("Unknown")
                 mismatched_tools.append({
                     "llm_returned": tool_name,
                     "valid_options": valid_tool_names
                 })
-                print(f"⚠️  WARNING: LLM returned invalid tool name: '{tool_name}'")
-                print(f"   Valid options: {valid_tool_names}")
-                print(f"   The LLM must return EXACT tool names (case-sensitive)!")
 
         is_correct = ground_truth_server in selected_servers
 

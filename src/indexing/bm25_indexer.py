@@ -43,10 +43,15 @@ class BM25Indexer:
         # Combine text field for each tools
         corpus = []
         for tool in tools:
+            # Handle usage_example which may be a list or string
+            usage_example = tool.get("usage_example", "")
+            if isinstance(usage_example, list):
+                usage_example = " ".join(usage_example)
+
             text_parts = [
                 tool.get("tool_name", ""),
                 tool.get("description", ""),
-                tool.get("usage_example", "")
+                usage_example
             ]
             combined_text = " ".join(text_parts)
             corpus.append(combined_text)

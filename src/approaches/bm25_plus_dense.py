@@ -46,30 +46,39 @@ class BM25PlusDenseApproach:
         self.model_name = model_name
         self.rrf_k = rrf_k
 
-    def select_tool(self, query: str) -> Dict[str, Any]:
+    def select_tool(self, query: str, k: int = 7) -> Dict[str, Any]:
         """
         Select tool using BM25 + Dense RRF approach.
-        
+
         Args:
             query: User query string
-            
+            k: Number of top tools to retrieve for metrics
+
         Returns:
             Dictionary with selected tool and metadata
         """
         start_time = time.perf_counter()
 
-        # Get top-1 tool using RRF
-        top_tool = self.retriever.retrieve_top1(query)
+        # Get top-k tools using RRF (for metrics calculation)
+        top_k_tools = self.retriever.retrieve(query, top_k=k)
 
-        if not top_tool:
+        if not top_k_tools:
             raise ValueError("No tools retrieved")
 
+        # Top-1 is the selected tool
+        top_tool = top_k_tools[0]
+
         latency = time.perf_counter() - start_time
+
+        # Extract servers from top-k for recall@k metrics
+        retrieved_servers = [tool.get("server", "Unknown") for tool in top_k_tools]
 
         result = {
             "query": query,
             "selected_tool_id": top_tool["tool_id"],
             "selected_tool_name": top_tool["tool_name"],
+            "selected_server": top_tool.get("server", "Unknown"),
+            "retrieved_servers": retrieved_servers,  # For recall@k metrics
             "rrf_score": top_tool["rrf_score"],
             "bm25_rank": top_tool.get("bm25_rank"),
             "bm25_score": top_tool.get("bm25_score", 0.0),
@@ -84,25 +93,25 @@ class BM25PlusDenseApproach:
 
         return result
 
-    def evaluate_query(self, query: str, ground_truth_tool_id: str) -> Dict[str, Any]:
+    def evaluate_query(self, query: str, ground_truth_server: str) -> Dict[str, Any]:
         """
         Evaluate tool selection for single query.
-        
+
         Args:
             query: User query string
-            ground_truth_tool_id: Correct tool ID
-            
+            ground_truth_server: Correct server name
+
         Returns:
             Evaluation dictionary with correctness info
         """
         result = self.select_tool(query)
 
-        # Check if selection is correct
-        is_correct = result["selected_tool_id"] == ground_truth_tool_id
+        # Check if selection is correct (server-level comparison)
+        is_correct = result["selected_server"] == ground_truth_server
 
         evaluation = {
             **result,
-            "ground_truth_tool_id": ground_truth_tool_id,
+            "ground_truth_server": ground_truth_server,
             "is_correct": is_correct,
             "accuracy": 1.0 if is_correct else 0.0
         }

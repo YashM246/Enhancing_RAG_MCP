@@ -19,23 +19,23 @@ sys.path.insert(0, str(project_root))
 from src.indexing import ToolIndexer
 from src.indexing.bm25_indexer import BM25Indexer
 from src.retrieval.dense_retriever import ToolRetriever
-from src.retrieval.bm25_retriever import BM25Retriever
-from src.retrieval.bm25_plus_dense_retriever import HybridRetriever
 from src.retrieval import RetrievalMetrics
 from src.approaches.bm25_only import BM25OnlyApproach
 from src.approaches.bm25_plus_dense import BM25PlusDenseApproach
 from src.approaches.llm_only import LLMOnlyApproach
 from src.approaches.dense_llm import DenseLLMApproach
+from src.approaches.bm25_llm import BM25LLMApproach
 from src.approaches.llm_hybrid import LLMHybridApproach
 
 # Global configuration
-TOOLS_PATH = "data/tools/all_tools.json"
+TOOLS_PATH = "data/tools/tools_list.json"  # Changed to tools_list.json for local testing
 QUERIES_PATH = "data/queries/mcp_task_description.json"
-K_VALUES = [3]
+K_VALUES = [3]  # Testing with k=3 only for local run
 EMBEDDING_MODEL = 'all-MiniLM-L6-v2'
 BATCH_SIZE = 8
 RRF_K = 60
-RETRIEVAL_K = 5
+RETRIEVAL_K = 3  # Changed to match K_VALUES
+LIMIT_QUERIES = 5  # Limit to 5 queries for quick testing
 LLM_SERVER_URL = "http://localhost:11434"
 LLM_MODEL_NAME = "mistral:7b-instruct-q4_0"
 LLM_BACKEND = "ollama"
@@ -193,7 +193,12 @@ class Benchmarker:
             raise ValueError(f"Unknown query JSON schema format")
         
         print(f"✓ Loaded {len(test_queries)} test queries from: {queries_path}")
-        
+
+        # Limit to first N queries if LIMIT_QUERIES is set
+        if LIMIT_QUERIES is not None and LIMIT_QUERIES > 0:
+            test_queries = test_queries[:LIMIT_QUERIES]
+            print(f"  ⚠️  Limited to first {LIMIT_QUERIES} queries for local testing")
+
         # Validate query format
         required_fields = ['query', 'ground_truth_tool']
         for i, query_data in enumerate(test_queries):
@@ -203,9 +208,9 @@ class Benchmarker:
                         f"Query {i} missing required field '{field}'. "
                         f"Required fields: {required_fields}"
                     )
-        
+
         # ===== Step 5: Run Retrieval =====
-        print(f"\n[Step 5] Running retrieval for all queries (k={max(k_values)})...")
+        print(f"\n[Step 5] Running retrieval for {len(test_queries)} queries (k={max(k_values)})...")
         print("-" * 80)
         
         retrieval_results = []
@@ -237,18 +242,13 @@ class Benchmarker:
                 'is_correct': is_correct  # True if first retrieved server matches ground truth
             }
             retrieval_results.append(result)
-            
-            # Display results for top-3
-            status = "✓" if is_correct else "✗"
-            
-            print(f"\n{status} Query: '{query[:100]}...' ({retrieval_time*1000:.2f}ms)")
-            print(f"  Ground Truth Server: {ground_truth_server}")
-            print(f"  Retrieved (Top-3):")
-            for i, tool in enumerate(retrieved_tools[:3]):
-                server = tool.get('server', 'Unknown')
-                marker = "→" if server == ground_truth_server else " "
-                print(f"    {marker} [{tool['rank']}] {tool['tool_id']} (Server: {server}) "
-                      f"(score: {tool['similarity_score']:.4f})")
+
+            # Show progress every 10 queries
+            if (len(retrieval_results)) % 10 == 0:
+                correct_so_far = sum(1 for r in retrieval_results if r['is_correct'])
+                accuracy_so_far = correct_so_far / len(retrieval_results) * 100
+                print(f"  Progress: {len(retrieval_results)}/{len(test_queries)} queries "
+                      f"(Accuracy so far: {accuracy_so_far:.1f}%)")
         
         # ===== Step 6: Calculate Metrics =====
         print("\n[Step 6] Calculating retrieval metrics...")
@@ -312,28 +312,22 @@ class Benchmarker:
                 results_filename = f"retrieval_benchmark_{model_name.replace('/', '_')}.json"
             
             results_path = self.results_dir / results_filename
-            
+
             output_data = {
-                'benchmark_config': {
+                'approach': 'dense_only',
+                'config': {
                     'model_name': model_name,
                     'k_values': k_values,
                     'batch_size': batch_size,
-                    'tools_path': str(tools_path),
-                    'queries_path': str(queries_path),
                     'num_tools': len(tools),
                     'num_queries': len(test_queries)
                 },
-                'queries': test_queries,
-                'retrieval_results': retrieval_results,
-                'metrics': {
-                    'overall': metrics
-                },
-                'failures': failures
+                'metrics': metrics
             }
-            
+
             with open(results_path, 'w', encoding='utf-8') as f:
                 json.dump(output_data, f, indent=2, ensure_ascii=False)
-            
+
             print(f"✓ Results saved to: {results_path}")
         
         # ===== Summary =====
@@ -587,17 +581,17 @@ class Benchmarker:
         # Run evaluations
         print("\nRunning evaluations...")
         results = []
-        for query_data in test_queries:
-            try:
-                evaluation = approach.evaluate_query(
-                    query_data['query'],
-                    query_data['ground_truth_tool']
-                )
-                results.append(evaluation)
-            except Exception as e:
-                print(f"Error on query '{query_data['query'][:50]}...': {e}")
-                continue
-        
+        for i, query_data in enumerate(test_queries, 1):
+            evaluation = approach.evaluate_query(
+                query_data['query'],
+                query_data['ground_truth_tool']
+            )
+            results.append(evaluation)
+
+            # Progress every 10 queries
+            if i % 10 == 0:
+                print(f"  {i}/{len(test_queries)} queries")
+
         metrics = self._calculate_llm_approach_metrics(results)
         
         return self._save_and_return_results(
@@ -682,17 +676,17 @@ class Benchmarker:
         # Run evaluations
         print("\nRunning evaluations...")
         results = []
-        for query_data in test_queries:
-            try:
-                evaluation = approach.evaluate_query(
-                    query_data['query'],
-                    query_data['ground_truth_tool']
-                )
-                results.append(evaluation)
-            except Exception as e:
-                print(f"Error on query '{query_data['query'][:50]}...': {e}")
-                continue
-        
+        for i, query_data in enumerate(test_queries, 1):
+            evaluation = approach.evaluate_query(
+                query_data['query'],
+                query_data['ground_truth_tool']
+            )
+            results.append(evaluation)
+
+            # Progress every 10 queries
+            if i % 10 == 0:
+                print(f"  {i}/{len(test_queries)} queries")
+
         metrics = self._calculate_llm_approach_metrics(results)
         
         return self._save_and_return_results(
@@ -703,7 +697,95 @@ class Benchmarker:
             save_results=save_results,
             results_filename=results_filename
         )
-    
+
+    def benchmark_bm25_llm(
+        self,
+        tools_json_path: str,
+        queries_json_path: str,
+        server_url: str = "http://localhost:11434",
+        llm_model_name: str = "mistral:7b-instruct-q4_0",
+        backend: str = "ollama",
+        k: int = 5,
+        save_results: bool = True,
+        results_filename: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Benchmark BM25 + LLM approach.
+
+        Args:
+            tools_json_path: Path to tools JSON
+            queries_json_path: Path to queries JSON
+            server_url: LLM server URL
+            llm_model_name: LLM model name
+            backend: 'ollama' or 'vllm'
+            k: Number of candidates to retrieve
+            save_results: Whether to save results
+            results_filename: Custom filename
+
+        Returns:
+            Benchmark results dictionary
+        """
+        print("=" * 80)
+        print("BM25 + LLM Approach Benchmarking")
+        print("=" * 80)
+
+        # Load data
+        tools_path = Path(tools_json_path) if Path(tools_json_path).is_absolute() else self.project_root / tools_json_path
+        queries_path = Path(queries_json_path) if Path(queries_json_path).is_absolute() else self.project_root / queries_json_path
+
+        with open(tools_path, 'r', encoding='utf-8') as f:
+            tools = json.load(f)
+
+        with open(queries_path, 'r', encoding='utf-8') as f:
+            raw_data = json.load(f)
+
+        test_queries = self._parse_queries(raw_data)
+        print(f"\n✓ Loaded {len(tools)} tools and {len(test_queries)} queries")
+
+        # Build BM25 index
+        print("\nBuilding BM25 index...")
+        indexer = BM25Indexer()
+        indexer.build_index(tools)
+
+        index_dir = self.data_dir / "indexes"
+        index_dir.mkdir(parents=True, exist_ok=True)
+        index_path = index_dir / "tools_bm25.index"
+        indexer.save_index(str(index_path))
+
+        # Initialize approach
+        approach = BM25LLMApproach(
+            index_path=str(index_path),
+            server_url=server_url,
+            model_name=llm_model_name,
+            backend=backend,
+            k=k
+        )
+
+        # Run evaluations
+        print("\nRunning evaluations...")
+        results = []
+        for query_data in test_queries:
+            try:
+                evaluation = approach.evaluate_query(
+                    query_data['query'],
+                    query_data['ground_truth_tool']
+                )
+                results.append(evaluation)
+            except Exception as e:
+                print(f"Error on query '{query_data['query'][:50]}...': {e}")
+                continue
+
+        metrics = self._calculate_llm_approach_metrics(results)
+
+        return self._save_and_return_results(
+            approach_name="bm25_llm",
+            results=results,
+            metrics=metrics,
+            config={'llm_model': llm_model_name, 'k': k, 'num_tools': len(tools), 'num_queries': len(test_queries)},
+            save_results=save_results,
+            results_filename=results_filename
+        )
+
     def benchmark_llm_hybrid(
         self,
         tools_json_path: str,
@@ -788,17 +870,17 @@ class Benchmarker:
         # Run evaluations
         print("\nRunning evaluations...")
         results = []
-        for query_data in test_queries:
-            try:
-                evaluation = approach.evaluate_query(
-                    query_data['query'],
-                    query_data['ground_truth_tool']
-                )
-                results.append(evaluation)
-            except Exception as e:
-                print(f"Error on query '{query_data['query'][:50]}...': {e}")
-                continue
-        
+        for i, query_data in enumerate(test_queries, 1):
+            evaluation = approach.evaluate_query(
+                query_data['query'],
+                query_data['ground_truth_tool']
+            )
+            results.append(evaluation)
+
+            # Progress every 10 queries
+            if i % 10 == 0:
+                print(f"  {i}/{len(test_queries)} queries")
+
         metrics = self._calculate_llm_approach_metrics(results)
         
         return self._save_and_return_results(
@@ -813,7 +895,7 @@ class Benchmarker:
     def _parse_queries(self, raw_data: Any) -> List[Dict[str, Any]]:
         """Parse queries from JSON data."""
         test_queries = []
-        
+
         if isinstance(raw_data, dict) and 'server_tasks' in raw_data:
             for server_task in raw_data.get('server_tasks', []):
                 server_name = server_task.get('server_name', 'Unknown')
@@ -829,37 +911,73 @@ class Benchmarker:
             test_queries = raw_data
         else:
             raise ValueError("Unknown query JSON schema format")
-        
+
+        # Limit to first N queries if LIMIT_QUERIES is set
+        if LIMIT_QUERIES is not None and LIMIT_QUERIES > 0:
+            test_queries = test_queries[:LIMIT_QUERIES]
+            print(f"  ⚠️  Limited to first {LIMIT_QUERIES} queries for local testing")
+
         return test_queries
     
     def _calculate_approach_metrics(self, results: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate metrics for non-LLM approaches."""
+        """Calculate metrics for non-LLM approaches including Recall@k and MRR."""
         if not results:
             return {}
-        
+
+        # Accuracy (top-1)
         total_correct = sum(1 for r in results if r.get('is_correct', False))
         accuracy = total_correct / len(results)
+
+        # Latency
         avg_latency = sum(r.get('latency_seconds', 0) for r in results) / len(results)
-        
+
+        # Recall@k for k = 1, 3, 5, 7
+        recall_at_1 = RetrievalMetrics.average_recall_at_k(results, k=1)
+        recall_at_3 = RetrievalMetrics.average_recall_at_k(results, k=3)
+        recall_at_5 = RetrievalMetrics.average_recall_at_k(results, k=5)
+        recall_at_7 = RetrievalMetrics.average_recall_at_k(results, k=7)
+
+        # MRR (Mean Reciprocal Rank)
+        mrr = RetrievalMetrics.mean_reciprocal_rank(results)
+
         return {
             'accuracy': accuracy,
             'num_correct': total_correct,
             'num_queries': len(results),
-            'avg_latency_ms': avg_latency * 1000
+            'avg_latency_ms': avg_latency * 1000,
+            'recall@1': recall_at_1,
+            'recall@3': recall_at_3,
+            'recall@5': recall_at_5,
+            'recall@7': recall_at_7,
+            'mrr': mrr
         }
     
     def _calculate_llm_approach_metrics(self, results: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate metrics for LLM-based approaches."""
+        """Calculate metrics for LLM-based approaches including Recall@k and MRR."""
         if not results:
             return {}
-        
+
+        # Accuracy (top-1)
         total_correct = sum(1 for r in results if r.get('is_correct', False))
         accuracy = total_correct / len(results)
+
+        # Latency
         avg_latency = sum(r.get('latency_seconds', 0) for r in results) / len(results)
+
+        # Token usage
         avg_prompt_tokens = sum(r.get('prompt_tokens', 0) for r in results) / len(results)
         avg_completion_tokens = sum(r.get('completion_tokens', 0) for r in results) / len(results)
         avg_total_tokens = sum(r.get('total_tokens', 0) for r in results) / len(results)
-        
+
+        # Recall@k for k = 1, 3, 5, 7
+        recall_at_1 = RetrievalMetrics.average_recall_at_k(results, k=1)
+        recall_at_3 = RetrievalMetrics.average_recall_at_k(results, k=3)
+        recall_at_5 = RetrievalMetrics.average_recall_at_k(results, k=5)
+        recall_at_7 = RetrievalMetrics.average_recall_at_k(results, k=7)
+
+        # MRR (Mean Reciprocal Rank)
+        mrr = RetrievalMetrics.mean_reciprocal_rank(results)
+
         return {
             'accuracy': accuracy,
             'num_correct': total_correct,
@@ -867,7 +985,12 @@ class Benchmarker:
             'avg_latency_ms': avg_latency * 1000,
             'avg_prompt_tokens': avg_prompt_tokens,
             'avg_completion_tokens': avg_completion_tokens,
-            'avg_total_tokens': avg_total_tokens
+            'avg_total_tokens': avg_total_tokens,
+            'recall@1': recall_at_1,
+            'recall@3': recall_at_3,
+            'recall@5': recall_at_5,
+            'recall@7': recall_at_7,
+            'mrr': mrr
         }
     
     def _save_and_return_results(
@@ -906,10 +1029,9 @@ class Benchmarker:
             output_data = {
                 'approach': approach_name,
                 'config': config,
-                'metrics': metrics,
-                'results': results
+                'metrics': metrics
             }
-            
+
             with open(results_path, 'w', encoding='utf-8') as f:
                 json.dump(output_data, f, indent=2, ensure_ascii=False)
             
@@ -949,7 +1071,7 @@ def main():
     
     # 1. Dense Only (baseline - retrieval only)
     print("\n\n" + "=" * 80)
-    print("BENCHMARK 1/6: Dense Only (Retrieval)")
+    print("BENCHMARK 1/7: Dense Only (Retrieval)")
     print("=" * 80)
     try:
         results = benchmarker.benchmark_retrieval_only(
@@ -969,7 +1091,7 @@ def main():
     
     # 2. BM25 Only
     print("\n\n" + "=" * 80)
-    print("BENCHMARK 2/6: BM25 Only")
+    print("BENCHMARK 2/7: BM25 Only")
     print("=" * 80)
     try:
         results = benchmarker.benchmark_bm25_only(
@@ -984,9 +1106,9 @@ def main():
         print(f"✗ BM25 Only failed: {e}")
         all_results['bm25_only'] = {'error': str(e)}
     
-    # 3. BM25 + Dense (Hybrid)
+    # 3. BM25 + Dense (Hybrid - no LLM)
     print("\n\n" + "=" * 80)
-    print("BENCHMARK 3/6: BM25 + Dense (Hybrid)")
+    print("BENCHMARK 3/7: BM25 + Dense (Hybrid - no LLM)")
     print("=" * 80)
     try:
         results = benchmarker.benchmark_bm25_plus_dense(
@@ -1006,7 +1128,7 @@ def main():
     
     # 4. LLM Only
     print("\n\n" + "=" * 80)
-    print("BENCHMARK 4/6: LLM Only")
+    print("BENCHMARK 4/7: LLM Only")
     print("=" * 80)
     try:
         results = benchmarker.benchmark_llm_only(
@@ -1026,7 +1148,7 @@ def main():
     
     # 5. Dense + LLM
     print("\n\n" + "=" * 80)
-    print("BENCHMARK 5/6: Dense + LLM")
+    print("BENCHMARK 5/7: Dense + LLM")
     print("=" * 80)
     try:
         results = benchmarker.benchmark_dense_llm(
@@ -1046,10 +1168,31 @@ def main():
     except Exception as e:
         print(f"✗ Dense + LLM failed: {e}")
         all_results['dense_llm'] = {'error': str(e)}
-    
-    # 6. LLM Hybrid (BM25 + Dense + LLM)
+
+    # 6. BM25 + LLM
     print("\n\n" + "=" * 80)
-    print("BENCHMARK 6/6: LLM Hybrid (BM25 + Dense + LLM)")
+    print("BENCHMARK 6/7: BM25 + LLM")
+    print("=" * 80)
+    try:
+        results = benchmarker.benchmark_bm25_llm(
+            tools_json_path=TOOLS_PATH,
+            queries_json_path=QUERIES_PATH,
+            server_url=LLM_SERVER_URL,
+            llm_model_name=LLM_MODEL_NAME,
+            backend=LLM_BACKEND,
+            k=RETRIEVAL_K,
+            save_results=True,
+            results_filename="bm25_llm_benchmark.json"
+        )
+        all_results['bm25_llm'] = results
+        print(f"✓ BM25 + LLM - Accuracy: {results['metrics']['accuracy']:.2%}")
+    except Exception as e:
+        print(f"✗ BM25 + LLM failed: {e}")
+        all_results['bm25_llm'] = {'error': str(e)}
+
+    # 7. LLM Hybrid (BM25 + Dense + LLM)
+    print("\n\n" + "=" * 80)
+    print("BENCHMARK 7/7: LLM Hybrid (BM25 + Dense + LLM)")
     print("=" * 80)
     try:
         results = benchmarker.benchmark_llm_hybrid(

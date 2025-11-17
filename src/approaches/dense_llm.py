@@ -154,7 +154,37 @@ class DenseLLMApproach:
             Dictionary with selection results + accuracy evaluation
         """
         # Get selection result
-        result = self.select_tool(query)
+        try:
+            result = self.select_tool(query)
+        except (ValueError, Exception) as e:
+            # If LLM response can't be parsed or other error, count as wrong answer
+            return {
+                "query": query,
+                "selected_tools": [],
+                "retrieved_servers": [],
+                "selected_servers": [],
+                "ground_truth_server": ground_truth_server,
+                "is_correct": False,
+                "accuracy": 0.0,
+                "parse_error": str(e),
+                "num_tools_selected": 0,
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "total_tokens": 0,
+                "latency_seconds": 0,
+                "retrieval_latency_seconds": 0,
+                "llm_latency_seconds": 0
+            }
+
+        # Extract server names from candidate tools (for recall@k metrics)
+        # This represents what the retrieval stage retrieved
+        candidate_servers = []
+        for tool_name in result["candidate_tools"]:
+            tool = next((t for t in self.retriever.tool_metadata if t["tool_name"] == tool_name), None)
+            if tool:
+                candidate_servers.append(tool.get("server", "Unknown"))
+            else:
+                candidate_servers.append("Unknown")
 
         # Extract server names from selected tools with strict validation
         selected_servers = []
@@ -167,15 +197,12 @@ class DenseLLMApproach:
             if tool:
                 selected_servers.append(tool.get("server", "Unknown"))
             else:
-                # LLM returned a tool name that doesn't match exactly - STRICT VALIDATION FAILURE
+                # LLM returned a tool name that doesn't match exactly
                 selected_servers.append("Unknown")
                 mismatched_tools.append({
                     "llm_returned": tool_name,
                     "valid_options": valid_tool_names
                 })
-                print(f"⚠️  WARNING: LLM returned invalid tool name: '{tool_name}'")
-                print(f"   Valid options: {valid_tool_names}")
-                print(f"   The LLM must return EXACT tool names (case-sensitive)!")
 
         # Check if selection is correct (server-level comparison)
         is_correct = ground_truth_server in selected_servers
@@ -183,6 +210,7 @@ class DenseLLMApproach:
         # Build evaluation dictionary
         evaluation = {
             **result,
+            "retrieved_servers": candidate_servers,  # For recall@k metrics (retrieval stage)
             "selected_servers": selected_servers,
             "ground_truth_server": ground_truth_server,
             "is_correct": is_correct,

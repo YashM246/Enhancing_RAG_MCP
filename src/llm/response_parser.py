@@ -65,21 +65,39 @@ def parse_tool_selection_response(response_text: str) -> Dict:
     # Strategy 1: Direct JSON parse
     # Try to parse the response as pure JSON
     # Works for: {"selected_tools": ["brave_search", "arxiv"]}
+    # Also handles bare arrays: ["brave_search", "arxiv"]
     try:
         parsed = json.loads(response_text.strip())
-        if "selected_tools" in parsed:
+
+        # Handle object format: {"selected_tools": [...]}
+        if isinstance(parsed, dict) and "selected_tools" in parsed:
             tools = parsed["selected_tools"]
             # Validate: must be list with 1-3 items
             if not isinstance(tools, list):
                 raise ValueError(f"selected_tools must be a list, got {type(tools)}")
             if len(tools) < 1:
                 raise ValueError("selected_tools array is empty (need at least 1 tool)")
+            # Truncate to max 3 tools instead of erroring
             if len(tools) > 3:
-                raise ValueError(f"Too many tools selected ({len(tools)}). Maximum is 3.")
+                tools = tools[:3]
             # Ensure all items are strings
             if not all(isinstance(t, str) for t in tools):
                 raise ValueError("All tools in selected_tools must be strings")
             return {"selected_tools": tools}
+
+        # Handle bare array format: ["tool1", "tool2"]
+        elif isinstance(parsed, list):
+            tools = parsed
+            if len(tools) < 1:
+                raise ValueError("Tool array is empty (need at least 1 tool)")
+            # Truncate to max 3 tools
+            if len(tools) > 3:
+                tools = tools[:3]
+            # Ensure all items are strings
+            if not all(isinstance(t, str) for t in tools):
+                raise ValueError("All tools must be strings")
+            return {"selected_tools": tools}
+
     except json.JSONDecodeError:
         # Not valid JSON, try next strategy
         pass
@@ -88,6 +106,9 @@ def parse_tool_selection_response(response_text: str) -> Dict:
     # Many LLMs wrap JSON in markdown code blocks
     # Works for: ```json\n{"selected_tools": ["..."]}\n```
     # Also works for: ```\n{"selected_tools": ["..."]}\n```
+    # Also handles: ```json\n["tool1", "tool2"]\n```
+
+    # Try to find JSON object in code block first
     markdown_match = re.search(
         r'```(?:json)?\s*(\{[^}]*"selected_tools"[^}]*\})\s*```',
         response_text,
@@ -100,11 +121,30 @@ def parse_tool_selection_response(response_text: str) -> Dict:
             parsed = json.loads(json_str)
             if "selected_tools" in parsed:
                 tools = parsed["selected_tools"]
-                if isinstance(tools, list) and 1 <= len(tools) <= 3:
+                if isinstance(tools, list) and len(tools) >= 1:
+                    # Truncate to max 3 tools
+                    tools = tools[:3] if len(tools) > 3 else tools
                     if all(isinstance(t, str) for t in tools):
                         return {"selected_tools": tools}
         except (json.JSONDecodeError, KeyError, ValueError):
             # Code block didn't contain valid JSON, continue to next strategy
+            pass
+
+    # Try to find bare array in code block
+    markdown_array_match = re.search(
+        r'```(?:json)?\s*(\[[\s\S]*?\])\s*```',
+        response_text,
+        re.DOTALL | re.IGNORECASE
+    )
+    if markdown_array_match:
+        try:
+            json_str = markdown_array_match.group(1)
+            parsed = json.loads(json_str)
+            if isinstance(parsed, list) and len(parsed) >= 1:
+                tools = parsed[:3] if len(parsed) > 3 else parsed
+                if all(isinstance(t, str) for t in tools):
+                    return {"selected_tools": tools}
+        except (json.JSONDecodeError, ValueError):
             pass
 
     # Strategy 3: Regex search for JSON array
@@ -121,7 +161,9 @@ def parse_tool_selection_response(response_text: str) -> Dict:
             array_content = json_match.group(1)
             # Parse as JSON array
             tools = json.loads(f'[{array_content}]')
-            if isinstance(tools, list) and 1 <= len(tools) <= 3:
+            if isinstance(tools, list) and len(tools) >= 1:
+                # Truncate to max 3 tools
+                tools = tools[:3] if len(tools) > 3 else tools
                 if all(isinstance(t, str) for t in tools):
                     return {"selected_tools": tools}
         except (json.JSONDecodeError, ValueError):
@@ -129,11 +171,8 @@ def parse_tool_selection_response(response_text: str) -> Dict:
             pass
 
     # All strategies failed - response is unparseable
-    # Provide a helpful error message with response preview
     raise ValueError(
-        f"Cannot parse tool selection from response. "
-        f"Expected format: {{\"selected_tools\": [\"tool1\", \"tool2\", ...]}}. "
-        f"Response (first 200 chars): {response_text[:200]}..."
+        f"Cannot parse tool selection. Response: {response_text[:200]}..."
     )
 
 

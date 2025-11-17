@@ -23,20 +23,30 @@ class BM25OnlyApproach:
         self.approach_name = "BM25 Only (Top-1)"
 
     
-    def select_tool(self, query: str)-> Dict[str, Any]:
+    def select_tool(self, query: str, k: int = 7)-> Dict[str, Any]:
 
         start_time = time.time()
 
-        # Get top-1 tool using BM25
-        top_tool = self.retriever.retrieve_top1(query)
+        # Get top-k tools using BM25 (for metrics calculation)
+        top_k_tools = self.retriever.retrieve(query, top_k=k)
+
+        # Top-1 is the selected tool
+        top_tool = top_k_tools[0] if top_k_tools else None
+
+        if not top_tool:
+            raise ValueError("No tools retrieved")
 
         latency = time.time() - start_time
+
+        # Extract servers from top-k for recall@k metrics
+        retrieved_servers = [tool.get("server", "Unknown") for tool in top_k_tools]
 
         result = {
             "query": query,
             "selected_tool_id": top_tool["tool_id"],
             "selected_tool_name": top_tool["tool_name"],
             "selected_server": top_tool.get("server", "Unknown"),
+            "retrieved_servers": retrieved_servers,  # For recall@k metrics
             "bm25_score": top_tool["bm25_score"],
             "latency_seconds": latency,
             "approach": self.approach_name,

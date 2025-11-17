@@ -42,12 +42,15 @@ Based on Gan & Sun (2025) and our experimental design:
 |----------|---------------------|-------------|---------|----------------|-------|
 | 1. Dense Retrieval Only | Low (~20-30%) | Minimal (0 LLM tokens) | Fastest | Retrieve top-7, select top-1 | Reports Recall@1/3/5/7 |
 | 2. BM25 Only | Low (~15-25%) | Minimal (0 LLM tokens) | Fastest | Retrieve top-7, select top-1 | Reports Recall@1/3/5/7 |
-| 3. LLM Only (Full Context) | ~13% | Highest (100% baseline) | Slowest | All tools | Prompt bloat baseline |
-| 4. Dense Retrieval + LLM | ~43% | ~50% reduction | Fast | k = 3, 5, 7 | RAG-MCP from paper |
-| 5. BM25 + LLM | ~35-40% | ~50% reduction | Fast | k = 3, 5, 7 | Lexical filtering |
-| 6. Hybrid Retrieval + LLM | **>50%** (goal) | ~50% reduction | Fast | k = 3, 5, 7 | Best of both worlds |
+| 3. BM25 + Dense (No LLM) | Medium (~25-35%) | Minimal (0 LLM tokens) | Fastest | Retrieve top-7, select top-1 | Ablation: Hybrid retrieval quality |
+| 4. LLM Only (Full Context) | ~13% | Highest (100% baseline) | **Context Length Failure** | All 297 tools | Prompt bloat - exceeds context window |
+| 5. Dense Retrieval + LLM | ~43% | ~50% reduction | Fast | k = 3, 5, 7 | RAG-MCP from paper |
+| 6. BM25 + LLM | ~35-40% | ~50% reduction | Fast | k = 3, 5, 7 | Lexical filtering |
+| 7. Hybrid Retrieval + LLM | **>50%** (goal) | ~50% reduction | Fast | k = 3, 5, 7 | Best of both worlds |
 
-**Key Hypothesis:** Hybrid approach (6) should outperform both pure retrieval and single-retrieval methods by combining semantic understanding with keyword matching.
+**Key Hypothesis:** Hybrid approach (7) should outperform both pure retrieval and single-retrieval methods by combining semantic understanding with keyword matching.
+
+**Note on Approach 4:** LLM Only fails on datasets with 200+ tools due to context length limitations. With 297 tools, the prompt exceeds Ollama's context window, causing all queries to fail. This validates the need for retrieval-based filtering.
 
 ## 🏗️ Architecture
 
@@ -128,13 +131,14 @@ Enhancing_RAG_MCP/
 │   │   ├── dense_retriever.py # Dense/semantic retrieval
 │   │   ├── bm25_retriever.py  # Sparse/lexical retrieval
 │   │   └── hybrid_retriever.py # Hybrid fusion (RRF)
-│   ├── approaches/            # Core implementations of 6 approaches
+│   ├── approaches/            # Core implementations of 7 approaches
 │   │   ├── dense_only.py      # Approach 1: Dense Retrieval Only
 │   │   ├── bm25_only.py       # Approach 2: BM25 Only
-│   │   ├── llm_only.py        # Approach 3: LLM Only (Full Context)
-│   │   ├── dense_llm.py       # Approach 4: Dense + LLM
-│   │   ├── bm25_llm.py        # Approach 5: BM25 + LLM
-│   │   └── hybrid_llm.py      # Approach 6: Hybrid + LLM
+│   │   ├── bm25_plus_dense.py # Approach 3: BM25 + Dense (No LLM)
+│   │   ├── llm_only.py        # Approach 4: LLM Only (Full Context)
+│   │   ├── dense_llm.py       # Approach 5: Dense + LLM
+│   │   ├── bm25_llm.py        # Approach 6: BM25 + LLM
+│   │   └── llm_hybrid.py      # Approach 7: Hybrid + LLM
 │   └── llm/                   # LLM integration
 │       └── llm_selector.py    # LLM tool selection logic
 ├── benchmarking/              # Evaluation framework
@@ -225,14 +229,17 @@ sbatch scripts/submit_benchmark.sh
 - [x] Project setup and infrastructure
 - [x] Dense retrieval implementation (FAISS + embeddings)
 - [x] BM25 retrieval implementation (sparse lexical search)
+- [x] Hybrid retrieval implementation (RRF fusion)
 - [x] LLM integration (vLLM + Ollama support, multi-tool selection)
-- [x] Approach 1: Dense Retrieval Only (100% on sample data)
-- [x] Approach 2: BM25 Only (75% on sample data)
-- [x] Approach 3: LLM Only (Full Context)
-- [x] Approach 4: Dense + LLM (RAG-MCP) (100% on sample data)
-- [x] Approach 5: BM25 + LLM (100% on sample data)
-- [ ] Approach 6: Hybrid Retrieval + LLM
-- [ ] Unified benchmarking script for all 6 approaches
+- [x] Approach 1: Dense Retrieval Only
+- [x] Approach 2: BM25 Only
+- [x] Approach 3: BM25 + Dense Hybrid (ablation study)
+- [x] Approach 4: LLM Only (Full Context) - *Context length failure with 297 tools*
+- [x] Approach 5: Dense + LLM (RAG-MCP)
+- [x] Approach 6: BM25 + LLM
+- [x] Approach 7: Hybrid Retrieval + LLM
+- [x] Unified benchmarking script for all 7 approaches
+- [x] Recall@k and MRR metrics implementation
 - [ ] HPC cluster deployment & large-scale evaluation
 
 **Development Workflow:**

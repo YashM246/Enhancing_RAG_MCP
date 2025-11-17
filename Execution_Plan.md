@@ -48,12 +48,12 @@
 **Steps:**
 1. ✅ Implement Approach 1 (Dense Only) - DONE
 2. ✅ Implement Approach 2 (BM25 Only) - DONE
-3. ⏳ Implement Approach 3 (LLM Only)
-4. ⏳ Implement Approach 4 (Dense + LLM)
-5. ⏳ Implement Approach 5 (BM25 + LLM)
-6. ⏳ Implement Approach 6 (Hybrid + LLM)
-7. ⏳ Test each approach with `if __name__ == "__main__":` blocks
-8. ⏳ Commit each working approach
+3. ✅ Implement Approach 3 (LLM Only) - DONE
+4. ✅ Implement Approach 4 (Dense + LLM) - DONE
+5. ✅ Implement Approach 5 (BM25 + LLM) - DONE
+6. ⏳ Implement Approach 6 (Hybrid + LLM) - IN PROGRESS
+7. ✅ Test each approach with `if __name__ == "__main__":` blocks - DONE (Approaches 1-5)
+8. ✅ Commit each working approach - DONE (Approaches 1-5)
 
 **Testing Strategy:**
 - Run each approach file directly: `python src/approaches/dense_only.py`
@@ -68,7 +68,8 @@
 **Files to Create:**
 1. `scripts/run_full_benchmark.py` - Main benchmarking script
    - Loads full dataset
-   - Runs all 6 approaches with multiple k values
+   - Runs all 6 approaches (k=3,5,7 for approaches 4-6; retrieve top-7 for approaches 1-2)
+   - Calculates Accuracy, Recall@1/3/5/7, MRR, token usage, latency
    - Saves results in standardized format
 
 2. `scripts/submit_benchmark.sh` - SLURM job script
@@ -119,15 +120,15 @@
   │   │   ├── tool_indexer.py    # Dense embeddings (FAISS) [✓]
   │   │   └── bm25_indexer.py    # Sparse BM25 index [✓]
   │   ├── retrieval/             # Retrieval components
-  │   │   ├── dense_retriever.py # Dense/semantic retrieval [TODO]
+  │   │   ├── dense_retriever.py # Dense/semantic retrieval [✓]
   │   │   ├── bm25_retriever.py  # Sparse/lexical retrieval [✓]
   │   │   └── hybrid_retriever.py # Hybrid fusion (RRF) [TODO]
   │   ├── approaches/            # Core implementations of 6 approaches
-  │   │   ├── dense_only.py      # Approach 1: Dense Retrieval Only [TODO]
-  │   │   ├── bm25_only.py       # Approach 2: BM25 Only [IN PROGRESS]
-  │   │   ├── llm_only.py        # Approach 3: LLM Only (Full Context) [TODO]
-  │   │   ├── dense_llm.py       # Approach 4: Dense + LLM [TODO]
-  │   │   ├── bm25_llm.py        # Approach 5: BM25 + LLM [TODO]
+  │   │   ├── dense_only.py      # Approach 1: Dense Retrieval Only [✓]
+  │   │   ├── bm25_only.py       # Approach 2: BM25 Only [✓]
+  │   │   ├── llm_only.py        # Approach 3: LLM Only (Full Context) [✓]
+  │   │   ├── dense_llm.py       # Approach 4: Dense + LLM [✓]
+  │   │   ├── bm25_llm.py        # Approach 5: BM25 + LLM [✓]
   │   │   └── hybrid_llm.py      # Approach 6: Hybrid + LLM [TODO]
   │   ├── llm/                   # LLM integration
   │   │   └── llm_selector.py    # LLM tool selection logic [✓]
@@ -264,11 +265,11 @@
 **Evaluation Module:**
 - [ ] Create `src/evaluation/evaluator.py`
 - [ ] Implement `Evaluator` class:
-  - [ ] Accuracy calculation (exact match)
-  - [ ] Top-k accuracy
-  - [ ] Mean Reciprocal Rank (MRR)
-  - [ ] Token usage tracking
-  - [ ] Latency measurement
+  - [ ] Accuracy calculation (server-level comparison, not exact tool match)
+  - [ ] Recall@k (k = 1, 3, 5, 7) - Is correct server in top-k candidates?
+  - [ ] Mean Reciprocal Rank (MRR) - Average rank of correct server
+  - [ ] Token usage tracking (LLM approaches only)
+  - [ ] Latency measurement (retrieval + LLM stages)
 - [ ] Create `src/evaluation/experiment_runner.py`
 
 **Utilities:**
@@ -346,20 +347,20 @@
 - [ ] Test server connection resilience
 
 **All 6 Approach Implementations:**
-- [ ] **Approach 1:** `src/approaches/dense_only.py` - Dense Retrieval Only (top-1)
+- [x] **Approach 1:** `src/approaches/dense_only.py` - Dense Retrieval Only (top-1)
   - Use cosine similarity on embeddings, return top-1 tool directly
-- [ ] **Approach 2:** `src/approaches/bm25_only.py` - BM25 Only (top-1)
+- [x] **Approach 2:** `src/approaches/bm25_only.py` - BM25 Only (top-1)
   - Use BM25 lexical search, return top-1 tool directly
-- [ ] **Approach 3:** `src/approaches/llm_only.py` - LLM Only (Full Context)
+- [x] **Approach 3:** `src/approaches/llm_only.py` - LLM Only (Full Context)
   - Give LLM ALL tools at once (naive MCP baseline)
-- [ ] **Approach 4:** `src/approaches/dense_llm.py` - Dense Retrieval + LLM (top-k)
+- [x] **Approach 4:** `src/approaches/dense_llm.py` - Dense Retrieval + LLM (top-k)
   - RAG-MCP from paper: retrieve top-k with embeddings, LLM selects
-- [ ] **Approach 5:** `src/approaches/bm25_llm.py` - BM25 + LLM (top-k)
+- [x] **Approach 5:** `src/approaches/bm25_llm.py` - BM25 + LLM (top-k)
   - Retrieve top-k with BM25, LLM selects
 - [ ] **Approach 6:** `src/approaches/hybrid_llm.py` - Hybrid Retrieval + LLM (top-k)
   - Combine dense + BM25 with fusion, LLM selects from top-k
-- [ ] Test all approaches on sample queries
-- [ ] Verify correct behavior and output format consistency
+- [x] Test all approaches on sample queries (Approaches 1-5 tested)
+- [x] Verify correct behavior and output format consistency (Approaches 1-5 verified)
 
 **Documentation:**
 - [ ] Update `README.md` with:
@@ -383,17 +384,17 @@
 - [ ] Configure logging and result saving
 - [ ] Create experiment tracking sheet
 
-**Experiment 1: Dense Retrieval Only (top-1)**
+**Experiment 1: Dense Retrieval Only (retrieve top-7, select top-1)**
 - [ ] Run full query dataset
 - [ ] Save results: `results/exp1_dense_only.json`
-- [ ] Track: Accuracy, Latency (no LLM tokens)
-- [ ] Note: Fastest baseline, no reasoning
+- [ ] Track: Accuracy, Recall@1/3/5/7, MRR, Latency (no LLM tokens)
+- [ ] Note: Fastest baseline, no reasoning. Retrieves top-7 to enable retrieval quality analysis
 
-**Experiment 2: BM25 Only (top-1)**
+**Experiment 2: BM25 Only (retrieve top-7, select top-1)**
 - [ ] Run full query dataset
 - [ ] Save results: `results/exp2_bm25_only.json`
-- [ ] Track: Accuracy, Latency (no LLM tokens)
-- [ ] Compare with dense retrieval
+- [ ] Track: Accuracy, Recall@1/3/5/7, MRR, Latency (no LLM tokens)
+- [ ] Compare with dense retrieval. Retrieves top-7 to enable retrieval quality analysis
 
 **Experiment 3: LLM Only (Full Context)**
 - [ ] Run full query dataset
@@ -401,25 +402,25 @@
 - [ ] Track: Accuracy, Token usage (highest), Latency (slowest)
 - [ ] Expect: Low accuracy (~13%), prompt bloat
 
-**Experiment 4: Dense Retrieval + LLM (k=3,5,10)**
+**Experiment 4: Dense Retrieval + LLM (k=3,5,7)**
 - [ ] Run with k=3: `results/exp4_dense_llm_k3.json`
 - [ ] Run with k=5: `results/exp4_dense_llm_k5.json`
-- [ ] Run with k=10: `results/exp4_dense_llm_k10.json`
-- [ ] Track: Accuracy (~43% expected), Token reduction (>50%), Latency
+- [ ] Run with k=7: `results/exp4_dense_llm_k7.json`
+- [ ] Track: Accuracy (~43% expected), Token reduction (>50%), Latency, Recall@1/3/5/7, MRR
 - [ ] This is RAG-MCP from paper
 
-**Experiment 5: BM25 + LLM (k=3,5,10)**
+**Experiment 5: BM25 + LLM (k=3,5,7)**
 - [ ] Run with k=3: `results/exp5_bm25_llm_k3.json`
 - [ ] Run with k=5: `results/exp5_bm25_llm_k5.json`
-- [ ] Run with k=10: `results/exp5_bm25_llm_k10.json`
-- [ ] Track: Accuracy, Token reduction, Latency
+- [ ] Run with k=7: `results/exp5_bm25_llm_k7.json`
+- [ ] Track: Accuracy, Token reduction, Latency, Recall@1/3/5/7, MRR
 - [ ] Compare with dense+LLM
 
-**Experiment 6: Hybrid Retrieval + LLM (k=3,5,10)**
+**Experiment 6: Hybrid Retrieval + LLM (k=3,5,7)**
 - [ ] Run with k=3: `results/exp6_hybrid_llm_k3.json`
 - [ ] Run with k=5: `results/exp6_hybrid_llm_k5.json`
-- [ ] Run with k=10: `results/exp6_hybrid_llm_k10.json`
-- [ ] Track: Accuracy (>50% goal), Token reduction, Latency
+- [ ] Run with k=7: `results/exp6_hybrid_llm_k7.json`
+- [ ] Track: Accuracy (>50% goal), Token reduction, Latency, Recall@1/3/5/7, MRR
 - [ ] Expected: Best overall performance
 
 **Experiment 7: Ablation Studies**
@@ -588,15 +589,15 @@ python scripts/analyze_results.py --results-dir results/
 **Approach Dependencies:**
 - Approaches 1 & 4: Require FAISS dense index
 - Approaches 2 & 5: Require BM25 sparse index
-- Approach 3 & 6: Require both indexes
-- Approaches 3-6: Require vLLM server connection
+- Approach 6: Requires both indexes (dense + BM25)
+- Approaches 3-6: Require LLM server connection (Ollama or vLLM)
 
 **Recommended Implementation Order:**
-1. Complete Approaches 1 & 2 (pure retrieval, no LLM needed)
-2. Complete Approach 3 (LLM-only baseline)
-3. Complete Approach 4 (RAG-MCP from paper - validate against published results)
-4. Complete Approach 5 (BM25+LLM variant)
-5. Complete Approach 6 (Hybrid - expected best performance)
+1. ✅ Complete Approaches 1 & 2 (pure retrieval, no LLM needed) - DONE
+2. ✅ Complete Approach 3 (LLM-only baseline) - DONE
+3. ✅ Complete Approach 4 (RAG-MCP from paper - validate against published results) - DONE
+4. ✅ Complete Approach 5 (BM25+LLM variant) - DONE
+5. ⏳ Complete Approach 6 (Hybrid - expected best performance) - IN PROGRESS
 
 **Critical Success Factors:**
 - Approach 4 accuracy should match paper (~43%)

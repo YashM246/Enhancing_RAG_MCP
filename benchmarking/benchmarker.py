@@ -39,7 +39,7 @@ RETRIEVAL_K = 3
 LIMIT_QUERIES = -1  # -1 means all queries
 LLM_SERVER_URL = "http://localhost:8000"  # vLLM default port
 LLM_MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"  # vLLM model format
-LLM_BACKEND = "openai"  # vLLM uses OpenAI-compatible API
+LLM_BACKEND = "vllm"  # vLLM backend type
 
 
 class Benchmarker:
@@ -1068,8 +1068,8 @@ def parse_args():
         "--backend",
         type=str,
         default=LLM_BACKEND,
-        choices=["openai", "ollama"],
-        help="LLM backend type (default: openai for vLLM compatibility)"
+        choices=["vllm", "ollama"],
+        help="LLM backend type (default: vllm)"
     )
     parser.add_argument(
         "--output-dir",

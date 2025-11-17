@@ -14,10 +14,31 @@ current_dir = Path(__file__).parent
 project_root = current_dir.parent
 src_dir = project_root / "src"
 sys.path.insert(0, str(src_dir))
+sys.path.insert(0, str(project_root))
 
 from src.indexing import ToolIndexer
+from src.indexing.bm25_indexer import BM25Indexer
 from src.retrieval.dense_retriever import ToolRetriever
+from src.retrieval.bm25_retriever import BM25Retriever
+from src.retrieval.bm25_plus_dense_retriever import HybridRetriever
 from src.retrieval import RetrievalMetrics
+from src.approaches.bm25_only import BM25OnlyApproach
+from src.approaches.bm25_plus_dense import BM25PlusDenseApproach
+from src.approaches.llm_only import LLMOnlyApproach
+from src.approaches.dense_llm import DenseLLMApproach
+from src.approaches.llm_hybrid import LLMHybridApproach
+
+# Global configuration
+TOOLS_PATH = "data/tools/all_tools.json"
+QUERIES_PATH = "data/queries/mcp_task_description.json"
+K_VALUES = [3]
+EMBEDDING_MODEL = 'all-MiniLM-L6-v2'
+BATCH_SIZE = 8
+RRF_K = 60
+RETRIEVAL_K = 5
+LLM_SERVER_URL = "http://localhost:11434"
+LLM_MODEL_NAME = "mistral:7b-instruct-q4_0"
+LLM_BACKEND = "ollama"
 
 
 class Benchmarker:
@@ -254,12 +275,12 @@ class Benchmarker:
         
         if failures:
             print(f"\nFound {len(failures)} failure cases (first retrieved server doesn't match ground truth):")
-            for i, failure in enumerate(failures, 1):
-                query_preview = failure['query'][:100] + '...' if len(failure['query']) > 100 else failure['query']
-                print(f"\n  [{i}] Query: '{query_preview}'")
-                print(f"      Expected Server: {failure['ground_truth_server']}")
-                print(f"      Retrieved Servers (Top-3): {failure['retrieved_servers'][:3]}")
-                print(f"      First Retrieved: {failure['retrieved_servers'][0] if failure['retrieved_servers'] else 'None'}")
+            # for i, failure in enumerate(failures, 1):
+            #     query_preview = failure['query'][:100] + '...' if len(failure['query']) > 100 else failure['query']
+            #     print(f"\n  [{i}] Query: '{query_preview}'")
+            #     print(f"      Expected Server: {failure['ground_truth_server']}")
+            #     print(f"      Retrieved Servers (Top-3): {failure['retrieved_servers'][:3]}")
+            #     print(f"      First Retrieved: {failure['retrieved_servers'][0] if failure['retrieved_servers'] else 'None'}")
         else:
             print("\n✓ No failures! All first retrieved servers match ground truth.")
         
@@ -348,29 +369,729 @@ class Benchmarker:
             'failures': failures,
             'retrieval_results': retrieval_results
         }
+    
+    def benchmark_bm25_only(
+        self,
+        tools_json_path: str,
+        queries_json_path: str,
+        save_results: bool = True,
+        results_filename: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Benchmark BM25-only approach.
+        
+        Args:
+            tools_json_path: Path to JSON file containing tool definitions
+            queries_json_path: Path to JSON file containing test queries with ground truth
+            save_results: Whether to save results to JSON file
+            results_filename: Custom filename for results
+        
+        Returns:
+            Dictionary containing all benchmark results and metrics
+        """
+        print("=" * 80)
+        print("BM25-Only Approach Benchmarking")
+        print("=" * 80)
+        
+        # Load tools and queries
+        tools_path = Path(tools_json_path) if Path(tools_json_path).is_absolute() else self.project_root / tools_json_path
+        queries_path = Path(queries_json_path) if Path(queries_json_path).is_absolute() else self.project_root / queries_json_path
+        
+        with open(tools_path, 'r', encoding='utf-8') as f:
+            tools = json.load(f)
+        
+        with open(queries_path, 'r', encoding='utf-8') as f:
+            raw_data = json.load(f)
+        
+        # Parse test queries
+        test_queries = self._parse_queries(raw_data)
+        
+        print(f"\n✓ Loaded {len(tools)} tools and {len(test_queries)} queries")
+        
+        # Build BM25 index
+        print("\nBuilding BM25 index...")
+        indexer = BM25Indexer()
+        indexer.build_index(tools)
+        
+        index_dir = self.data_dir / "indexes"
+        index_dir.mkdir(parents=True, exist_ok=True)
+        bm25_index_path = index_dir / "bm25_index.pkl"
+        indexer.save_index(str(bm25_index_path))
+        
+        # Initialize approach
+        approach = BM25OnlyApproach(index_path=str(bm25_index_path))
+        
+        # Run evaluations
+        print("\nRunning evaluations...")
+        results = []
+        for query_data in test_queries:
+            evaluation = approach.evaluate_query(
+                query_data['query'],
+                query_data['ground_truth_tool']
+            )
+            results.append(evaluation)
+        
+        # Calculate metrics
+        metrics = self._calculate_approach_metrics(results)
+        
+        # Save and return
+        return self._save_and_return_results(
+            approach_name="bm25_only",
+            results=results,
+            metrics=metrics,
+            config={'num_tools': len(tools), 'num_queries': len(test_queries)},
+            save_results=save_results,
+            results_filename=results_filename
+        )
+    
+    def benchmark_bm25_plus_dense(
+        self,
+        tools_json_path: str,
+        queries_json_path: str,
+        model_name: str = 'all-MiniLM-L6-v2',
+        rrf_k: int = 60,
+        batch_size: int = 8,
+        save_results: bool = True,
+        results_filename: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Benchmark BM25 + Dense hybrid approach.
+        
+        Args:
+            tools_json_path: Path to JSON file containing tool definitions
+            queries_json_path: Path to JSON file containing test queries
+            model_name: Embedding model name
+            rrf_k: RRF constant
+            batch_size: Batch size for embedding
+            save_results: Whether to save results
+            results_filename: Custom filename for results
+        
+        Returns:
+            Dictionary containing benchmark results
+        """
+        print("=" * 80)
+        print("BM25 + Dense Hybrid Approach Benchmarking")
+        print("=" * 80)
+        
+        # Load data
+        tools_path = Path(tools_json_path) if Path(tools_json_path).is_absolute() else self.project_root / tools_json_path
+        queries_path = Path(queries_json_path) if Path(queries_json_path).is_absolute() else self.project_root / queries_json_path
+        
+        with open(tools_path, 'r', encoding='utf-8') as f:
+            tools = json.load(f)
+        
+        with open(queries_path, 'r', encoding='utf-8') as f:
+            raw_data = json.load(f)
+        
+        test_queries = self._parse_queries(raw_data)
+        print(f"\n✓ Loaded {len(tools)} tools and {len(test_queries)} queries")
+        
+        # Build indexes
+        print("\nBuilding indexes...")
+        index_dir = self.data_dir / "indexes"
+        index_dir.mkdir(parents=True, exist_ok=True)
+        
+        # BM25 index
+        bm25_indexer = BM25Indexer()
+        bm25_indexer.build_index(tools)
+        bm25_index_path = index_dir / "bm25_index.pkl"
+        bm25_indexer.save_index(str(bm25_index_path))
+        
+        # Dense index
+        dense_indexer = ToolIndexer(model_name=model_name)
+        dense_indexer.build_index(tools, batch_size=batch_size)
+        dense_index_path = index_dir / f"tools_{model_name.replace('/', '_')}.index"
+        dense_metadata_path = index_dir / f"tools_{model_name.replace('/', '_')}.metadata.json"
+        dense_indexer.save_index(str(dense_index_path), str(dense_metadata_path))
+        
+        # Initialize approach
+        approach = BM25PlusDenseApproach(
+            bm25_index_path=str(bm25_index_path),
+            dense_index_path=str(dense_index_path),
+            dense_metadata_path=str(dense_metadata_path),
+            model_name=model_name,
+            rrf_k=rrf_k
+        )
+        
+        # Run evaluations
+        print("\nRunning evaluations...")
+        results = []
+        for query_data in test_queries:
+            evaluation = approach.evaluate_query(
+                query_data['query'],
+                query_data['ground_truth_tool']
+            )
+            results.append(evaluation)
+        
+        metrics = self._calculate_approach_metrics(results)
+        
+        return self._save_and_return_results(
+            approach_name="bm25_plus_dense",
+            results=results,
+            metrics=metrics,
+            config={'model_name': model_name, 'rrf_k': rrf_k, 'num_tools': len(tools), 'num_queries': len(test_queries)},
+            save_results=save_results,
+            results_filename=results_filename
+        )
+    
+    def benchmark_llm_only(
+        self,
+        tools_json_path: str,
+        queries_json_path: str,
+        server_url: str = "http://localhost:11434",
+        model_name: str = "mistral:7b-instruct-q4_0",
+        backend: str = "ollama",
+        save_results: bool = True,
+        results_filename: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Benchmark LLM-only approach.
+        
+        Args:
+            tools_json_path: Path to tools JSON
+            queries_json_path: Path to queries JSON
+            server_url: LLM server URL
+            model_name: LLM model name
+            backend: 'ollama' or 'vllm'
+            save_results: Whether to save results
+            results_filename: Custom filename
+        
+        Returns:
+            Benchmark results dictionary
+        """
+        print("=" * 80)
+        print("LLM-Only Approach Benchmarking")
+        print("=" * 80)
+        
+        # Load data
+        tools_path = Path(tools_json_path) if Path(tools_json_path).is_absolute() else self.project_root / tools_json_path
+        queries_path = Path(queries_json_path) if Path(queries_json_path).is_absolute() else self.project_root / queries_json_path
+        
+        with open(tools_path, 'r', encoding='utf-8') as f:
+            tools = json.load(f)
+        
+        with open(queries_path, 'r', encoding='utf-8') as f:
+            raw_data = json.load(f)
+        
+        test_queries = self._parse_queries(raw_data)
+        print(f"\n✓ Loaded {len(tools)} tools and {len(test_queries)} queries")
+        
+        # Initialize approach
+        approach = LLMOnlyApproach(
+            tools=tools,
+            server_url=server_url,
+            model_name=model_name,
+            backend=backend
+        )
+        
+        # Run evaluations
+        print("\nRunning evaluations...")
+        results = []
+        for query_data in test_queries:
+            try:
+                evaluation = approach.evaluate_query(
+                    query_data['query'],
+                    query_data['ground_truth_tool']
+                )
+                results.append(evaluation)
+            except Exception as e:
+                print(f"Error on query '{query_data['query'][:50]}...': {e}")
+                continue
+        
+        metrics = self._calculate_llm_approach_metrics(results)
+        
+        return self._save_and_return_results(
+            approach_name="llm_only",
+            results=results,
+            metrics=metrics,
+            config={'server_url': server_url, 'model_name': model_name, 'backend': backend, 'num_tools': len(tools), 'num_queries': len(test_queries)},
+            save_results=save_results,
+            results_filename=results_filename
+        )
+    
+    def benchmark_dense_llm(
+        self,
+        tools_json_path: str,
+        queries_json_path: str,
+        server_url: str = "http://localhost:11434",
+        llm_model_name: str = "mistral:7b-instruct-q4_0",
+        backend: str = "ollama",
+        embedding_model: str = "all-MiniLM-L6-v2",
+        k: int = 5,
+        batch_size: int = 8,
+        save_results: bool = True,
+        results_filename: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Benchmark Dense + LLM approach.
+        
+        Args:
+            tools_json_path: Path to tools JSON
+            queries_json_path: Path to queries JSON
+            server_url: LLM server URL
+            llm_model_name: LLM model name
+            backend: 'ollama' or 'vllm'
+            embedding_model: Embedding model name
+            k: Number of candidates to retrieve
+            batch_size: Batch size for embedding
+            save_results: Whether to save results
+            results_filename: Custom filename
+        
+        Returns:
+            Benchmark results dictionary
+        """
+        print("=" * 80)
+        print("Dense + LLM Approach Benchmarking")
+        print("=" * 80)
+        
+        # Load data
+        tools_path = Path(tools_json_path) if Path(tools_json_path).is_absolute() else self.project_root / tools_json_path
+        queries_path = Path(queries_json_path) if Path(queries_json_path).is_absolute() else self.project_root / queries_json_path
+        
+        with open(tools_path, 'r', encoding='utf-8') as f:
+            tools = json.load(f)
+        
+        with open(queries_path, 'r', encoding='utf-8') as f:
+            raw_data = json.load(f)
+        
+        test_queries = self._parse_queries(raw_data)
+        print(f"\n✓ Loaded {len(tools)} tools and {len(test_queries)} queries")
+        
+        # Build dense index
+        print("\nBuilding dense index...")
+        indexer = ToolIndexer(model_name=embedding_model)
+        indexer.build_index(tools, batch_size=batch_size)
+        
+        index_dir = self.data_dir / "indexes"
+        index_dir.mkdir(parents=True, exist_ok=True)
+        index_path = index_dir / f"tools_{embedding_model.replace('/', '_')}.index"
+        metadata_path = index_dir / f"tools_{embedding_model.replace('/', '_')}.metadata.json"
+        indexer.save_index(str(index_path), str(metadata_path))
+        
+        # Initialize approach
+        approach = DenseLLMApproach(
+            index_path=str(index_path),
+            metadata_path=str(metadata_path),
+            server_url=server_url,
+            model_name=llm_model_name,
+            backend=backend,
+            embedding_model=embedding_model,
+            k=k
+        )
+        
+        # Run evaluations
+        print("\nRunning evaluations...")
+        results = []
+        for query_data in test_queries:
+            try:
+                evaluation = approach.evaluate_query(
+                    query_data['query'],
+                    query_data['ground_truth_tool']
+                )
+                results.append(evaluation)
+            except Exception as e:
+                print(f"Error on query '{query_data['query'][:50]}...': {e}")
+                continue
+        
+        metrics = self._calculate_llm_approach_metrics(results)
+        
+        return self._save_and_return_results(
+            approach_name="dense_llm",
+            results=results,
+            metrics=metrics,
+            config={'embedding_model': embedding_model, 'llm_model': llm_model_name, 'k': k, 'num_tools': len(tools), 'num_queries': len(test_queries)},
+            save_results=save_results,
+            results_filename=results_filename
+        )
+    
+    def benchmark_llm_hybrid(
+        self,
+        tools_json_path: str,
+        queries_json_path: str,
+        server_url: str = "http://localhost:11434",
+        llm_model_name: str = "mistral:7b-instruct-q4_0",
+        backend: str = "ollama",
+        embedding_model: str = "all-MiniLM-L6-v2",
+        rrf_k: int = 60,
+        retrieval_k: int = 5,
+        batch_size: int = 8,
+        save_results: bool = True,
+        results_filename: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Benchmark Hybrid (BM25+Dense) + LLM approach.
+        
+        Args:
+            tools_json_path: Path to tools JSON
+            queries_json_path: Path to queries JSON
+            server_url: LLM server URL
+            llm_model_name: LLM model name
+            backend: 'ollama' or 'vllm'
+            embedding_model: Embedding model name
+            rrf_k: RRF constant
+            retrieval_k: Number of candidates to retrieve
+            batch_size: Batch size for embedding
+            save_results: Whether to save results
+            results_filename: Custom filename
+        
+        Returns:
+            Benchmark results dictionary
+        """
+        print("=" * 80)
+        print("Hybrid (BM25+Dense) + LLM Approach Benchmarking")
+        print("=" * 80)
+        
+        # Load data
+        tools_path = Path(tools_json_path) if Path(tools_json_path).is_absolute() else self.project_root / tools_json_path
+        queries_path = Path(queries_json_path) if Path(queries_json_path).is_absolute() else self.project_root / queries_json_path
+        
+        with open(tools_path, 'r', encoding='utf-8') as f:
+            tools = json.load(f)
+        
+        with open(queries_path, 'r', encoding='utf-8') as f:
+            raw_data = json.load(f)
+        
+        test_queries = self._parse_queries(raw_data)
+        print(f"\n✓ Loaded {len(tools)} tools and {len(test_queries)} queries")
+        
+        # Build indexes
+        print("\nBuilding indexes...")
+        index_dir = self.data_dir / "indexes"
+        index_dir.mkdir(parents=True, exist_ok=True)
+        
+        # BM25 index
+        bm25_indexer = BM25Indexer()
+        bm25_indexer.build_index(tools)
+        bm25_index_path = index_dir / "bm25_index.pkl"
+        bm25_indexer.save_index(str(bm25_index_path))
+        
+        # Dense index
+        dense_indexer = ToolIndexer(model_name=embedding_model)
+        dense_indexer.build_index(tools, batch_size=batch_size)
+        dense_index_path = index_dir / f"tools_{embedding_model.replace('/', '_')}.index"
+        dense_metadata_path = index_dir / f"tools_{embedding_model.replace('/', '_')}.metadata.json"
+        dense_indexer.save_index(str(dense_index_path), str(dense_metadata_path))
+        
+        # Initialize approach
+        approach = LLMHybridApproach(
+            bm25_index_path=str(bm25_index_path),
+            dense_index_path=str(dense_index_path),
+            dense_metadata_path=str(dense_metadata_path),
+            server_url=server_url,
+            model_name=llm_model_name,
+            backend=backend,
+            embedding_model=embedding_model,
+            rrf_k=rrf_k,
+            retrieval_k=retrieval_k
+        )
+        
+        # Run evaluations
+        print("\nRunning evaluations...")
+        results = []
+        for query_data in test_queries:
+            try:
+                evaluation = approach.evaluate_query(
+                    query_data['query'],
+                    query_data['ground_truth_tool']
+                )
+                results.append(evaluation)
+            except Exception as e:
+                print(f"Error on query '{query_data['query'][:50]}...': {e}")
+                continue
+        
+        metrics = self._calculate_llm_approach_metrics(results)
+        
+        return self._save_and_return_results(
+            approach_name="llm_hybrid",
+            results=results,
+            metrics=metrics,
+            config={'embedding_model': embedding_model, 'llm_model': llm_model_name, 'rrf_k': rrf_k, 'retrieval_k': retrieval_k, 'num_tools': len(tools), 'num_queries': len(test_queries)},
+            save_results=save_results,
+            results_filename=results_filename
+        )
+    
+    def _parse_queries(self, raw_data: Any) -> List[Dict[str, Any]]:
+        """Parse queries from JSON data."""
+        test_queries = []
+        
+        if isinstance(raw_data, dict) and 'server_tasks' in raw_data:
+            for server_task in raw_data.get('server_tasks', []):
+                server_name = server_task.get('server_name', 'Unknown')
+                for task in server_task.get('tasks', []):
+                    query_entry = {
+                        'query': task.get('fuzzy_description', ''),
+                        'ground_truth_tool': server_name,
+                        'query_id': task.get('task_id', ''),
+                        'category': server_task.get('combination_type', 'single_server'),
+                    }
+                    test_queries.append(query_entry)
+        elif isinstance(raw_data, list):
+            test_queries = raw_data
+        else:
+            raise ValueError("Unknown query JSON schema format")
+        
+        return test_queries
+    
+    def _calculate_approach_metrics(self, results: List[Dict[str, Any]]) -> Dict[str, float]:
+        """Calculate metrics for non-LLM approaches."""
+        if not results:
+            return {}
+        
+        total_correct = sum(1 for r in results if r.get('is_correct', False))
+        accuracy = total_correct / len(results)
+        avg_latency = sum(r.get('latency_seconds', 0) for r in results) / len(results)
+        
+        return {
+            'accuracy': accuracy,
+            'num_correct': total_correct,
+            'num_queries': len(results),
+            'avg_latency_ms': avg_latency * 1000
+        }
+    
+    def _calculate_llm_approach_metrics(self, results: List[Dict[str, Any]]) -> Dict[str, float]:
+        """Calculate metrics for LLM-based approaches."""
+        if not results:
+            return {}
+        
+        total_correct = sum(1 for r in results if r.get('is_correct', False))
+        accuracy = total_correct / len(results)
+        avg_latency = sum(r.get('latency_seconds', 0) for r in results) / len(results)
+        avg_prompt_tokens = sum(r.get('prompt_tokens', 0) for r in results) / len(results)
+        avg_completion_tokens = sum(r.get('completion_tokens', 0) for r in results) / len(results)
+        avg_total_tokens = sum(r.get('total_tokens', 0) for r in results) / len(results)
+        
+        return {
+            'accuracy': accuracy,
+            'num_correct': total_correct,
+            'num_queries': len(results),
+            'avg_latency_ms': avg_latency * 1000,
+            'avg_prompt_tokens': avg_prompt_tokens,
+            'avg_completion_tokens': avg_completion_tokens,
+            'avg_total_tokens': avg_total_tokens
+        }
+    
+    def _save_and_return_results(
+        self,
+        approach_name: str,
+        results: List[Dict[str, Any]],
+        metrics: Dict[str, float],
+        config: Dict[str, Any],
+        save_results: bool,
+        results_filename: Optional[str]
+    ) -> Dict[str, Any]:
+        """Save results and return summary."""
+        # Print summary
+        print("\n" + "=" * 80)
+        print(f"{approach_name.upper()} - Benchmark Complete!")
+        print("=" * 80)
+        print(f"\nSummary:")
+        print(f"  - Approach: {approach_name}")
+        print(f"  - Queries processed: {metrics.get('num_queries', 0)}")
+        print(f"  - Correct: {metrics.get('num_correct', 0)}")
+        print(f"  - Accuracy: {metrics.get('accuracy', 0):.2%}")
+        print(f"  - Avg latency: {metrics.get('avg_latency_ms', 0):.2f}ms")
+        
+        if 'avg_total_tokens' in metrics:
+            print(f"  - Avg tokens: {metrics['avg_total_tokens']:.0f}")
+        
+        print("=" * 80)
+        
+        # Save results
+        if save_results:
+            if results_filename is None:
+                results_filename = f"{approach_name}_benchmark.json"
+            
+            results_path = self.results_dir / results_filename
+            
+            output_data = {
+                'approach': approach_name,
+                'config': config,
+                'metrics': metrics,
+                'results': results
+            }
+            
+            with open(results_path, 'w', encoding='utf-8') as f:
+                json.dump(output_data, f, indent=2, ensure_ascii=False)
+            
+            print(f"\n✓ Results saved to: {results_path}")
+        
+        return {
+            'approach': approach_name,
+            'config': config,
+            'metrics': metrics,
+            'results': results
+        }
 
 
 def main():
     """
-    Example usage of the Benchmarker class.
+    Run all benchmarks sequentially.
     """
+    print("\n" + "=" * 80)
+    print("RUNNING ALL BENCHMARKS")
+    print("=" * 80)
+    print(f"\nConfiguration:")
+    print(f"  Tools: {TOOLS_PATH}")
+    print(f"  Queries: {QUERIES_PATH}")
+    print(f"  K Values: {K_VALUES}")
+    print(f"  Embedding Model: {EMBEDDING_MODEL}")
+    print(f"  Batch Size: {BATCH_SIZE}")
+    print(f"  RRF K: {RRF_K}")
+    print(f"  Retrieval K: {RETRIEVAL_K}")
+    print(f"  LLM Server: {LLM_SERVER_URL}")
+    print(f"  LLM Model: {LLM_MODEL_NAME}")
+    print("=" * 80)
+    
     # Initialize benchmarker
     benchmarker = Benchmarker()
     
-    # Run retrieval-only benchmark
-    results = benchmarker.benchmark_retrieval_only(
-        tools_json_path="data/tools/all_tools.json",
-        queries_json_path="data/queries/mcp_task_description.json",
-        model_name='all-MiniLM-L6-v2',
-        k_values=[1, 3, 5],
-        batch_size=8,
-        save_results=True
-    )
+    all_results = {}
     
-    print(f"\n✓ Benchmark completed successfully!")
-    print(f"  Accuracy@1 (first result correct): {results['metrics']['accuracy@1']:.2%}")
-    print(f"  Overall Recall@3: {results['metrics']['recall@3']:.2%}")
-    print(f"  Overall MRR: {results['metrics']['mrr']:.4f}")
+    # 1. Dense Only (baseline - retrieval only)
+    print("\n\n" + "=" * 80)
+    print("BENCHMARK 1/6: Dense Only (Retrieval)")
+    print("=" * 80)
+    try:
+        results = benchmarker.benchmark_retrieval_only(
+            tools_json_path=TOOLS_PATH,
+            queries_json_path=QUERIES_PATH,
+            model_name=EMBEDDING_MODEL,
+            k_values=K_VALUES,
+            batch_size=BATCH_SIZE,
+            save_results=True,
+            results_filename="dense_only_benchmark.json"
+        )
+        all_results['dense_only'] = results
+        print(f"✓ Dense Only - Accuracy: {results['metrics']['accuracy@1']:.2%}")
+    except Exception as e:
+        print(f"✗ Dense Only failed: {e}")
+        all_results['dense_only'] = {'error': str(e)}
+    
+    # 2. BM25 Only
+    print("\n\n" + "=" * 80)
+    print("BENCHMARK 2/6: BM25 Only")
+    print("=" * 80)
+    try:
+        results = benchmarker.benchmark_bm25_only(
+            tools_json_path=TOOLS_PATH,
+            queries_json_path=QUERIES_PATH,
+            save_results=True,
+            results_filename="bm25_only_benchmark.json"
+        )
+        all_results['bm25_only'] = results
+        print(f"✓ BM25 Only - Accuracy: {results['metrics']['accuracy']:.2%}")
+    except Exception as e:
+        print(f"✗ BM25 Only failed: {e}")
+        all_results['bm25_only'] = {'error': str(e)}
+    
+    # 3. BM25 + Dense (Hybrid)
+    print("\n\n" + "=" * 80)
+    print("BENCHMARK 3/6: BM25 + Dense (Hybrid)")
+    print("=" * 80)
+    try:
+        results = benchmarker.benchmark_bm25_plus_dense(
+            tools_json_path=TOOLS_PATH,
+            queries_json_path=QUERIES_PATH,
+            model_name=EMBEDDING_MODEL,
+            rrf_k=RRF_K,
+            batch_size=BATCH_SIZE,
+            save_results=True,
+            results_filename="bm25_plus_dense_benchmark.json"
+        )
+        all_results['bm25_plus_dense'] = results
+        print(f"✓ BM25 + Dense - Accuracy: {results['metrics']['accuracy']:.2%}")
+    except Exception as e:
+        print(f"✗ BM25 + Dense failed: {e}")
+        all_results['bm25_plus_dense'] = {'error': str(e)}
+    
+    # 4. LLM Only
+    print("\n\n" + "=" * 80)
+    print("BENCHMARK 4/6: LLM Only")
+    print("=" * 80)
+    try:
+        results = benchmarker.benchmark_llm_only(
+            tools_json_path=TOOLS_PATH,
+            queries_json_path=QUERIES_PATH,
+            server_url=LLM_SERVER_URL,
+            model_name=LLM_MODEL_NAME,
+            backend=LLM_BACKEND,
+            save_results=True,
+            results_filename="llm_only_benchmark.json"
+        )
+        all_results['llm_only'] = results
+        print(f"✓ LLM Only - Accuracy: {results['metrics']['accuracy']:.2%}")
+    except Exception as e:
+        print(f"✗ LLM Only failed: {e}")
+        all_results['llm_only'] = {'error': str(e)}
+    
+    # 5. Dense + LLM
+    print("\n\n" + "=" * 80)
+    print("BENCHMARK 5/6: Dense + LLM")
+    print("=" * 80)
+    try:
+        results = benchmarker.benchmark_dense_llm(
+            tools_json_path=TOOLS_PATH,
+            queries_json_path=QUERIES_PATH,
+            server_url=LLM_SERVER_URL,
+            llm_model_name=LLM_MODEL_NAME,
+            backend=LLM_BACKEND,
+            embedding_model=EMBEDDING_MODEL,
+            k=RETRIEVAL_K,
+            batch_size=BATCH_SIZE,
+            save_results=True,
+            results_filename="dense_llm_benchmark.json"
+        )
+        all_results['dense_llm'] = results
+        print(f"✓ Dense + LLM - Accuracy: {results['metrics']['accuracy']:.2%}")
+    except Exception as e:
+        print(f"✗ Dense + LLM failed: {e}")
+        all_results['dense_llm'] = {'error': str(e)}
+    
+    # 6. LLM Hybrid (BM25 + Dense + LLM)
+    print("\n\n" + "=" * 80)
+    print("BENCHMARK 6/6: LLM Hybrid (BM25 + Dense + LLM)")
+    print("=" * 80)
+    try:
+        results = benchmarker.benchmark_llm_hybrid(
+            tools_json_path=TOOLS_PATH,
+            queries_json_path=QUERIES_PATH,
+            server_url=LLM_SERVER_URL,
+            llm_model_name=LLM_MODEL_NAME,
+            backend=LLM_BACKEND,
+            embedding_model=EMBEDDING_MODEL,
+            rrf_k=RRF_K,
+            retrieval_k=RETRIEVAL_K,
+            batch_size=BATCH_SIZE,
+            save_results=True,
+            results_filename="llm_hybrid_benchmark.json"
+        )
+        all_results['llm_hybrid'] = results
+        print(f"✓ LLM Hybrid - Accuracy: {results['metrics']['accuracy']:.2%}")
+    except Exception as e:
+        print(f"✗ LLM Hybrid failed: {e}")
+        all_results['llm_hybrid'] = {'error': str(e)}
+    
+    # Print final summary
+    print("\n\n" + "=" * 80)
+    print("FINAL SUMMARY - ALL BENCHMARKS")
+    print("=" * 80)
+    print(f"\n{'Approach':<25} {'Accuracy':<12} {'Avg Latency':<15} {'Status'}")
+    print("-" * 80)
+    
+    for approach_name, result in all_results.items():
+        if 'error' in result:
+            print(f"{approach_name:<25} {'N/A':<12} {'N/A':<15} ✗ Failed")
+        else:
+            metrics = result.get('metrics', {})
+            accuracy = metrics.get('accuracy') or metrics.get('accuracy@1', 0)
+            latency = metrics.get('avg_latency_ms', 0)
+            print(f"{approach_name:<25} {accuracy:<12.2%} {latency:<15.2f} ✓ Success")
+    
+    print("=" * 80)
+    print("\n✓ All benchmarks completed!")
+    print(f"Results saved to: {benchmarker.results_dir}/")
+    
+    return all_results
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 import json
 import time
+import argparse
 from typing import List, Dict, Any, Optional
 
 # Add src directory to path
@@ -27,18 +28,18 @@ from src.approaches.dense_llm import DenseLLMApproach
 from src.approaches.bm25_llm import BM25LLMApproach
 from src.approaches.llm_hybrid import LLMHybridApproach
 
-# Global configuration
-TOOLS_PATH = "data/tools/tools_list.json"  # Changed to tools_list.json for local testing
+# Default configuration (can be overridden by CLI arguments)
+TOOLS_PATH = "data/tools/tools_list.json"
 QUERIES_PATH = "data/queries/mcp_task_description.json"
-K_VALUES = [3]  # Testing with k=3 only for local run
+K_VALUES = [3]
 EMBEDDING_MODEL = 'all-MiniLM-L6-v2'
 BATCH_SIZE = 8
 RRF_K = 60
-RETRIEVAL_K = 3  # Changed to match K_VALUES
-LIMIT_QUERIES = 5  # Limit to 5 queries for quick testing
-LLM_SERVER_URL = "http://localhost:11434"
-LLM_MODEL_NAME = "mistral:7b-instruct-q4_0"
-LLM_BACKEND = "ollama"
+RETRIEVAL_K = 3
+LIMIT_QUERIES = -1  # -1 means all queries
+LLM_SERVER_URL = "http://localhost:8000"  # vLLM default port
+LLM_MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"  # vLLM model format
+LLM_BACKEND = "openai"  # vLLM uses OpenAI-compatible API
 
 
 class Benchmarker:
@@ -1045,10 +1046,70 @@ class Benchmarker:
         }
 
 
+def parse_args():
+    """
+    Parse command-line arguments.
+    """
+    parser = argparse.ArgumentParser(description="Run RAG-MCP benchmarking experiments")
+
+    parser.add_argument(
+        "--server-url",
+        type=str,
+        default=LLM_SERVER_URL,
+        help="LLM server URL (default: http://localhost:8000 for vLLM)"
+    )
+    parser.add_argument(
+        "--model-name",
+        type=str,
+        default=LLM_MODEL_NAME,
+        help="LLM model name (default: mistralai/Mistral-7B-Instruct-v0.3)"
+    )
+    parser.add_argument(
+        "--backend",
+        type=str,
+        default=LLM_BACKEND,
+        choices=["openai", "ollama"],
+        help="LLM backend type (default: openai for vLLM compatibility)"
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="data/results",
+        help="Output directory for results (default: data/results)"
+    )
+    parser.add_argument(
+        "--limit-queries",
+        type=int,
+        default=LIMIT_QUERIES,
+        help="Limit number of queries to process, -1 for all (default: -1)"
+    )
+    parser.add_argument(
+        "--k-values",
+        type=int,
+        nargs='+',
+        default=K_VALUES,
+        help="K values for retrieval (default: 3)"
+    )
+
+    return parser.parse_args()
+
+
 def main():
     """
     Run all benchmarks sequentially.
     """
+    # Parse command-line arguments
+    args = parse_args()
+
+    # Update global configuration with CLI arguments
+    global LLM_SERVER_URL, LLM_MODEL_NAME, LLM_BACKEND, LIMIT_QUERIES, K_VALUES, RETRIEVAL_K
+    LLM_SERVER_URL = args.server_url
+    LLM_MODEL_NAME = args.model_name
+    LLM_BACKEND = args.backend
+    LIMIT_QUERIES = args.limit_queries
+    K_VALUES = args.k_values
+    RETRIEVAL_K = args.k_values[0]  # Use first k value for retrieval approaches
+
     print("\n" + "=" * 80)
     print("RUNNING ALL BENCHMARKS")
     print("=" * 80)
@@ -1060,12 +1121,18 @@ def main():
     print(f"  Batch Size: {BATCH_SIZE}")
     print(f"  RRF K: {RRF_K}")
     print(f"  Retrieval K: {RETRIEVAL_K}")
+    print(f"  Limit Queries: {LIMIT_QUERIES if LIMIT_QUERIES > 0 else 'All'}")
     print(f"  LLM Server: {LLM_SERVER_URL}")
     print(f"  LLM Model: {LLM_MODEL_NAME}")
+    print(f"  LLM Backend: {LLM_BACKEND}")
+    print(f"  Output Directory: {args.output_dir}")
     print("=" * 80)
-    
-    # Initialize benchmarker
+
+    # Initialize benchmarker with custom output directory
     benchmarker = Benchmarker()
+    if args.output_dir != "data/results":
+        benchmarker.results_dir = Path(args.output_dir)
+        benchmarker.results_dir.mkdir(parents=True, exist_ok=True)
     
     all_results = {}
     

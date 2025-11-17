@@ -1,0 +1,808 @@
+================================================================================
+USC CARC HIGH PERFORMANCE COMPUTING (HPC) SYSTEM GUIDE
+A Complete Guide for Running Benchmarking Jobs
+================================================================================
+
+TABLE OF CONTENTS
+-----------------
+1. System Architecture Overview
+2. Storage File Systems
+3. Accessing the System
+4. Setting Up Your Environment
+5. Running Benchmarking Jobs
+6. Using OnDemand Interface
+7. Job Management Commands
+8. Performance Optimization Tips
+9. Common Workflow Summary
+10. Troubleshooting & Getting Help
+
+
+================================================================================
+1. SYSTEM ARCHITECTURE OVERVIEW
+================================================================================
+
+USC's Center for Advanced Research Computing (CARC) provides two main HPC 
+clusters:
+
+DISCOVERY CLUSTER
+- Public cluster available to all CARC users
+- Suitable for general research computing tasks
+- Access shared among all USC researchers
+
+ENDEAVOUR CLUSTER
+- Condo cluster with dedicated resources for specific research groups
+- Resources are leased or subscribed to by research groups
+- Priority access for group members
+
+OPERATING SYSTEM
+- Rocky Linux 8 (not macOS or Windows)
+- Command-line driven interface
+- Jobs submitted to Slurm batch processing system
+
+
+================================================================================
+2. STORAGE FILE SYSTEMS
+================================================================================
+
+You have access to four different storage directories:
+
+DIRECTORY    | PURPOSE                        | QUOTA      | BEST USE
+-------------|--------------------------------|------------|-------------------------
+/home1       | Personal files & configs       | 100 GB     | Config files, scripts
+/project2    | Primary job workspace          | 5+ TB      | **RUN JOBS HERE**
+/scratch1    | Temporary & I/O intensive      | 10 TB      | Temp data, high I/O
+/cryoem2     | Specialized cryo-EM storage    | Varies     | If applicable
+
+IMPORTANT FOR BENCHMARKING:
+- Use /project2 as your main working directory for running jobs
+- Your project directory will be: /project2/<PI_username>_<Project_ID>
+- /scratch1 is good for temporary files that don't need long-term storage
+
+
+================================================================================
+3. ACCESSING THE SYSTEM
+================================================================================
+
+PREREQUISITES
+-------------
+1. USC VPN Connection (Cisco AnyConnect Secure Mobility Client)
+   - Must be connected to USC Secure network OR use VPN
+   - Download: https://itservices.usc.edu/anyconnect/
+
+2. Duo Two-Factor Authentication
+   - Required for VPN access
+   - Enroll at: https://itservices.usc.edu/duo/
+
+3. Active CARC Project
+   - Must belong to a Principal Investigator's (PI) project
+   - Managed via CARC user portal: https://hpcaccount.usc.edu/
+
+4. Your USC NetID
+   - First part of your USC email (e.g., ttrojan@usc.edu → ttrojan)
+
+
+ACCESS METHODS
+--------------
+
+METHOD 1: CARC OnDemand (Recommended for Beginners)
+----------------------------------------------------
+URL: https://ondemand.carc.usc.edu/
+
+Features:
+- Web-based graphical interface
+- Easy file management (drag & drop)
+- Browser-based shell access
+- Visual job submission (Job Composer)
+- Interactive applications (JupyterLab, RStudio, VS Code)
+- Real-time job monitoring
+
+METHOD 2: Command Line SSH (Traditional)
+-----------------------------------------
+For advanced users who prefer terminal access
+More control over job submission and management
+
+
+================================================================================
+4. SETTING UP YOUR ENVIRONMENT
+================================================================================
+
+STEP 1: REQUEST AN INTERACTIVE SESSION
+---------------------------------------
+First, you need to request computational resources to set up your environment:
+
+salloc --partition=gpu --gres=gpu:1 --cpus-per-task=8 --mem=32GB --time=1:00:00
+
+This command requests:
+- GPU partition
+- 1 GPU
+- 8 CPU cores
+- 32 GB memory
+- 1 hour time limit
+
+
+STEP 2: SET UP CONDA ENVIRONMENT (if needed)
+---------------------------------------------
+module purge
+module load conda
+conda init bash
+source ~/.bashrc
+
+# Create a new environment
+conda create --name benchmark-env
+conda activate benchmark-env
+
+# Install required packages
+# Examples:
+# conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+# conda install tensorflow-gpu
+# conda install scikit-learn pandas numpy
+
+# Exit interactive session when done
+exit
+
+
+STEP 3: PREPARE YOUR WORKING DIRECTORY
+---------------------------------------
+cd /project2/<PI_username>_<Project_ID>/
+
+# Create a directory for your benchmarking project
+mkdir my_benchmark_project
+cd my_benchmark_project
+
+# Upload your code (via OnDemand drag-drop, git clone, or scp)
+git clone <your_repository_url>
+
+
+================================================================================
+5. RUNNING BENCHMARKING JOBS
+================================================================================
+
+STEP 1: CREATE A SLURM JOB SCRIPT
+----------------------------------
+Create a file named: benchmark_job.slurm
+
+#!/bin/bash
+#SBATCH --job-name=benchmark          # Name your job
+#SBATCH --partition=gpu               # Partition: 'gpu' or 'main' (CPU-only)
+#SBATCH --nodes=1                     # Number of nodes
+#SBATCH --ntasks=1                    # Number of tasks
+#SBATCH --cpus-per-task=8             # CPU cores per task
+#SBATCH --mem=32G                     # Total memory per node
+#SBATCH --gres=gpu:1                  # Number of GPUs (remove for CPU-only)
+#SBATCH --time=02:00:00              # Time limit (HH:MM:SS)
+#SBATCH --account=<project_account>   # Your project account name
+#SBATCH --output=slurm-%j.out        # Output file (%j = job ID)
+#SBATCH --error=slurm-%j.err         # Error file (optional)
+
+# Print job information
+echo "=========================================="
+echo "Job ID: $SLURM_JOBID"
+echo "Running on host: $(hostname)"
+echo "Starting time: $(date)"
+echo "=========================================="
+
+# Print Slurm environment variables
+printenv | grep -i slurm | sort
+
+# Load required modules
+module purge
+eval "$(conda shell.bash hook)"
+conda activate benchmark-env
+
+# Navigate to your code directory
+cd /project2/<PI_username>_<Project_ID>/my_benchmark_project
+
+# Run your benchmarking script
+python your_benchmark_script.py
+
+# Or for compiled programs:
+# ./your_executable
+
+# Print completion info
+echo "=========================================="
+echo "Job completed at: $(date)"
+echo "=========================================="
+
+
+SLURM SCRIPT PARAMETERS EXPLAINED
+----------------------------------
+#SBATCH --job-name        : Name that appears in queue
+#SBATCH --partition       : gpu (for GPU jobs) or main (for CPU jobs)
+#SBATCH --nodes           : Number of compute nodes (usually 1)
+#SBATCH --ntasks          : Number of parallel tasks
+#SBATCH --cpus-per-task   : CPU cores per task (adjust based on needs)
+#SBATCH --mem             : Total memory (e.g., 32G, 64G, 128G)
+#SBATCH --gres            : GPU resources (e.g., gpu:1, gpu:2, gpu:a100:1)
+#SBATCH --time            : Max runtime (HH:MM:SS or DD-HH:MM:SS)
+#SBATCH --account         : Your project account (required)
+
+
+STEP 2: SUBMIT YOUR JOB
+------------------------
+sbatch benchmark_job.slurm
+
+After submission, you'll receive a job ID:
+"Submitted batch job 123456"
+
+
+STEP 3: MONITOR YOUR JOB
+-------------------------
+# Check your job status
+squeue -u $USER
+
+# Check all jobs in the queue
+squeue
+
+# Get detailed job information (after job starts/completes)
+jobinfo <JOB_ID>
+
+# Cancel a job
+scancel <JOB_ID>
+
+# View job output (real-time)
+tail -f slurm-<JOB_ID>.out
+
+# View completed job output
+cat slurm-<JOB_ID>.out
+
+
+STEP 4: RETRIEVE RESULTS
+-------------------------
+Your job will create:
+- slurm-<JOB_ID>.out : Standard output
+- slurm-<JOB_ID>.err : Standard error (if specified)
+- Any output files your script generates
+
+Download results via:
+- OnDemand file manager (web interface)
+- scp command (command line)
+- rsync (for large datasets)
+
+
+================================================================================
+6. USING ONDEMAND INTERFACE
+================================================================================
+
+ACCESSING ONDEMAND
+------------------
+1. Connect to USC VPN
+2. Navigate to: https://ondemand.carc.usc.edu/
+3. Login with USC NetID credentials
+
+
+FILE MANAGEMENT
+---------------
+1. Click "Files" in top menu
+2. Select directory:
+   - Home Directory (/home1)
+   - Project Directory (/project2)
+   - Scratch Directory (/scratch1)
+
+Operations available:
+- Upload (drag & drop or click Upload button)
+- Download (select files → Download button)
+- Copy, Paste, Rename, Delete
+- Edit text files
+- Create new files/folders
+
+Note: Use OnDemand for small files only. For large files, use command-line 
+transfer tools (scp, rsync, globus).
+
+
+VISUAL JOB SUBMISSION (JOB COMPOSER)
+-------------------------------------
+1. Go to: Jobs → Job Composer
+
+2. Create New Job:
+   - Click "+ New Job"
+   - Choose:
+     * "From Default Template" (simple job)
+     * "From Template" (use existing template)
+     * "From Specified Path" (copy from directory)
+     * "From Selected Job" (reuse previous job)
+
+3. Configure Job:
+   - Click "Job Options" to set:
+     * Job name
+     * Cluster (Discovery/Endeavour)
+     * Project account
+     * Job script location
+   
+4. Add Files:
+   - Click "Edit Files"
+   - Upload your scripts and data
+
+5. Submit:
+   - Click green "Submit" button
+   - Monitor in "Jobs → Active Jobs"
+
+
+MONITORING JOBS IN ONDEMAND
+----------------------------
+Jobs → Active Jobs
+
+View:
+- All your jobs (running, queued, completed)
+- Job status and details
+- Node information
+- Resource usage
+
+Filter by:
+- Cluster (Discovery/Endeavour)
+- Status (running, queued, held)
+- User, project account
+
+Click arrow next to job for detailed information.
+
+
+INTERACTIVE APPLICATIONS
+-------------------------
+OnDemand provides interactive apps:
+- JupyterLab (for Python notebooks)
+- RStudio Server (for R development)
+- VS Code (code editor)
+- Desktop (graphical desktop environment)
+
+Access via: Interactive Apps → [Choose App]
+
+
+================================================================================
+7. JOB MANAGEMENT COMMANDS
+================================================================================
+
+SUBMITTING JOBS
+---------------
+sbatch <job_script.slurm>           # Submit a batch job
+salloc [options]                    # Request interactive session
+srun [options] <command>            # Run command on compute nodes
+
+
+MONITORING JOBS
+---------------
+squeue                              # View all jobs in queue
+squeue -u $USER                     # View only your jobs
+squeue -u $USER --start             # Show estimated start time
+squeue -p gpu                       # Show jobs on GPU partition
+
+jobinfo <JOB_ID>                    # Detailed job information
+sacct                               # View job accounting data
+sacct -j <JOB_ID>                   # Info for specific job
+
+
+CONTROLLING JOBS
+----------------
+scancel <JOB_ID>                    # Cancel specific job
+scancel -u $USER                    # Cancel all your jobs
+scancel --name=<job_name>           # Cancel jobs by name
+
+scontrol hold <JOB_ID>              # Hold a job
+scontrol release <JOB_ID>           # Release a held job
+
+
+CHECKING RESOURCES
+------------------
+sinfo                               # View partition and node info
+sinfo -p gpu                        # View GPU partition info
+sinfo -N                            # View node-specific info
+
+nvidia-smi                          # Check GPU status (on GPU node)
+watch -n 1 nvidia-smi               # Monitor GPU in real-time (Ctrl+C to exit)
+
+
+EXAMPLE INTERACTIVE SESSION
+----------------------------
+# Request GPU resources
+salloc --partition=gpu --gres=gpu:1 --cpus-per-task=8 --mem=32GB --time=2:00:00
+
+# Once allocated, you're on a compute node
+# Load environment
+module load conda
+conda activate benchmark-env
+
+# Run commands interactively
+python test_script.py
+
+# Exit when done
+exit
+
+
+================================================================================
+8. PERFORMANCE OPTIMIZATION TIPS
+================================================================================
+
+FROM THE EXAMPLE PROJECT
+-------------------------
+1. OPTIMIZE SINGLE-GPU BEFORE SCALING
+   - Test and optimize on 1 GPU first
+   - Don't request multiple GPUs if single GPU works
+   - More resources = longer queue time
+
+2. USE MULTIPLE CPU CORES FOR DATA LOADING
+   - In PyTorch: Set num_workers parameter
+   - Example: DataLoader(dataset, num_workers=8)
+   - Match num_workers to --cpus-per-task in Slurm script
+
+3. PROFILE YOUR CODE
+   - Use line_profiler or similar tools
+   - Identify bottlenecks before scaling
+   - Data loading is often the slowest part
+
+4. MONITOR GPU UTILIZATION
+   watch -n 1 nvidia-smi
+   
+   Check:
+   - GPU usage percentage
+   - Memory usage
+   - Temperature
+   
+5. REQUEST APPROPRIATE RESOURCES
+   - Don't over-request (wastes resources, longer queue time)
+   - Check efficiency after job: jobinfo <JOB_ID>
+   - Adjust based on actual usage
+
+
+RESOURCE REQUEST GUIDELINES
+----------------------------
+Start Conservative:
+- 1 GPU (if needed)
+- 8 CPU cores
+- 32 GB memory
+- 1-2 hours time
+
+Scale Up Based on Results:
+- Check jobinfo output for efficiency
+- CPU efficiency < 50%? → Reduce CPU cores
+- Memory efficiency < 50%? → Reduce memory
+- Job timeout? → Increase time limit
+
+
+CHECKING JOB EFFICIENCY
+------------------------
+After job completes:
+
+jobinfo <JOB_ID>
+
+Look at:
+- CPU efficiency (target: >70%)
+- Memory efficiency (target: >50%)
+- GPU utilization (check logs/nvidia-smi output)
+- Wait time vs. run time
+
+
+BEST PRACTICES
+--------------
+1. Test with small data/iterations first
+2. Use /scratch1 for temporary large files
+3. Keep code and results on /project2
+4. Don't store large datasets on /home1 (100 GB limit)
+5. Clean up /scratch1 regularly (not backed up)
+6. Use version control (git) for code
+7. Document resource requirements for reproducibility
+
+
+================================================================================
+9. COMMON WORKFLOW SUMMARY
+================================================================================
+
+COMPLETE WORKFLOW FOR BENCHMARKING JOB
+---------------------------------------
+
+1. PREPARATION (One-time setup)
+   ☐ Ensure VPN is installed and configured
+   ☐ Verify project access in user portal
+   ☐ Set up Conda environment (if needed)
+   ☐ Upload/clone your code to /project2
+
+2. PRE-SUBMISSION
+   ☐ Navigate to project directory
+   ☐ Test code locally or in interactive session
+   ☐ Create Slurm job script
+   ☐ Verify all file paths are correct
+   ☐ Check resource requirements
+
+3. SUBMISSION
+   ☐ Connect to USC VPN
+   ☐ Access CARC (OnDemand or SSH)
+   ☐ Submit job: sbatch benchmark_job.slurm
+   ☐ Note the job ID
+
+4. MONITORING
+   ☐ Check status: squeue -u $USER
+   ☐ Monitor output: tail -f slurm-<JOB_ID>.out
+   ☐ Check for errors in real-time
+
+5. POST-COMPLETION
+   ☐ Review job info: jobinfo <JOB_ID>
+   ☐ Check output files
+   ☐ Download results (if needed)
+   ☐ Analyze efficiency metrics
+   ☐ Adjust resources for future runs
+
+
+QUICK REFERENCE COMMANDS
+-------------------------
+# Connect to VPN first!
+
+# Access OnDemand
+https://ondemand.carc.usc.edu/
+
+# SSH access (alternative)
+ssh <USC_NetID>@discovery.usc.edu
+
+# Navigate to workspace
+cd /project2/<PI_username>_<Project_ID>
+
+# Submit job
+sbatch my_job.slurm
+
+# Check status
+squeue -u $USER
+
+# View output
+tail -f slurm-<JOB_ID>.out
+
+# Get job details
+jobinfo <JOB_ID>
+
+# Cancel job
+scancel <JOB_ID>
+
+
+================================================================================
+10. TROUBLESHOOTING & GETTING HELP
+================================================================================
+
+COMMON ISSUES & SOLUTIONS
+--------------------------
+
+ISSUE: Can't access OnDemand
+SOLUTION: 
+- Verify VPN connection
+- Use private/incognito browser
+- Clear browser cache
+- Try different browser
+
+ISSUE: Job pending for long time
+SOLUTION:
+- Check queue: squeue -u $USER --start
+- Reduce resource requests
+- Check if requesting unavailable resources
+- Consider using different partition
+
+ISSUE: Job fails immediately
+SOLUTION:
+- Check slurm-<JOB_ID>.out for error messages
+- Verify file paths are correct
+- Ensure conda environment is activated
+- Check resource limits (memory, time)
+
+ISSUE: Out of memory error
+SOLUTION:
+- Increase --mem parameter in Slurm script
+- Reduce batch size in your code
+- Use /scratch1 for large temporary files
+- Check for memory leaks
+
+ISSUE: Module not found
+SOLUTION:
+- Load correct modules: module load <module_name>
+- Check available modules: module avail
+- Ensure conda environment is activated
+- Verify package installation
+
+ISSUE: Permission denied
+SOLUTION:
+- Check file permissions: ls -la
+- Ensure you're in correct directory
+- Verify project access in user portal
+- Contact CARC support if needed
+
+
+GETTING HELP
+------------
+
+1. WEEKLY OFFICE HOURS
+   When: Tuesdays, 2:30-5:00 PM (Pacific Time)
+   Where: Zoom (requires USC NetID)
+   What: Drop-in support, no appointment needed
+   Who: All users and questions welcome
+
+2. USER FORUM (Discourse)
+   URL: https://hpc-discourse.usc.edu/
+   What: Community Q&A, discussion forum
+   Who: CARC staff monitors and responds
+   Good for: Non-urgent questions, sharing knowledge
+
+3. DOCUMENTATION
+   URL: https://www.carc.usc.edu/user-guides/
+   What: Comprehensive user guides
+   Topics: 
+   - Getting started guides
+   - Software guides
+   - Data management
+   - Job submission
+   - Best practices
+
+4. FREQUENTLY ASKED QUESTIONS (FAQ)
+   URL: https://www.carc.usc.edu/user-support/frequently-asked-questions
+   What: Common questions and answers
+   Topics:
+   - Account issues
+   - Resource usage
+   - Software installation
+   - Job submission
+
+5. SUBMIT A HELP TICKET
+   When: Urgent issues or problems unresolved by other resources
+   How: https://www.carc.usc.edu/user-support/submit-ticket
+   Include:
+   - Job ID (if applicable)
+   - Error messages
+   - Steps to reproduce issue
+   - What you've already tried
+
+6. WORKSHOPS
+   What: Free 2-hour workshops on various topics
+   When: Monthly, rotating topics
+   Topics: 
+   - Introduction to HPC
+   - Programming languages (Python, R, etc.)
+   - Parallel computing
+   - Software-specific training
+   URL: https://www.carc.usc.edu/education/workshops
+
+
+ADDITIONAL RESOURCES
+--------------------
+
+Official Documentation:
+- Quick Start: https://www.carc.usc.edu/user-guides/quick-start-guides/intro-to-carc
+- OnDemand: https://www.carc.usc.edu/user-guides/carc-ondemand/ondemand-overview
+- Data Management: https://www.carc.usc.edu/user-guides/research-data-management/
+- Running Jobs: https://www.carc.usc.edu/user-guides/hpc-basics/running-jobs
+
+Example Projects:
+- Deep Learning: https://github.com/uschpc/Running-DL-Applications
+- More examples: https://github.com/uschpc
+
+External Learning:
+- Linux command line tutorials
+- Slurm documentation: https://slurm.schedmd.com/
+- Conda documentation: https://docs.conda.io/
+
+
+IMPORTANT NOTES
+---------------
+
+DATA SENSITIVITY
+- CARC does not support sensitive data storage
+- No HIPAA, FERPA, or CUI-regulated data
+- Contact carc-support@usc.edu if you have questions
+
+RESOURCE LIMITS
+- Be considerate of shared resources
+- Don't monopolize resources
+- Clean up unnecessary files
+- Follow fair use policies
+
+ACKNOWLEDGMENTS
+- Acknowledge CARC in publications
+- Format usually provided by CARC support
+- Helps secure continued funding
+
+
+================================================================================
+EXAMPLE BENCHMARKING JOB SCRIPT TEMPLATE
+================================================================================
+
+Below is a complete, production-ready Slurm script template:
+
+#!/bin/bash
+#SBATCH --job-name=my_benchmark
+#SBATCH --partition=gpu
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+#SBATCH --gres=gpu:1
+#SBATCH --time=02:00:00
+#SBATCH --account=<your_account>
+#SBATCH --output=benchmark_%j.out
+#SBATCH --error=benchmark_%j.err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=<your_email>@usc.edu
+
+# ============================================================================
+# Job Information
+# ============================================================================
+echo "=========================================="
+echo "Job ID: $SLURM_JOBID"
+echo "Job Name: $SLURM_JOB_NAME"
+echo "Node: $SLURM_NODELIST"
+echo "Starting Time: $(date)"
+echo "Working Directory: $(pwd)"
+echo "=========================================="
+
+# Print Slurm environment
+echo "Slurm Environment Variables:"
+printenv | grep -i slurm | sort
+echo "=========================================="
+
+# ============================================================================
+# Environment Setup
+# ============================================================================
+echo "Setting up environment..."
+
+# Clear any loaded modules
+module purge
+
+# Load required modules
+eval "$(conda shell.bash hook)"
+conda activate benchmark-env
+
+# Verify environment
+echo "Python: $(which python)"
+echo "Python version: $(python --version)"
+echo "=========================================="
+
+# ============================================================================
+# GPU Information (if using GPU)
+# ============================================================================
+echo "GPU Information:"
+nvidia-smi
+echo "=========================================="
+
+# ============================================================================
+# Navigate to Working Directory
+# ============================================================================
+cd /project2/<PI_username>_<Project_ID>/my_benchmark_project || exit 1
+
+# ============================================================================
+# Run Benchmark
+# ============================================================================
+echo "Starting benchmark..."
+echo "Start time: $(date)"
+
+# Run your benchmarking script
+python benchmark_script.py \
+    --parameter1 value1 \
+    --parameter2 value2 \
+    --output results_${SLURM_JOBID}.json
+
+# Check exit status
+if [ $? -eq 0 ]; then
+    echo "Benchmark completed successfully!"
+else
+    echo "Benchmark failed with error!"
+    exit 1
+fi
+
+echo "End time: $(date)"
+echo "=========================================="
+
+# ============================================================================
+# Post-Processing (optional)
+# ============================================================================
+echo "Post-processing results..."
+
+# Example: Copy results to specific location
+cp results_${SLURM_JOBID}.json /project2/<PI_username>_<Project_ID>/results/
+
+# Example: Generate summary
+python generate_summary.py results_${SLURM_JOBID}.json
+
+echo "=========================================="
+echo "Job completed successfully at: $(date)"
+echo "=========================================="
+
+
+================================================================================
+END OF GUIDE
+================================================================================
+
+For the most up-to-date information, always refer to:
+https://www.carc.usc.edu/user-guides/
+
+Contact: carc-support@usc.edu
+
+Last Updated: Based on documentation accessed November 2025

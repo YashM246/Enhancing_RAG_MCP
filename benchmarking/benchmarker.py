@@ -1213,73 +1213,76 @@ def main():
         print(f"✗ LLM Only failed: {e}")
         all_results['llm_only'] = {'error': str(e)}
     
-    # 5. Dense + LLM
-    print("\n\n" + "=" * 80)
-    print("BENCHMARK 5/7: Dense + LLM")
-    print("=" * 80)
-    try:
-        results = benchmarker.benchmark_dense_llm(
-            tools_json_path=TOOLS_PATH,
-            queries_json_path=QUERIES_PATH,
-            server_url=LLM_SERVER_URL,
-            llm_model_name=LLM_MODEL_NAME,
-            backend=LLM_BACKEND,
-            embedding_model=EMBEDDING_MODEL,
-            k=RETRIEVAL_K,
-            batch_size=BATCH_SIZE,
-            save_results=True,
-            results_filename="dense_llm_benchmark.json"
-        )
-        all_results['dense_llm'] = results
-        print(f"✓ Dense + LLM - Accuracy: {results['metrics']['accuracy']:.2%}")
-    except Exception as e:
-        print(f"✗ Dense + LLM failed: {e}")
-        all_results['dense_llm'] = {'error': str(e)}
+    # 5. Dense + LLM (run for each k value)
+    for k_val in K_VALUES:
+        print("\n\n" + "=" * 80)
+        print(f"BENCHMARK 5: Dense + LLM (k={k_val})")
+        print("=" * 80)
+        try:
+            results = benchmarker.benchmark_dense_llm(
+                tools_json_path=TOOLS_PATH,
+                queries_json_path=QUERIES_PATH,
+                server_url=LLM_SERVER_URL,
+                llm_model_name=LLM_MODEL_NAME,
+                backend=LLM_BACKEND,
+                embedding_model=EMBEDDING_MODEL,
+                k=k_val,
+                batch_size=BATCH_SIZE,
+                save_results=True,
+                results_filename=f"dense_llm_k{k_val}_benchmark.json"
+            )
+            all_results[f'dense_llm_k{k_val}'] = results
+            print(f"✓ Dense + LLM (k={k_val}) - Accuracy: {results['metrics']['accuracy']:.2%}")
+        except Exception as e:
+            print(f"✗ Dense + LLM (k={k_val}) failed: {e}")
+            all_results[f'dense_llm_k{k_val}'] = {'error': str(e)}
 
-    # 6. BM25 + LLM
-    print("\n\n" + "=" * 80)
-    print("BENCHMARK 6/7: BM25 + LLM")
-    print("=" * 80)
-    try:
-        results = benchmarker.benchmark_bm25_llm(
-            tools_json_path=TOOLS_PATH,
-            queries_json_path=QUERIES_PATH,
-            server_url=LLM_SERVER_URL,
-            llm_model_name=LLM_MODEL_NAME,
-            backend=LLM_BACKEND,
-            k=RETRIEVAL_K,
-            save_results=True,
-            results_filename="bm25_llm_benchmark.json"
-        )
-        all_results['bm25_llm'] = results
-        print(f"✓ BM25 + LLM - Accuracy: {results['metrics']['accuracy']:.2%}")
-    except Exception as e:
-        print(f"✗ BM25 + LLM failed: {e}")
-        all_results['bm25_llm'] = {'error': str(e)}
+    # 6. BM25 + LLM (run for each k value)
+    for k_val in K_VALUES:
+        print("\n\n" + "=" * 80)
+        print(f"BENCHMARK 6: BM25 + LLM (k={k_val})")
+        print("=" * 80)
+        try:
+            results = benchmarker.benchmark_bm25_llm(
+                tools_json_path=TOOLS_PATH,
+                queries_json_path=QUERIES_PATH,
+                server_url=LLM_SERVER_URL,
+                llm_model_name=LLM_MODEL_NAME,
+                backend=LLM_BACKEND,
+                k=k_val,
+                save_results=True,
+                results_filename=f"bm25_llm_k{k_val}_benchmark.json"
+            )
+            all_results[f'bm25_llm_k{k_val}'] = results
+            print(f"✓ BM25 + LLM (k={k_val}) - Accuracy: {results['metrics']['accuracy']:.2%}")
+        except Exception as e:
+            print(f"✗ BM25 + LLM (k={k_val}) failed: {e}")
+            all_results[f'bm25_llm_k{k_val}'] = {'error': str(e)}
 
-    # 7. LLM Hybrid (BM25 + Dense + LLM)
-    print("\n\n" + "=" * 80)
-    print("BENCHMARK 7/7: LLM Hybrid (BM25 + Dense + LLM)")
-    print("=" * 80)
-    try:
-        results = benchmarker.benchmark_llm_hybrid(
-            tools_json_path=TOOLS_PATH,
-            queries_json_path=QUERIES_PATH,
-            server_url=LLM_SERVER_URL,
-            llm_model_name=LLM_MODEL_NAME,
-            backend=LLM_BACKEND,
-            embedding_model=EMBEDDING_MODEL,
-            rrf_k=RRF_K,
-            retrieval_k=RETRIEVAL_K,
-            batch_size=BATCH_SIZE,
-            save_results=True,
-            results_filename="llm_hybrid_benchmark.json"
-        )
-        all_results['llm_hybrid'] = results
-        print(f"✓ LLM Hybrid - Accuracy: {results['metrics']['accuracy']:.2%}")
-    except Exception as e:
-        print(f"✗ LLM Hybrid failed: {e}")
-        all_results['llm_hybrid'] = {'error': str(e)}
+    # 7. LLM Hybrid (BM25 + Dense + LLM) (run for each k value)
+    for k_val in K_VALUES:
+        print("\n\n" + "=" * 80)
+        print(f"BENCHMARK 7: LLM Hybrid (BM25 + Dense + LLM) (k={k_val})")
+        print("=" * 80)
+        try:
+            results = benchmarker.benchmark_llm_hybrid(
+                tools_json_path=TOOLS_PATH,
+                queries_json_path=QUERIES_PATH,
+                server_url=LLM_SERVER_URL,
+                llm_model_name=LLM_MODEL_NAME,
+                backend=LLM_BACKEND,
+                embedding_model=EMBEDDING_MODEL,
+                rrf_k=RRF_K,
+                retrieval_k=k_val,
+                batch_size=BATCH_SIZE,
+                save_results=True,
+                results_filename=f"hybrid_llm_k{k_val}_benchmark.json"
+            )
+            all_results[f'hybrid_llm_k{k_val}'] = results
+            print(f"✓ LLM Hybrid (k={k_val}) - Accuracy: {results['metrics']['accuracy']:.2%}")
+        except Exception as e:
+            print(f"✗ LLM Hybrid (k={k_val}) failed: {e}")
+            all_results[f'hybrid_llm_k{k_val}'] = {'error': str(e)}
     
     # Print final summary
     print("\n\n" + "=" * 80)

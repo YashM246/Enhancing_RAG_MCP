@@ -83,7 +83,7 @@ vllm serve mistralai/Mistral-7B-Instruct-v0.3 \
     --host 0.0.0.0 \
     --port 8000 \
     --gpu-memory-utilization 0.9 \
-    --max-model-len 4096 \
+    --max-model-len 16384 \
     --dtype float16 > logs/vllm_server_${SLURM_JOBID}.log 2>&1 &
 
 # Get vLLM server PID for cleanup later

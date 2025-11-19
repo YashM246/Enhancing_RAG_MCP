@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --gres=gpu:a100:1
-#SBATCH --time=2:00:00
+#SBATCH --time=6:00:00
 #SBATCH --output=logs/benchmark_%j.out
 #SBATCH --error=logs/benchmark_%j.err
 
@@ -90,20 +90,42 @@ vllm serve mistralai/Mistral-7B-Instruct-v0.3 \
 VLLM_PID=$!
 echo "vLLM server PID: $VLLM_PID"
 
-# Wait for server to start (120 seconds should be enough)
+# Wait for server to start (with health check)
 echo "Waiting for vLLM server to initialize..."
-sleep 120
+MAX_WAIT=300  # 5 minutes max wait
+WAIT_INTERVAL=10
+ELAPSED=0
 
-# Check if server is running
-if ! ps -p $VLLM_PID > /dev/null; then
-    echo "ERROR: vLLM server failed to start!"
-    cat logs/vllm_server_${SLURM_JOBID}.log
+while [ $ELAPSED -lt $MAX_WAIT ]; do
+    sleep $WAIT_INTERVAL
+    ELAPSED=$((ELAPSED + WAIT_INTERVAL))
+
+    # Check if process is still running
+    if ! ps -p $VLLM_PID > /dev/null; then
+        echo "ERROR: vLLM server process died!"
+        echo "Last 50 lines of vLLM log:"
+        tail -50 logs/vllm_server_${SLURM_JOBID}.log
+        exit 1
+    fi
+
+    # Try to connect to server
+    if curl -s http://localhost:8000/v1/models > /dev/null 2>&1; then
+        echo "✓ vLLM server is ready! (waited ${ELAPSED}s)"
+        curl -s http://localhost:8000/v1/models
+        break
+    else
+        echo "  Still waiting... (${ELAPSED}s elapsed)"
+    fi
+done
+
+# Final check
+if [ $ELAPSED -ge $MAX_WAIT ]; then
+    echo "ERROR: vLLM server did not start within ${MAX_WAIT}s"
+    echo "Last 50 lines of vLLM log:"
+    tail -50 logs/vllm_server_${SLURM_JOBID}.log
     exit 1
 fi
 
-# Test server connectivity
-echo "Testing vLLM server connectivity..."
-curl -s http://localhost:8000/v1/models || echo "Warning: Server might not be ready yet"
 echo "=========================================="
 
 # ============================================================================

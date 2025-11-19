@@ -1,0 +1,2802 @@
+[
+  {
+    "tool_id": "openapiexplorer_getapioverview_001",
+    "tool_name": "getApiOverview",
+    "description": "API identifier, can be a known ID from openapisearch.com or a URL leading to a raw OpenAPI file",
+    "category": "api",
+    "server": "OpenAPI Explorer",
+    "usage_example": [
+      "getApiOverview()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_temperature_001",
+    "tool_name": "convert_temperature",
+    "description": "Convert temperature between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_temperature()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_angle_002",
+    "tool_name": "convert_angle",
+    "description": "Convert angle between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_angle()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_length_003",
+    "tool_name": "convert_length",
+    "description": "Convert length between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_length()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_energy_004",
+    "tool_name": "convert_energy",
+    "description": "Convert energy between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_energy()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_force_005",
+    "tool_name": "convert_force",
+    "description": "Convert force between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_force()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_pressure_006",
+    "tool_name": "convert_pressure",
+    "description": "Convert pressure between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_pressure()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_power_007",
+    "tool_name": "convert_power",
+    "description": "Convert power between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_power()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_speed_008",
+    "tool_name": "convert_speed",
+    "description": "Convert speed between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_speed()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_area_009",
+    "tool_name": "convert_area",
+    "description": "Convert area between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_area()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_mass_010",
+    "tool_name": "convert_mass",
+    "description": "Convert weight between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_mass()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_volume_011",
+    "tool_name": "convert_volume",
+    "description": "Convert volume between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_volume()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_computer_data_012",
+    "tool_name": "convert_computer_data",
+    "description": "Convert computer storage between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_computer_data()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_density_013",
+    "tool_name": "convert_density",
+    "description": "Convert density between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_density()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_time_014",
+    "tool_name": "convert_time",
+    "description": "Convert time between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_time()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_batch_015",
+    "tool_name": "convert_batch",
+    "description": "Perform multiple unit conversions in a single batch request. Each request in the batch should contain: - value: The numeric value to convert - from_unit: Source unit for conversion - to_unit: Target unit for conversion - conversion_type: Type of conversion (temperature, length, mass, etc.) - request_id: Optional identifier for tracking individual requests Returns a structured response with individual results for each conversion, including success/failure status and either converted values or error messages.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_batch()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_list_supported_units_016",
+    "tool_name": "list_supported_units",
+    "description": "List all supported units for each conversion type or for a specific type.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "list_supported_units()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_search_001",
+    "tool_name": "search",
+    "description": "Search Wikipedia for articles matching a query.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "search()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_article_002",
+    "tool_name": "article",
+    "description": "Get the full content of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "article()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_003",
+    "tool_name": "summary",
+    "description": "Get a summary of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_for_query_resource_004",
+    "tool_name": "summary_for_query_resource",
+    "description": "Get a summary of a Wikipedia article tailored to a specific query.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary_for_query_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_section_resource_005",
+    "tool_name": "summary_section_resource",
+    "description": "Get a summary of a specific section of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary_section_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_sections_006",
+    "tool_name": "sections",
+    "description": "Get the sections of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "sections()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_links_007",
+    "tool_name": "links",
+    "description": "Get the links in a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "links()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_key_facts_resource_008",
+    "tool_name": "key_facts_resource",
+    "description": "Extract key facts from a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "key_facts_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_get_related_topics_015",
+    "tool_name": "get_related_topics",
+    "description": "Get topics related to a Wikipedia article based on links and categories.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "get_related_topics()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_search_nearby_001",
+    "tool_name": "search_nearby",
+    "description": "Search for nearby places based on location, with optional filtering by keywords, distance, rating, and operating hours",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "search_nearby()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_get_place_details_002",
+    "tool_name": "get_place_details",
+    "description": "Get detailed information about a specific place including contact details, reviews, ratings, and operating hours",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "get_place_details()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_geocode_003",
+    "tool_name": "maps_geocode",
+    "description": "Convert addresses or place names to geographic coordinates (latitude and longitude)",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_geocode()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_reverse_geocode_004",
+    "tool_name": "maps_reverse_geocode",
+    "description": "Convert geographic coordinates (latitude and longitude) to a human-readable address",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_reverse_geocode()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_distance_matrix_005",
+    "tool_name": "maps_distance_matrix",
+    "description": "Calculate travel distances and durations between multiple origins and destinations for different travel modes",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_distance_matrix()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_directions_006",
+    "tool_name": "maps_directions",
+    "description": "Get detailed turn-by-turn navigation directions between two locations with route information",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_directions()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_elevation_007",
+    "tool_name": "maps_elevation",
+    "description": "Get elevation data (height above sea level) for specific geographic locations",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_elevation()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_hexagram_resource_001",
+    "tool_name": "get_hexagram_resource",
+    "description": "Access hexagram information as a resource for context loading. This resource allows AI models to load hexagram data directly into their context for reference during conversations. Args: number: Hexagram number as string (1-64) Returns: Hexagram data formatted for context use with educational framing",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_hexagram_resource()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_iching_database_002",
+    "tool_name": "get_iching_database",
+    "description": "Access the complete I Ching database as a resource. Provides a summary of all 64 hexagrams for context loading, useful when AI models need to reference the complete system. Returns: Complete hexagram database summary with educational context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_iching_database()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_i_ching_divination_003",
+    "tool_name": "i_ching_divination",
+    "description": "Perform I Ching divination using traditional three-coin method. Generates a random hexagram with interpretation for philosophical guidance. Uses cryptographically secure randomness to simulate coin tosses. Args: query: Optional question or context for the divination Returns: Formatted hexagram reading with interpretation and ethical disclaimer",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "i_ching_divination()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_bibliomantic_consultation_004",
+    "tool_name": "bibliomantic_consultation",
+    "description": "Perform bibliomantic consultation following Philip K. Dick's approach. Augments your query with I Ching wisdom, creating a bridge between your specific question and ancient guidance, as described in \"The Man in the High Castle\". Args: query: The question or situation requiring guidance Returns: Complete bibliomantic consultation with hexagram wisdom and ethical context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "bibliomantic_consultation()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_hexagram_details_005",
+    "tool_name": "get_hexagram_details",
+    "description": "Get detailed information about a specific I Ching hexagram. Provides the traditional name and interpretation for any of the 64 hexagrams in the I Ching (Book of Changes). Args: hexagram_number: The hexagram number (1-64) Returns: Detailed hexagram information with educational context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_hexagram_details()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_server_statistics_006",
+    "tool_name": "server_statistics",
+    "description": "Get bibliomantic server statistics and system information. Provides information about the server's capabilities, the I Ching database, and divination system status. Returns: Complete server statistics and system information with ethical context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "server_statistics()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_article_searcher_003",
+    "tool_name": "article_searcher",
+    "description": "Search PubMed/PubTator3 for research articles and preprints. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Use this tool to find scientific literature ABOUT genes, variants, diseases, or chemicals. Results include articles from PubMed and optionally preprints from bioRxiv/medRxiv. Important: This searches for ARTICLES ABOUT these topics, not database records. For genetic variant database records, use variant_searcher instead. Example usage: - Find articles about BRAF mutations in melanoma - Search for papers on a specific drug's effects - Locate research on gene-disease associations",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "article_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_article_getter_004",
+    "tool_name": "article_getter",
+    "description": "Fetch detailed information for a specific article. Retrieves the full abstract and available text for an article by its identifier. Supports: - PubMed IDs (PMID) for published articles - PMC IDs for articles in PubMed Central - DOIs for preprints from Europe PMC Returns formatted text including: - Title - Abstract - Full text (when available from PMC for published articles) - Source information (PubMed or Europe PMC)",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "article_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_trial_searcher_005",
+    "tool_name": "trial_searcher",
+    "description": "Search ClinicalTrials.gov for clinical studies. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Comprehensive search tool for finding clinical trials based on multiple criteria. Supports filtering by conditions, interventions, location, phase, and eligibility. Location search notes: - Use either location term OR lat/long coordinates, not both - For city-based searches, AI agents should geocode to lat/long first - Distance parameter only works with lat/long coordinates Returns a formatted list of matching trials with key details.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "trial_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_trial_getter_006",
+    "tool_name": "trial_getter",
+    "description": "Fetch comprehensive details for a specific clinical trial. Retrieves all available information for a clinical trial by its NCT ID. This includes protocol details, locations, outcomes, and references. For specific sections only, use the specialized getter tools: - trial_protocol_getter: Core protocol information - trial_locations_getter: Site locations and contacts - trial_outcomes_getter: Primary/secondary outcomes and results - trial_references_getter: Publications and references",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "trial_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_trial_protocol_getter_007",
+    "tool_name": "trial_protocol_getter",
+    "description": "Fetch core protocol information for a clinical trial. Retrieves essential protocol details including: - Official title and brief summary - Study status and sponsor information - Study design (type, phase, allocation, masking) - Eligibility criteria - Primary completion date",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "trial_protocol_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_trial_references_getter_008",
+    "tool_name": "trial_references_getter",
+    "description": "Fetch publications and references for a clinical trial. Retrieves all linked publications including: - Published results papers - Background literature - Protocol publications - Related analyses Includes PubMed IDs when available for easy cross-referencing.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "trial_references_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_trial_outcomes_getter_009",
+    "tool_name": "trial_outcomes_getter",
+    "description": "Fetch outcome measures and results for a clinical trial. Retrieves detailed outcome information including: - Primary outcome measures - Secondary outcome measures - Results data (if available) - Adverse events (if reported) Note: Results are only available for completed trials that have posted data.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "trial_outcomes_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_trial_locations_getter_010",
+    "tool_name": "trial_locations_getter",
+    "description": "Fetch contact and location details for a clinical trial. Retrieves all study locations including: - Facility names and addresses - Principal investigator information - Contact details (when recruiting) - Recruitment status by site Useful for finding trials near specific locations or contacting study teams.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "trial_locations_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_variant_searcher_011",
+    "tool_name": "variant_searcher",
+    "description": "Search MyVariant.info for genetic variant DATABASE RECORDS. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Important: This searches for variant DATABASE RECORDS (frequency, significance, etc.), NOT articles about variants. For articles about variants, use article_searcher. Searches the comprehensive variant database including: - Population frequencies (gnomAD, 1000 Genomes, etc.) - Clinical significance (ClinVar) - Functional predictions (SIFT, PolyPhen, CADD) - Gene and protein consequences Search by various identifiers or filter by clinical/functional criteria.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "variant_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_variant_getter_012",
+    "tool_name": "variant_getter",
+    "description": "Fetch comprehensive details for a specific genetic variant. Retrieves all available information for a variant including: - Gene location and consequences - Population frequencies across databases - Clinical significance from ClinVar - Functional predictions - External annotations (TCGA cancer data, conservation scores) Accepts various ID formats: - HGVS: NM_004333.4:c.1799T>A - rsID: rs113488022 - MyVariant ID: chr7:g.140753336A>T",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "variant_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_alphagenome_predictor_013",
+    "tool_name": "alphagenome_predictor",
+    "description": "Predict variant effects on gene regulation using Google DeepMind's AlphaGenome. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your analysis strategy! AlphaGenome provides state-of-the-art predictions for how genetic variants affect gene regulation, including: - Gene expression changes (RNA-seq) - Chromatin accessibility impacts (ATAC-seq, DNase-seq) - Splicing alterations - Promoter activity changes (CAGE) This tool requires: 1. AlphaGenome to be installed (see error message for instructions) 2. An API key from https://deepmind.google.com/science/alphagenome API Key Options: - Provide directly via the api_key parameter - Or set ALPHAGENOME_API_KEY environment variable Example usage: - Predict regulatory effects of BRAF V600E mutation: chr7:140753336 A>T - Assess non-coding variant impact on gene expression - Evaluate promoter variants in specific tissues Note: This is an optional tool that enhances variant interpretation with AI predictions. Standard annotations remain available via variant_getter.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "alphagenome_predictor()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_gene_getter_014",
+    "tool_name": "gene_getter",
+    "description": "Get detailed gene information from MyGene.info. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to understand your research goal! Provides real-time gene annotations including: - Official gene name and symbol - Gene summary/description - Aliases and alternative names - Gene type (protein-coding, etc.) - Links to external databases This tool fetches CURRENT gene information from MyGene.info, ensuring you always have the latest annotations and nomenclature. Example usage: - Get information about TP53 tumor suppressor - Look up BRAF kinase gene details - Find the official name for a gene by its alias Note: For genetic variants, use variant_searcher. For articles about genes, use article_searcher.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "gene_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_disease_getter_015",
+    "tool_name": "disease_getter",
+    "description": "Get detailed disease information from MyDisease.info. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to understand your research goal! Provides real-time disease annotations including: - Official disease name and definition - Disease synonyms and alternative names - Ontology mappings (MONDO, DOID, OMIM, etc.) - Associated phenotypes - Links to disease databases This tool fetches CURRENT disease information from MyDisease.info, ensuring you always have the latest ontology mappings and definitions. Example usage: - Get the definition of GIST (Gastrointestinal Stromal Tumor) - Look up synonyms for melanoma - Find the MONDO ID for a disease by name Note: For clinical trials about diseases, use trial_searcher. For articles about diseases, use article_searcher.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "disease_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_drug_getter_016",
+    "tool_name": "drug_getter",
+    "description": "Get detailed drug/chemical information from MyChem.info. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to understand your research goal! This tool provides comprehensive drug information including: - Chemical properties (formula, InChIKey) - Drug identifiers (DrugBank, ChEMBL, PubChem) - Trade names and brand names - Clinical indications - Mechanism of action - Pharmacology details - Links to drug databases This tool fetches CURRENT drug information from MyChem.info, part of the BioThings suite, ensuring you always have the latest drug data. Example usage: - Get information about imatinib (Gleevec) - Look up details for DrugBank ID DB00619 - Find the mechanism of action for pembrolizumab Note: For clinical trials about drugs, use trial_searcher. For articles about drugs, use article_searcher.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "drug_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_nci_organization_searcher_017",
+    "tool_name": "nci_organization_searcher",
+    "description": "Search for organizations in the NCI Clinical Trials database. Searches the National Cancer Institute's curated database of organizations involved in cancer clinical trials. This includes: - Academic medical centers - Community hospitals - Industry sponsors - Government facilities - Research networks Requires NCI API key from: https://clinicaltrialsapi.cancer.gov/ IMPORTANT: To avoid API errors, always use city AND state together when searching by location. The NCI API has limitations on broad searches. Example usage: - Find cancer centers in Boston, MA (city AND state) - Search for \"MD Anderson\" in Houston, TX - List academic organizations in Cleveland, OH - Search by organization name alone (without location)",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "nci_organization_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_nci_organization_getter_018",
+    "tool_name": "nci_organization_getter",
+    "description": "Get detailed information about a specific organization from NCI. Retrieves comprehensive details about an organization including: - Full name and aliases - Address and contact information - Organization type and role - Associated clinical trials - Research focus areas Requires NCI API key from: https://clinicaltrialsapi.cancer.gov/ Example usage: - Get details about a specific cancer center - Find contact information for trial sponsors - View organization's trial portfolio",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "nci_organization_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_nci_intervention_searcher_019",
+    "tool_name": "nci_intervention_searcher",
+    "description": "Search for interventions in the NCI Clinical Trials database. Searches the National Cancer Institute's curated database of interventions used in cancer clinical trials. This includes: - FDA-approved drugs - Investigational agents - Medical devices - Surgical procedures - Radiation therapies - Behavioral interventions Requires NCI API key from: https://clinicaltrialsapi.cancer.gov/ Example usage: - Find all trials using pembrolizumab - Search for CAR-T cell therapies - List radiation therapy protocols - Find dietary interventions",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "nci_intervention_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_nci_intervention_getter_020",
+    "tool_name": "nci_intervention_getter",
+    "description": "Get detailed information about a specific intervention from NCI. Retrieves comprehensive details about an intervention including: - Full name and synonyms - Intervention type and category - Mechanism of action (for drugs) - FDA approval status - Associated clinical trials - Combination therapies Requires NCI API key from: https://clinicaltrialsapi.cancer.gov/ Example usage: - Get details about a specific drug - Find all trials using a device - View combination therapy protocols",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "nci_intervention_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_nci_biomarker_searcher_021",
+    "tool_name": "nci_biomarker_searcher",
+    "description": "Search for biomarkers in the NCI Clinical Trials database. Searches for biomarkers used in clinical trial eligibility criteria. This is essential for precision medicine trials that select patients based on specific biomarker characteristics. Biomarker examples: - Gene mutations (e.g., BRAF V600E, EGFR T790M) - Protein expression (e.g., PD-L1 \u2265 50%, HER2 positive) - Gene fusions (e.g., ALK fusion, ROS1 fusion) - Other molecular markers (e.g., MSI-H, TMB-high) Requires NCI API key from: https://clinicaltrialsapi.cancer.gov/ Note: Biomarker data availability may be limited in CTRP. Results focus on biomarkers used in trial eligibility criteria. Example usage: - Search for PD-L1 expression biomarkers - Find trials requiring EGFR mutations - Look up biomarkers tested by NGS - Search for HER2 expression markers",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "nci_biomarker_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_nci_disease_searcher_022",
+    "tool_name": "nci_disease_searcher",
+    "description": "Search NCI's controlled vocabulary of cancer conditions. Searches the National Cancer Institute's curated database of cancer conditions and diseases used in clinical trials. This is different from the general disease_getter tool which uses MyDisease.info. NCI's disease vocabulary provides: - Official cancer terminology used in trials - Disease synonyms and alternative names - Hierarchical disease classifications - Standardized disease codes for trial matching Requires NCI API key from: https://clinicaltrialsapi.cancer.gov/ Example usage: - Search for specific cancer types (e.g., \"melanoma\") - Find all lung cancer subtypes - Look up official names for disease synonyms - Get standardized disease terms for trial searches Note: This is specifically for NCI's cancer disease vocabulary. For general disease information, use the disease_getter tool.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "nci_disease_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_adverse_searcher_023",
+    "tool_name": "openfda_adverse_searcher",
+    "description": "Search FDA adverse event reports (FAERS) for drug safety information. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Searches FDA's Adverse Event Reporting System for: - Drug side effects and adverse reactions - Serious event reports (death, hospitalization, disability) - Safety signal patterns across patient populations Note: These reports do not establish causation - they are voluntary reports that may contain incomplete or unverified information.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_adverse_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_adverse_getter_024",
+    "tool_name": "openfda_adverse_getter",
+    "description": "Get detailed information for a specific FDA adverse event report. Retrieves complete details including: - Patient demographics and medical history - All drugs involved and dosages - Complete list of adverse reactions - Event narrative and outcomes - Reporter information",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_adverse_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_label_searcher_025",
+    "tool_name": "openfda_label_searcher",
+    "description": "Search FDA drug product labels (SPL) for prescribing information. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Searches official FDA drug labels for: - Approved indications and usage - Dosage and administration guidelines - Contraindications and warnings - Drug interactions and adverse reactions - Special population considerations Label sections include: indications, dosage, contraindications, warnings, adverse, interactions, pregnancy, pediatric, geriatric, overdose",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_label_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_label_getter_026",
+    "tool_name": "openfda_label_getter",
+    "description": "Get complete FDA drug label information by set ID. Retrieves the full prescribing information including: - Complete indications and usage text - Detailed dosing instructions - All warnings and precautions - Clinical pharmacology and studies - Manufacturing and storage information Specify sections to retrieve specific parts, or leave empty for default key sections.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_label_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_device_searcher_027",
+    "tool_name": "openfda_device_searcher",
+    "description": "Search FDA device adverse event reports (MAUDE) for medical device issues. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Searches FDA's device adverse event database for: - Device malfunctions and failures - Patient injuries related to devices - Genomic test and diagnostic device issues By default, filters to genomic/diagnostic devices relevant to precision medicine. Set genomics_only=False to search all medical devices.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_device_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_device_getter_028",
+    "tool_name": "openfda_device_getter",
+    "description": "Get detailed information for a specific FDA device event report. Retrieves complete device event details including: - Device identification and specifications - Complete event narrative - Patient outcomes and impacts - Manufacturer analysis and actions - Remedial actions taken",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_device_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_approval_searcher_029",
+    "tool_name": "openfda_approval_searcher",
+    "description": "Search FDA drug approval records from Drugs@FDA database. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Returns information about: - Application numbers and sponsors - Brand and generic names - Product formulations and strengths - Marketing status and approval dates - Submission history Useful for verifying if a drug is FDA-approved and when.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_approval_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_approval_getter_030",
+    "tool_name": "openfda_approval_getter",
+    "description": "Get detailed FDA drug approval information for a specific application. Returns comprehensive approval details including: - Full product list with dosage forms and strengths - Complete submission history - Marketing status timeline - Therapeutic equivalence codes - Pharmacologic class information",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_approval_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_recall_searcher_031",
+    "tool_name": "openfda_recall_searcher",
+    "description": "Search FDA drug recall records from the Enforcement database. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Returns recall information including: - Classification (Class I, II, or III) - Recall reason and description - Product identification - Distribution information - Recalling firm details - Current status Class I = most serious (death/serious harm) Class II = moderate (temporary/reversible harm) Class III = least serious (unlikely to cause harm)",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_recall_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_recall_getter_032",
+    "tool_name": "openfda_recall_getter",
+    "description": "Get detailed FDA drug recall information for a specific recall. Returns complete recall details including: - Full product description and code information - Complete reason for recall - Distribution pattern and locations - Quantity of product recalled - Firm information and actions taken - Timeline of recall events",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_recall_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_shortage_searcher_033",
+    "tool_name": "openfda_shortage_searcher",
+    "description": "Search FDA drug shortage records. \u26a0\ufe0f PREREQUISITE: Use the 'think' tool FIRST to plan your research strategy! Returns shortage information including: - Current shortage status - Shortage start and resolution dates - Reason for shortage - Therapeutic category - Manufacturer information - Estimated resolution timeline Note: Shortage data is cached and updated periodically. Check FDA.gov for most current information.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_shortage_searcher()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_openfda_shortage_getter_034",
+    "tool_name": "openfda_shortage_getter",
+    "description": "Get detailed FDA drug shortage information for a specific drug. Returns comprehensive shortage details including: - Complete timeline of shortage - Detailed reason for shortage - All affected manufacturers - Alternative products if available - Resolution status and estimates - Additional notes and recommendations Data is updated periodically from FDA shortage database.",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "openfda_shortage_getter()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_get_performance_metrics_035",
+    "tool_name": "get_performance_metrics",
+    "description": "Get performance metrics for BioMCP operations. Returns performance statistics including: - Request counts and success rates - Response time percentiles (p50, p95, p99) - Error rates and types - Domain-specific performance breakdown Parameters: metric_name: Optional specific metric to retrieve Returns: Formatted metrics report",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "get_performance_metrics()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_search_036",
+    "tool_name": "search",
+    "description": "Search biomedical literature, clinical trials, genetic variants, genes, drugs, and diseases. \u26a0\ufe0f IMPORTANT: Have you used the 'think' tool first? If not, STOP and use it NOW! The 'think' tool is REQUIRED for proper research planning and should be your FIRST step. This tool provides access to biomedical data from PubMed/PubTator3, ClinicalTrials.gov, MyVariant.info, and the BioThings suite (MyGene.info, MyChem.info, MyDisease.info). It supports two search modes: ## 1. UNIFIED QUERY LANGUAGE Use the 'query' parameter with field-based syntax for precise cross-domain searches. Syntax: - Basic: \"gene:BRAF\" - AND logic: \"gene:BRAF AND disease:melanoma\" - OR logic: \"gene:PTEN AND (R173 OR Arg173 OR 'position 173')\" - Domain-specific: \"trials.condition:melanoma AND trials.phase:3\" Common fields: - Cross-domain: gene, disease, variant, chemical/drug - Articles: pmid, title, abstract, journal, author - Trials: trials.condition, trials.intervention, trials.phase, trials.status - Variants: variants.hgvs, variants.rsid, variants.significance Example: ``` await search( query=\"gene:BRAF AND disease:melanoma AND trials.phase:3\", max_results_per_domain=20 ) ``` ## 2. DOMAIN-SPECIFIC SEARCH Use the 'domain' parameter with specific filters for targeted searches. Domains: - \"article\": Search PubMed/PubTator3 for research articles and preprints ABOUT genes, variants, diseases, or chemicals - \"trial\": Search ClinicalTrials.gov for clinical studies - \"variant\": Search MyVariant.info for genetic variant DATABASE RECORDS (population frequency, clinical significance, etc.) - NOT for articles about variants! - \"gene\": Search MyGene.info for gene information (symbol, name, function, aliases) - \"drug\": Search MyChem.info for drug/chemical information (names, formulas, indications) - \"disease\": Search MyDisease.info for disease information (names, definitions, synonyms) - \"nci_organization\": Search NCI database for cancer centers, hospitals, and research sponsors (requires API key) - \"nci_intervention\": Search NCI database for drugs, devices, procedures used in cancer trials (requires API key) - \"nci_biomarker\": Search NCI database for biomarkers used in trial eligibility criteria (requires API key) - \"nci_disease\": Search NCI controlled vocabulary for cancer conditions and terms (requires API key) Example: ``` await search( domain=\"article\", genes=[\"BRAF\", \"NRAS\"], diseases=[\"melanoma\"], page_size=50 ) ``` ## DOMAIN SELECTION EXAMPLES: - To find ARTICLES about BRAF V600E mutation: domain=\"article\", genes=[\"BRAF\"], variants=[\"V600E\"] - To find VARIANT DATA for BRAF mutations: domain=\"variant\", gene=\"BRAF\" - To find articles about ERBB2 p.D277Y: domain=\"article\", genes=[\"ERBB2\"], variants=[\"p.D277Y\"] - Common mistake: Using domain=\"variant\" when you want articles about a variant ## IMPORTANT NOTES: - For complex research questions, use the separate 'think' tool for systematic analysis - The tool returns results in OpenAI MCP format: {\"results\": [{\"id\", \"title\", \"text\", \"url\"}, ...]} - Search results do NOT include metadata (per OpenAI MCP specification) - Use the fetch tool to get detailed metadata for specific records - Use get_schema=True to explore available search fields - Use explain_query=True to understand query parsing (unified mode) - Domain-specific searches use AND logic for multiple values - For OR logic, use the unified query language - NEW: Article search keywords support OR with pipe separator: \"R173|Arg173|p.R173\" - Remember: domain=\"article\" finds LITERATURE, domain=\"variant\" finds DATABASE RECORDS ## RETURN FORMAT: All search modes return results in this format: ```json { \"results\": [ { \"id\": \"unique_identifier\", \"title\": \"Human-readable title\", \"text\": \"Summary or snippet of content\", \"url\": \"Link to full resource\" } ] } ```",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "search()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_fetch_037",
+    "tool_name": "fetch",
+    "description": "Fetch comprehensive details for a specific biomedical record. This tool retrieves full information for articles, clinical trials, genetic variants, genes, drugs, or diseases using their unique identifiers. It returns data in a standardized format suitable for detailed analysis and research. ## IDENTIFIER FORMATS: - Articles: PMID (PubMed ID) - e.g., \"35271234\" OR DOI - e.g., \"10.1101/2024.01.20.23288905\" - Trials: NCT ID (ClinicalTrials.gov ID) - e.g., \"NCT04280705\" - Variants: HGVS notation or dbSNP ID - e.g., \"chr7:g.140453136A>T\" or \"rs121913254\" - Genes: Gene symbol or Entrez ID - e.g., \"BRAF\" or \"673\" - Drugs: Drug name or ID - e.g., \"imatinib\" or \"DB00619\" - Diseases: Disease name or ID - e.g., \"melanoma\" or \"MONDO:0005105\" - NCI Organizations: NCI organization ID - e.g., \"NCI-2011-03337\" - NCI Interventions: NCI intervention ID - e.g., \"INT123456\" - NCI Diseases: NCI disease ID - e.g., \"C4872\" The domain is automatically detected from the ID format if not provided: - NCT* \u2192 trial - Contains \"/\" with numeric prefix (DOI) \u2192 article - Pure numeric \u2192 article (PMID) - rs* or contains ':' or 'g.' \u2192 variant - For genes, drugs, diseases: manual specification recommended ## DOMAIN-SPECIFIC OPTIONS: ### Articles (domain=\"article\"): - Returns full article metadata, abstract, and full text when available - Supports both PubMed articles (via PMID) and Europe PMC preprints (via DOI) - Includes annotations for genes, diseases, chemicals, and variants (PubMed only) - detail=\"full\" attempts to retrieve full text content (PubMed only) ### Clinical Trials (domain=\"trial\"): - detail=None or \"protocol\": Core study information - detail=\"locations\": Study sites and contact information - detail=\"outcomes\": Primary/secondary outcomes and results - detail=\"references\": Related publications and citations - detail=\"all\": Complete trial record with all sections ### Variants (domain=\"variant\"): - Returns comprehensive variant information including: - Clinical significance and interpretations - Population frequencies - Gene/protein effects - External database links - detail parameter is ignored (always returns full data) ### Genes (domain=\"gene\"): - Returns gene information from MyGene.info including: - Gene symbol, name, and type - Entrez ID and Ensembl IDs - Gene summary and aliases - RefSeq information - detail parameter is ignored (always returns full data) ### Drugs (domain=\"drug\"): - Returns drug/chemical information from MyChem.info including: - Drug name and trade names - Chemical formula and structure IDs - Clinical indications - Mechanism of action - External database links (DrugBank, PubChem, ChEMBL) - detail parameter is ignored (always returns full data) ### Diseases (domain=\"disease\"): - Returns disease information from MyDisease.info including: - Disease name and definition - MONDO ontology ID - Disease synonyms - Cross-references to other databases - Associated phenotypes - detail parameter is ignored (always returns full data) ### NCI Organizations (domain=\"nci_organization\"): - Returns organization information from NCI database including: - Organization name and type - Full address and contact information - Research focus areas - Associated clinical trials - Requires NCI API key - detail parameter is ignored (always returns full data) ### NCI Interventions (domain=\"nci_intervention\"): - Returns intervention information from NCI database including: - Intervention name and type - Synonyms and alternative names - Mechanism of action (for drugs) - FDA approval status - Associated clinical trials - Requires NCI API key - detail parameter is ignored (always returns full data) ### NCI Diseases (domain=\"nci_disease\"): - Returns disease information from NCI controlled vocabulary including: - Preferred disease name - Disease category and classification - All known synonyms - Cross-reference codes (ICD, SNOMED) - Requires NCI API key - detail parameter is ignored (always returns full data) ## RETURN FORMAT: All fetch operations return a standardized format: ```json { \"id\": \"unique_identifier\", \"title\": \"Record title or name\", \"text\": \"Full content or comprehensive description\", \"url\": \"Link to original source\", \"metadata\": { // Domain-specific additional fields } } ``` ## EXAMPLES: Fetch article by PMID (domain auto-detected): ``` await fetch(id=\"35271234\") ``` Fetch article by DOI (domain auto-detected): ``` await fetch(id=\"10.1101/2024.01.20.23288905\") ``` Fetch complete trial information (domain auto-detected): ``` await fetch( id=\"NCT04280705\", detail=\"all\" ) ``` Fetch variant with clinical interpretations: ``` await fetch(id=\"rs121913254\") ``` Explicitly specify domain (optional): ``` await fetch( domain=\"variant\", id=\"chr7:g.140453136A>T\" ) ```",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "fetch()"
+    ]
+  },
+  {
+    "tool_id": "biomcp_think_038",
+    "tool_name": "think",
+    "description": "REQUIRED FIRST STEP: Perform structured sequential thinking for ANY biomedical research task. \ud83d\udea8 IMPORTANT: You MUST use this tool BEFORE any search or fetch operations when: - Researching ANY biomedical topic (genes, diseases, variants, trials) - Planning to use multiple BioMCP tools - Answering questions that require analysis or synthesis - Comparing information from different sources - Making recommendations or drawing conclusions \u26a0\ufe0f FAILURE TO USE THIS TOOL FIRST will result in: - Incomplete or poorly structured analysis - Missing important connections between data - Suboptimal search strategies - Overlooked critical information Sequential thinking ensures you: 1. Fully understand the research question 2. Plan an optimal search strategy 3. Identify all relevant data sources 4. Structure your analysis properly 5. Deliver comprehensive, well-reasoned results ## Usage Pattern: 1. Start with thoughtNumber=1 to initiate analysis 2. Progress through numbered thoughts sequentially 3. Adjust totalThoughts estimate as understanding develops 4. Set nextThoughtNeeded=False only when analysis is complete ## Example: ```python # Initial analysis await think( thought=\"Breaking down the relationship between BRAF mutations and melanoma treatment resistance...\", thoughtNumber=1, totalThoughts=5, nextThoughtNeeded=True ) # Continue analysis await think( thought=\"Examining specific BRAF V600E mutation mechanisms...\", thoughtNumber=2, totalThoughts=5, nextThoughtNeeded=True ) # Final thought await think( thought=\"Synthesizing findings and proposing research directions...\", thoughtNumber=5, totalThoughts=5, nextThoughtNeeded=False ) ``` ## Important Notes: - Each thought builds on previous ones within a session - State is maintained throughout the MCP session - Use thoughtful, detailed analysis in each step - Revisions and branching are supported through the underlying implementation",
+    "category": "biology",
+    "server": "BioMCP",
+    "usage_example": [
+      "think()"
+    ]
+  },
+  {
+    "tool_id": "callforpapers_get_events_001",
+    "tool_name": "get_events",
+    "description": "Search for conferences matching specific keywords.",
+    "category": "academia",
+    "server": "Call for Papers",
+    "usage_example": [
+      "get_events()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_get_car_brands_001",
+    "tool_name": "get_car_brands",
+    "description": "Get all available car brands from FIPE API. Returns: List of car brands with their codes and names",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "get_car_brands()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_search_car_price_002",
+    "tool_name": "search_car_price",
+    "description": "Search for car models and prices by brand name. Args: brand_name: The car brand name to search for (e.g., \"Toyota\", \"Honda\", \"Ford\") Returns: Car models with current market prices from FIPE database",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "search_car_price()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_get_vehicles_by_type_003",
+    "tool_name": "get_vehicles_by_type",
+    "description": "Get vehicles by type (cars, motorcycles, trucks). Args: vehicle_type: Type of vehicles to fetch (\"carros\"/\"cars\", \"motos\"/\"motorcycles\", \"caminhoes\"/\"trucks\") Returns: List of vehicle brands for the specified type",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "get_vehicles_by_type()"
+    ]
+  },
+  {
+    "tool_id": "context7_get_library_docs_001",
+    "tool_name": "get-library-docs",
+    "description": "Fetches up-to-date documentation for a library. You must call 'resolve-library-id' first to obtain the exact Context7-compatible library ID required to use this tool, UNLESS the user explicitly provides a library ID in the format '/org/project' or '/org/project/version' in their query.",
+    "category": "dev-tools",
+    "server": "Context7",
+    "usage_example": [
+      "get-library-docs()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getnetworks_001",
+    "tool_name": "getNetworks",
+    "description": "REQUIRED FIRST STEP: Get all supported blockchain networks. Always call this first to see available networks before using any network-specific functions. Returns network IDs like \"ethereum\", \"solana\", etc.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getNetworks()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getnetworkdexes_002",
+    "tool_name": "getNetworkDexes",
+    "description": "Get available DEXes on a specific network. First call getNetworks to see valid network IDs.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getNetworkDexes()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getnetworkpools_003",
+    "tool_name": "getNetworkPools",
+    "description": "PRIMARY POOL FUNCTION: Get top liquidity pools on a specific network. This is the MAIN way to get pool data - there is NO global pools function. Use this instead of any \"getTopPools\" or \"getAllPools\" concepts.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getNetworkPools()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getdexpools_004",
+    "tool_name": "getDexPools",
+    "description": "Get pools from a specific DEX on a network. First use getNetworks, then getNetworkDexes to find valid DEX IDs.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getDexPools()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getpooldetails_005",
+    "tool_name": "getPoolDetails",
+    "description": "Get detailed information about a specific pool. Requires network ID from getNetworks and a pool address.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getPoolDetails()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_gettokendetails_006",
+    "tool_name": "getTokenDetails",
+    "description": "Get detailed information about a specific token on a network. First use getNetworks to get valid network IDs.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getTokenDetails()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_gettokenpools_007",
+    "tool_name": "getTokenPools",
+    "description": "Get liquidity pools containing a specific token on a network. Great for finding where a token is traded.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getTokenPools()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getpoolohlcv_008",
+    "tool_name": "getPoolOHLCV",
+    "description": "Get historical price data (OHLCV) for a pool - essential for price analysis, backtesting, and visualization. Requires network and pool address.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getPoolOHLCV()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getpooltransactions_009",
+    "tool_name": "getPoolTransactions",
+    "description": "Get recent transactions for a specific pool. Shows swaps, adds, removes. Requires network and pool address.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getPoolTransactions()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_search_010",
+    "tool_name": "search",
+    "description": "Search across ALL networks for tokens, pools, and DEXes by name, symbol, or address. Good starting point when you don\\",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "search()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getstats_011",
+    "tool_name": "getStats",
+    "description": "Get high-level statistics about the DexPaprika ecosystem: total networks, DEXes, pools, and tokens available.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getStats()"
+    ]
+  },
+  {
+    "tool_id": "fruityvice_get_fruit_nutrition_001",
+    "tool_name": "get_fruit_nutrition",
+    "description": "Get nutritional information and details for a given fruit name. Args: fruit_name: The name of the fruit to get information about (e.g., \"apple\", \"banana\", \"orange\") Returns: Dictionary containing fruit information including name, family, genus, order, and nutritional data",
+    "category": "food",
+    "server": "FruityVice",
+    "usage_example": [
+      "get_fruit_nutrition()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_trending_games_001",
+    "tool_name": "get_steam_trending_games",
+    "description": "Get real trending games from Steam platform with live data from multiple sources.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_top_sellers_002",
+    "tool_name": "get_steam_top_sellers",
+    "description": "Get real top selling games from Steam platform with live sales data.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_top_sellers()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_most_played_003",
+    "tool_name": "get_steam_most_played",
+    "description": "Get real-time most played games from Steam with live player statistics from SteamCharts.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_most_played()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_epic_free_games_004",
+    "tool_name": "get_epic_free_games",
+    "description": "Get current and upcoming free games from Epic Games Store with real promotion data.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_epic_free_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_epic_trending_games_005",
+    "tool_name": "get_epic_trending_games",
+    "description": "Get trending games from Epic Games Store.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_epic_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_all_trending_games_006",
+    "tool_name": "get_all_trending_games",
+    "description": "Get comprehensive real-time gaming data from all platforms (Steam and Epic Games).",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_all_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_api_health_007",
+    "tool_name": "get_api_health",
+    "description": "Check the health status of the Gaming Trend Analytics API.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_api_health()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_react_usage_guide_001",
+    "tool_name": "React Usage Guide",
+    "description": "React implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "React Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_vue_usage_guide_002",
+    "tool_name": "Vue Usage Guide",
+    "description": "Vue implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Vue Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_angular_usage_guide_003",
+    "tool_name": "Angular Usage Guide",
+    "description": "Angular implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Angular Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_svelte_usage_guide_004",
+    "tool_name": "Svelte Usage Guide",
+    "description": "Svelte implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Svelte Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_react_native_usage_guide_005",
+    "tool_name": "React Native Usage Guide",
+    "description": "React Native implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "React Native Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_flutter_usage_guide_006",
+    "tool_name": "Flutter Usage Guide",
+    "description": "Flutter implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Flutter Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_icons_index_007",
+    "tool_name": "Icons Index",
+    "description": "Complete index of all Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Icons Index()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_list_icons_008",
+    "tool_name": "list_icons",
+    "description": "Get a list of all available Hugeicons icons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "list_icons()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_search_icons_009",
+    "tool_name": "search_icons",
+    "description": "Search for icons by name or tags. Use commas to search for multiple icons (e.g. 'home, notification, settings')",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "search_icons()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_get_platform_usage_010",
+    "tool_name": "get_platform_usage",
+    "description": "Get platform-specific usage instructions for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "get_platform_usage()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_search_models_001",
+    "tool_name": "search-models",
+    "description": "Search for models on Hugging Face Hub",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "search-models()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_model_info_002",
+    "tool_name": "get-model-info",
+    "description": "Get detailed information about a specific model",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-model-info()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_search_datasets_003",
+    "tool_name": "search-datasets",
+    "description": "Search for datasets on Hugging Face Hub",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "search-datasets()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_dataset_info_004",
+    "tool_name": "get-dataset-info",
+    "description": "Get detailed information about a specific dataset",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-dataset-info()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_search_spaces_005",
+    "tool_name": "search-spaces",
+    "description": "Search for Spaces on Hugging Face Hub",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "search-spaces()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_space_info_006",
+    "tool_name": "get-space-info",
+    "description": "Get detailed information about a specific Space",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-space-info()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_paper_info_007",
+    "tool_name": "get-paper-info",
+    "description": "Get information about a specific paper on Hugging Face",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-paper-info()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_daily_papers_008",
+    "tool_name": "get-daily-papers",
+    "description": "Get the list of daily papers curated by Hugging Face",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-daily-papers()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_search_collections_009",
+    "tool_name": "search-collections",
+    "description": "Search for collections on Hugging Face Hub",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "search-collections()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_collection_info_010",
+    "tool_name": "get-collection-info",
+    "description": "Get detailed information about a specific collection",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-collection-info()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_search_001",
+    "tool_name": "nixos_search",
+    "description": "Search NixOS packages, options, or programs. Args: query: Search term to look for search_type: Type of search - \"packages\", \"options\", \"programs\", or \"flakes\" limit: Maximum number of results to return (1-100) channel: NixOS channel to search in (e.g., \"unstable\", \"stable\", \"25.05\") Returns: Plain text results with bullet points or error message",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_search()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_channels_003",
+    "tool_name": "nixos_channels",
+    "description": "List available NixOS channels with their status. Returns: Plain text list showing channel names, versions, and availability",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_channels()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_stats_004",
+    "tool_name": "nixos_stats",
+    "description": "Get NixOS statistics for a channel. Args: channel: NixOS channel to get stats for (e.g., \"unstable\", \"stable\", \"25.05\") Returns: Plain text statistics including package/option counts",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_stats()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_search_005",
+    "tool_name": "home_manager_search",
+    "description": "Search Home Manager configuration options. Searches through available Home Manager options by name and description. Args: query: The search query string to match against option names and descriptions limit: Maximum number of results to return (default: 20, max: 100) Returns: Plain text list of matching options with name, type, and description",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_search()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_info_006",
+    "tool_name": "home_manager_info",
+    "description": "Get detailed information about a specific Home Manager option. Requires an exact option name match. If not found, suggests similar options. Args: name: The exact option name (e.g., 'programs.git.enable') Returns: Plain text with option details (name, type, description) or error with suggestions",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_info()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_stats_007",
+    "tool_name": "home_manager_stats",
+    "description": "Get statistics about Home Manager options. Retrieves overall statistics including total options, categories, and top categories. Returns: Plain text summary with total options, category count, and top 5 categories",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_stats()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_list_options_008",
+    "tool_name": "home_manager_list_options",
+    "description": "List all Home Manager option categories. Enumerates all top-level categories with their option counts. Returns: Plain text list of categories sorted alphabetically with option counts",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_list_options()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_options_by_prefix_009",
+    "tool_name": "home_manager_options_by_prefix",
+    "description": "Get Home Manager options matching a specific prefix. Useful for browsing options under a category or finding exact option names. Args: option_prefix: The prefix to match (e.g., 'programs.git' or 'services') Returns: Plain text list of options with the given prefix, including descriptions",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_options_by_prefix()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_search_010",
+    "tool_name": "darwin_search",
+    "description": "Search nix-darwin (macOS) configuration options. Searches through available nix-darwin options by name and description. Args: query: The search query string to match against option names and descriptions limit: Maximum number of results to return (default: 20, max: 100) Returns: Plain text list of matching options with name, type, and description",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_search()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_info_011",
+    "tool_name": "darwin_info",
+    "description": "Get detailed information about a specific nix-darwin option. Requires an exact option name match. If not found, suggests similar options. Args: name: The exact option name (e.g., 'system.defaults.dock.autohide') Returns: Plain text with option details (name, type, description) or error with suggestions",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_info()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_stats_012",
+    "tool_name": "darwin_stats",
+    "description": "Get statistics about nix-darwin options. Retrieves overall statistics including total options, categories, and top categories. Returns: Plain text summary with total options, category count, and top 5 categories",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_stats()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_list_options_013",
+    "tool_name": "darwin_list_options",
+    "description": "List all nix-darwin option categories. Enumerates all top-level categories with their option counts. Returns: Plain text list of categories sorted alphabetically with option counts",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_list_options()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_options_by_prefix_014",
+    "tool_name": "darwin_options_by_prefix",
+    "description": "Get nix-darwin options matching a specific prefix. Useful for browsing options under a category or finding exact option names. Args: option_prefix: The prefix to match (e.g., 'system.defaults' or 'services') Returns: Plain text list of options with the given prefix, including descriptions",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_options_by_prefix()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_flakes_stats_015",
+    "tool_name": "nixos_flakes_stats",
+    "description": "Get statistics about available NixOS flakes. Retrieves statistics from the flake search index including total packages, unique repositories, flake types, and top contributors. Returns: Plain text summary with flake statistics and top contributors",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_flakes_stats()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_flakes_search_016",
+    "tool_name": "nixos_flakes_search",
+    "description": "Search NixOS flakes by name, description, owner, or repository. Searches the flake index for community-contributed packages and configurations. Flakes are indexed separately from official packages. Args: query: The search query (flake name, description, owner, or repository) limit: Maximum number of results to return (default: 20, max: 100) channel: Ignored - flakes use a separate indexing system Returns: Plain text list of unique flakes with their packages and metadata",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_flakes_search()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixhub_package_versions_017",
+    "tool_name": "nixhub_package_versions",
+    "description": "Get version history and nixpkgs commit hashes for a specific package from NixHub.io. Use this tool when users need specific package versions or commit hashes for reproducible builds. Args: package_name: Name of the package to query (e.g., \"firefox\", \"python\") limit: Maximum number of versions to return (default: 10, max: 50) Returns: Plain text with package info and version history including commit hashes",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixhub_package_versions()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixhub_find_version_018",
+    "tool_name": "nixhub_find_version",
+    "description": "Find a specific version of a package in NixHub with smart search. Automatically searches with increasing limits to find the requested version. Args: package_name: Name of the package to query (e.g., \"ruby\", \"python\") version: Specific version to find (e.g., \"2.6.7\", \"3.5.9\") Returns: Plain text with version info and commit hash if found, or helpful message if not",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixhub_find_version()"
+    ]
+  },
+  {
+    "tool_id": "osintintelligence_whois_lookup_001",
+    "tool_name": "whois_lookup",
+    "description": "OSINT Intelligence MCP server.",
+    "category": "osint",
+    "server": "OSINT Intelligence",
+    "usage_example": [
+      "whois_lookup()"
+    ]
+  },
+  {
+    "tool_id": "osintintelligence_nmap_scan_002",
+    "tool_name": "nmap_scan",
+    "description": "OSINT Intelligence MCP server.",
+    "category": "osint",
+    "server": "OSINT Intelligence",
+    "usage_example": [
+      "nmap_scan()"
+    ]
+  },
+  {
+    "tool_id": "osintintelligence_dnsrecon_lookup_003",
+    "tool_name": "dnsrecon_lookup",
+    "description": "OSINT Intelligence MCP server.",
+    "category": "osint",
+    "server": "OSINT Intelligence",
+    "usage_example": [
+      "dnsrecon_lookup()"
+    ]
+  },
+  {
+    "tool_id": "osintintelligence_dnstwist_lookup_004",
+    "tool_name": "dnstwist_lookup",
+    "description": "OSINT Intelligence MCP server.",
+    "category": "osint",
+    "server": "OSINT Intelligence",
+    "usage_example": [
+      "dnstwist_lookup()"
+    ]
+  },
+  {
+    "tool_id": "osintintelligence_dig_lookup_005",
+    "tool_name": "dig_lookup",
+    "description": "OSINT Intelligence MCP server.",
+    "category": "osint",
+    "server": "OSINT Intelligence",
+    "usage_example": [
+      "dig_lookup()"
+    ]
+  },
+  {
+    "tool_id": "osintintelligence_host_lookup_006",
+    "tool_name": "host_lookup",
+    "description": "OSINT Intelligence MCP server.",
+    "category": "osint",
+    "server": "OSINT Intelligence",
+    "usage_example": [
+      "host_lookup()"
+    ]
+  },
+  {
+    "tool_id": "osintintelligence_osint_overview_007",
+    "tool_name": "osint_overview",
+    "description": "OSINT Intelligence MCP server.",
+    "category": "osint",
+    "server": "OSINT Intelligence",
+    "usage_example": [
+      "osint_overview()"
+    ]
+  },
+  {
+    "tool_id": "reddit_fetch_reddit_hot_threads_001",
+    "tool_name": "fetch_reddit_hot_threads",
+    "description": "Fetch hot threads from a subreddit Args: subreddit: Name of the subreddit limit: Number of posts to fetch (default: 10) Returns: Human readable string containing list of post information",
+    "category": "social",
+    "server": "Reddit",
+    "usage_example": [
+      "fetch_reddit_hot_threads()"
+    ]
+  },
+  {
+    "tool_id": "reddit_fetch_reddit_post_content_002",
+    "tool_name": "fetch_reddit_post_content",
+    "description": "Fetch detailed content of a specific post Args: post_id: Reddit post ID comment_limit: Number of top level comments to fetch comment_depth: Maximum depth of comment tree to traverse Returns: Human readable string containing post content and comments tree",
+    "category": "social",
+    "server": "Reddit",
+    "usage_example": [
+      "fetch_reddit_post_content()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_findparks_001",
+    "tool_name": "findParks",
+    "description": "Search for national parks based on state, name, activities, or other criteria",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "findParks()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getparkdetails_002",
+    "tool_name": "getParkDetails",
+    "description": "Get detailed information about a specific national park",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getParkDetails()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getalerts_003",
+    "tool_name": "getAlerts",
+    "description": "Get current alerts for national parks including closures, hazards, and important information",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getAlerts()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getvisitorcenters_004",
+    "tool_name": "getVisitorCenters",
+    "description": "Get information about visitor centers and their operating hours",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getVisitorCenters()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getcampgrounds_005",
+    "tool_name": "getCampgrounds",
+    "description": "Get information about available campgrounds and their amenities",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getCampgrounds()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getevents_006",
+    "tool_name": "getEvents",
+    "description": "Find upcoming events at parks",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getEvents()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_egfr_epi_001",
+    "tool_name": "egfr_epi",
+    "description": "Estimated Glomerular Filtration Rate (eGFR) using the EPI formula (version 2021) Reference: N Engl J Med. 2021 Nov 4;385(19):1737-1749 Parameters: ----------- scr : float serum creatinine level in mg/dL age : int Age in years male : bool true if Male Returns: -------- float Estimated GFR in mL/min/1.73m^2",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "egfr_epi()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_egfr_epi_cr_cys_002",
+    "tool_name": "egfr_epi_cr_cys",
+    "description": "Estimated Glomerular Filtration Rate (eGFR) using the 2021 CKD-EPI Creatinine-Cystatin C equation Reference: N Engl J Med. 2021 Nov 4;385(19):1737-1749 Parameters: ----------- scr : float Serum creatinine level in mg/dL scys : float Serum cystatin C level in mg/L age : int Age in years male : bool True if patient is male, False if female Returns: -------- efgr : float Estimated GFR in mL/min/1.73m^2",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "egfr_epi_cr_cys()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_mdrd_gfr_003",
+    "tool_name": "mdrd_gfr",
+    "description": "MDRD GFR Equation Estimates GFR in CKD patients using creatinine and patient characteristics. Parameters: ----------- scr : float Serum creatinine level in mg/dL age : int Age in years is_black : bool True if patient is Black is_female : bool True if patient is female Returns: -------- float Estimated GFR in mL/min/1.73m^2",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "mdrd_gfr()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_bp_children_004",
+    "tool_name": "bp_children",
+    "description": "\ud608\uc555 \uc13c\ud0c0\uc77c(percentile)\uc744 \uacc4\uc0b0\ud558\ub294 \ud568\uc218 Parameters: ----------- years : int \ub098\uc774(\ub144) months : int \ub098\uc774(\uc6d4) height : int \ud0a4(cm) sex : str \uc131\ubcc4 ('male' \ub610\ub294 'female') systolic : int \uc218\ucd95\uae30 \ud608\uc555(mmHg) diastolic : int \uc774\uc644\uae30 \ud608\uc555(mmHg) Returns: -------- dict \uc218\ucd95\uae30 \ubc0f \uc774\uc644\uae30 \ud608\uc555 \uc13c\ud0c0\uc77c \uacb0\uacfc\ub97c \ud3ec\ud568\ud558\ub294 \ub515\uc154\ub108\ub9ac",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "bp_children()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_bmi_calculator_005",
+    "tool_name": "bmi_calculator",
+    "description": "Calculates Body Mass Index (BMI) and Body Surface Area (BSA) Parameters: ----------- weight : float Weight in kilograms height : float Height in centimeters (default) or meters height_unit : str Unit of height measurement ('cm' or 'm', default is 'cm') Returns: -------- bmi: float Body Mass Index (kg/m\u00b2)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "bmi_calculator()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_crcl_cockcroft_gault_007",
+    "tool_name": "crcl_cockcroft_gault",
+    "description": "Calculate Creatinine Clearance using the Cockcroft-Gault formula Parameters: ----------- age : int Age in years weight : float Actual body weight in kg height : float Height in inches scr : float Serum creatinine in mg/dL sex : str Gender ('male' or 'female') Returns: -------- crcl : float Creatinine clearance in mL/min",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "crcl_cockcroft_gault()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_map_calculator_008",
+    "tool_name": "map_calculator",
+    "description": "Calculate Mean Arterial Pressure (MAP) Parameters: ----------- sbp : int Systolic Blood Pressure in mmHg dbp : int Diastolic Blood Pressure in mmHg Returns: -------- MAP : float Mean Arterial Pressure (MAP) in mmHg Dictionary containing MAP result and input values",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "map_calculator()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_chads2_vasc_score_009",
+    "tool_name": "chads2_vasc_score",
+    "description": "Calculate CHA\u2082DS\u2082-VASc Score for Atrial Fibrillation Stroke Risk Parameters: ----------- age : int Age in years female : bool True if patient is female, False if male chf : bool True if patient has history of congestive heart failure hypertension : bool True if patient has history of hypertension stroke_history : bool True if patient has history of stroke, TIA, or thromboembolism vascular_disease : bool True if patient has history of vascular disease (prior MI, peripheral artery disease, or aortic plaque) diabetes : bool True if patient has history of diabetes mellitus Returns: -------- score: int CHA\u2082DS\u2082-VASc score",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "chads2_vasc_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_prevent_cvd_risk_010",
+    "tool_name": "prevent_cvd_risk",
+    "description": "Predicting Risk of Cardiovascular Disease EVENTs (PREVENT) Predicts 10-year risk of CVD in patients aged 30-79 without known CVD. Parameters: ----------- age : int Age in years (30-79) female : bool True if patient is female, False if male tc : float Total cholesterol in mmol/L hdl : float HDL cholesterol in mmol/L sbp : int Systolic blood pressure in mmHg diabetes : bool True if patient has diabetes current_smoker : bool True if patient is a current smoker egfr : float Estimated glomerular filtration rate in mL/min/1.73m\u00b2 using_antihtn : bool True if patient is using antihypertensive drugs using_statins : bool True if patient is using statins Returns: -------- float 10-year CVD risk as a percentage",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "prevent_cvd_risk()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_corrected_calcium_011",
+    "tool_name": "corrected_calcium",
+    "description": "Calcium Correction for Hypoalbuminemia and Hyperalbuminemia Calculates a corrected calcium level for patients with abnormal albumin levels. Parameters: ----------- serum_calcium : float Patient's measured serum calcium level in mg/dL patient_albumin : float Patient's serum albumin level in g/dL normal_albumin : float, optional Normal/reference albumin level in g/dL, default is 4.0 g/dL Returns: -------- float Corrected calcium level in mg/dL Formula: -------- Corrected Calcium = (0.8 * (Normal Albumin - Patient's Albumin)) + Serum Calcium References: ----------- Payne RB, et al. Br Med J. 1973;4(5893):643-646.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "corrected_calcium()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_qtc_calculator_012",
+    "tool_name": "qtc_calculator",
+    "description": "Corrected QT Interval (QTc) Calculator Corrects the QT interval for heart rate extremes using various formulas. Parameters: ----------- qt_interval : float Measured QT interval in milliseconds (ms) heart_rate : float Heart rate in beats per minute (bpm) formula : str, optional Formula to use for correction (default: \"bazett\") Options: \"bazett\", \"fridericia\", \"framingham\", \"hodges\", \"rautaharju\" Returns: -------- qtc : float Corrected QT interval in milliseconds (ms) Formulas: --------- RR interval = 60 / heart_rate (in seconds) Bazett: QTc = QT / \u221a(RR) Fridericia: QTc = QT / (RR)^(1/3) Framingham: QTc = QT + 154 \u00d7 (1 - RR) Hodges: QTc = QT + 1.75 \u00d7 (heart_rate - 60) Rautaharju: QTc = QT \u00d7 (120 + heart_rate) / 180 References: ----------- Bazett HC. Heart. 1920;7:353-370 Fridericia LS. Acta Med Scand. 1920;53:469-486 Sagie A, et al. Am J Cardiol. 1992;70(7):797-801 (Framingham) Hodges M, et al. J Electrocardiol. 1983;16(1):17-24 Rautaharju PM, et al. J Am Coll Cardiol. 2004;44(3):594-600",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "qtc_calculator()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_wells_pe_criteria_013",
+    "tool_name": "wells_pe_criteria",
+    "description": "Wells' Criteria for Pulmonary Embolism Objectifies risk of pulmonary embolism based on clinical criteria. Reference: Wells PS, et al. Thromb Haemost. 2000;83(3):416-20. Parameters: ----------- clinical_signs_dvt: bool Clinical signs and symptoms of DVT (leg swelling, pain with palpation) alternative_diagnosis_less_likely: bool Alternative diagnosis less likely than PE heart_rate_over_100: bool Heart rate > 100 beats per minute immobilization_or_surgery: bool Immobilization or surgery in the previous four weeks previous_dvt_or_pe: bool Previous DVT/PE hemoptysis: bool Hemoptysis malignancy: bool Malignancy (treatment ongoing, treated in last 6 months, or palliative) Returns: -------- points: float Total points based on Wells' criteria",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "wells_pe_criteria()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_nihss_score_014",
+    "tool_name": "nihss_score",
+    "description": "NIH Stroke Scale (NIHSS) Quantifies stroke severity by assigning a score to various neurologic exam components. Parameters: ----------- Each parameter corresponds to an NIHSS item. All values must be integers within valid scoring ranges. Returns: -------- total_score: int Total NIHSS score (0-42)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "nihss_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_ibw_calculator_015",
+    "tool_name": "ibw_calculator",
+    "description": "Ideal Body Weight and Adjusted Body Weight Calculator Calculates ideal body weight (Devine formula) and adjusted body weight. Parameters: ----------- weight_kg : float Actual body weight in kilograms height_inches : float Height in inches male : bool True if patient is male, False if female Returns: -------- ibw: float Ideal body weight in kilograms Formulas: --------- Ideal Body Weight (IBW) (Devine formula): - Men: IBW = 50 kg + 2.3 kg \u00d7 (height in inches - 60) - Women: IBW = 45.5 kg + 2.3 kg \u00d7 (height in inches - 60) Adjusted Body Weight (ABW): - ABW = IBW + 0.4 \u00d7 (actual weight - IBW) References: ----------- Devine BJ. Gentamicin therapy. Drug Intell Clin Pharm. 1974;8:650-655. Pai MP. Drug Dosing Based on Weight and Body Surface Area: Mathematical Assumptions and Limitations in Obese Adults. Pharmacotherapy. 2012;32(9):856-868.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "ibw_calculator()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_abw_calculator_016",
+    "tool_name": "abw_calculator",
+    "description": "Ideal Body Weight and Adjusted Body Weight Calculator Calculates ideal body weight (Devine formula) and adjusted body weight. Parameters: ----------- weight_kg : float Actual body weight in kilograms height_inches : float Height in inches male : bool True if patient is male, False if female Returns: -------- abw: float Adjusted body weight in kilograms Formulas: --------- Ideal Body Weight (IBW) (Devine formula): - Men: IBW = 50 kg + 2.3 kg \u00d7 (height in inches - 60) - Women: IBW = 45.5 kg + 2.3 kg \u00d7 (height in inches - 60) Adjusted Body Weight (ABW): - ABW = IBW + 0.4 \u00d7 (actual weight - IBW) References: ----------- Devine BJ. Gentamicin therapy. Drug Intell Clin Pharm. 1974;8:650-655. Pai MP. Drug Dosing Based on Weight and Body Surface Area: Mathematical Assumptions and Limitations in Obese Adults. Pharmacotherapy. 2012;32(9):856-868.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "abw_calculator()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_pregnancy_calculator_017",
+    "tool_name": "pregnancy_calculator",
+    "description": "Pregnancy Due Dates Calculator Calculates pregnancy dates from last period, gestational age, or date of conception. Parameters: ----------- calculation_method : str Method used for calculation: \"lmp\" (last menstrual period), \"conception\", or \"ultrasound\" date_value : str Date in format 'YYYY-MM-DD' (date of LMP, conception, or ultrasound) cycle_length : int, optional Length of menstrual cycle in days (default: 28) gestational_age_weeks : int, optional Weeks of gestational age at ultrasound (required if calculation_method is \"ultrasound\") gestational_age_days : int, optional Days of gestational age at ultrasound (required if calculation_method is \"ultrasound\") Returns: -------- dict Dictionary containing calculated pregnancy dates and information Formulas: --------- - EGA (Estimated Gestational Age) = time since 1st day of LMP - EDC (Estimated Date of Conception) = LMP + 2 weeks (adjusted for cycle length) - EDD (Estimated Due Date) = LMP + 40 weeks (adjusted for cycle length) For non-28 day cycles: - Adjustment = (cycle_length - 28) days - EDD = LMP + 40 weeks + Adjustment",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "pregnancy_calculator()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_heart_score_018",
+    "tool_name": "heart_score",
+    "description": "HEART Score for Major Cardiac Events Predicts 6-week risk of major adverse cardiac events in patients with chest pain. Parameters: ----------- history : int Patient history rating (0: Slightly suspicious, 1: Moderately suspicious, 2: Highly suspicious) ekg : int EKG findings (0: Normal, 1: Non-specific repolarization disturbance, 2: Significant ST deviation) age : int Age rating (0: <45 years, 1: 45-64 years, 2: \u226565 years) risk_factors : int Cardiovascular risk factors (0: None known, 1: 1-2 risk factors, 2: \u22653 risk factors or history of atherosclerotic disease) troponin : int Initial troponin level (0: \u2264normal limit, 1: 1-3\u00d7 normal limit, 2: >3\u00d7 normal limit) Returns: -------- total_score : int Total HEART score (0-10)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "heart_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_revised_cardiac_risk_index_019",
+    "tool_name": "revised_cardiac_risk_index",
+    "description": "Revised Cardiac Risk Index for Pre-Operative Risk Estimates risk of cardiac complications after noncardiac surgery. Parameters: ----------- high_risk_surgery : bool Intraperitoneal, intrathoracic, or suprainguinal vascular surgery ischemic_heart_disease : bool History of MI, positive exercise test, current chest pain considered due to myocardial ischemia, use of nitrate therapy, or ECG with pathological Q waves congestive_heart_failure : bool Pulmonary edema, bilateral rales, S3 gallop, paroxysmal nocturnal dyspnea, or CXR showing pulmonary vascular redistribution cerebrovascular_disease : bool Prior transient ischemic attack (TIA) or stroke insulin_treatment : bool Pre-operative treatment with insulin creatinine_over_2mg : bool Pre-operative creatinine >2 mg/dL (176.8 \u00b5mol/L) Returns: -------- score : int RCRI score (0-6) References: ----------- Lee TH, et al. Circulation. 1999;100(10):1043-1049. Canadian Cardiovascular Society (CCS) Guidelines, 2017. European Society of Cardiology (ESC) Guidelines, 2022.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "revised_cardiac_risk_index()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_child_pugh_score_020",
+    "tool_name": "child_pugh_score",
+    "description": "Calculates the Child-Pugh Score for cirrhosis mortality assessment. Parameters: ----------- bilirubin : float Total bilirubin in mg/dL. albumin : float Albumin in g/dL. inr : float International Normalized Ratio (INR) for prothrombin time. ascites : str One of: \"absent\", \"slight\", \"moderate\". encephalopathy_grade : int Hepatic encephalopathy grade: 0 (none), 1-2 (mild), 3-4 (severe). Returns: -------- int Total Child-Pugh score (5\u201315).",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "child_pugh_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_phq9_score_021",
+    "tool_name": "phq9_score",
+    "description": "PHQ-9 (Patient Health Questionnaire-9) Objectifies degree of depression severity. Parameters: ----------- interest : int Little interest or pleasure in doing things (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) feeling_down : int Feeling down, depressed, or hopeless (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) sleep : int Trouble falling or staying asleep, or sleeping too much (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) tired : int Feeling tired or having little energy (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) appetite : int Poor appetite or overeating (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) feeling_bad : int Feeling bad about yourself or that you are a failure or have let yourself or family down (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) concentration : int Trouble concentrating on things, such as reading the newspaper or watching television (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) movement : int Moving or speaking so slowly that other people could have noticed, or being fidgety or restless (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) self_harm : int Thoughts that you would be better off dead, or thoughts of hurting yourself (0: Not at all, 1: Several days, 2: More than half the days, 3: Nearly every day) Returns: -------- int Total PHQ-9 score (0-27)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "phq9_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_stop_bang_score_022",
+    "tool_name": "stop_bang_score",
+    "description": "STOP-BANG Score for Obstructive Sleep Apnea Screens for obstructive sleep apnea. Parameters: ----------- snoring : bool Do you snore loudly? (Louder than talking or loud enough to be heard through closed doors) tired : bool Do you often feel tired, fatigued, or sleepy during the daytime? observed_apnea : bool Has anyone observed you stop breathing during sleep? pressure : bool Do you have (or are you being treated for) high blood pressure? bmi_over_35 : bool Is BMI more than 35 kg/m\u00b2? age_over_50 : bool Is age over 50 years? neck_over_40cm : bool Is neck circumference greater than 40 cm? male : bool Is patient male? Returns: -------- int Total STOP-BANG score (0-8)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "stop_bang_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_steroid_conversion_023",
+    "tool_name": "steroid_conversion",
+    "description": "Converts corticosteroid dosages using standard equivalencies. Parameters: ----------- from_steroid : str Name of the original steroid (e.g., 'prednisone', 'dexamethasone'). from_dose_mg : float Dose of the original steroid in mg. to_steroid : str Name of the steroid to convert to. Returns: -------- float Equivalent dose in mg of the target steroid.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "steroid_conversion()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_calculate_mme_024",
+    "tool_name": "calculate_mme",
+    "description": "Calculates total daily Morphine Milligram Equivalents (MME). Parameters: ----------- opioid : str Name of the opioid (e.g., 'oxycodone', 'fentanyl_patch'). dose_per_administration : float Amount of opioid per dose (mg for most, mcg/hr for fentanyl patch). doses_per_day : int Number of times the dose is taken per day. Returns: -------- float Total MME/day.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "calculate_mme()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_maintenance_fluids_025",
+    "tool_name": "maintenance_fluids",
+    "description": "Calculates maintenance IV fluid rate (mL/hr) using the 4-2-1 Rule. Parameters: ----------- weight_kg : float Patient's weight in kilograms. Returns: -------- float Maintenance fluid rate in mL/hr.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "maintenance_fluids()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_corrected_sodium_katz_026",
+    "tool_name": "corrected_sodium_katz",
+    "description": "Calculates corrected sodium level in the setting of hyperglycemia using Katz correction formulas. Parameters: ----------- measured_sodium : float Measured serum sodium in mEq/L. serum_glucose : float Serum glucose in mg/dL. Returns: -------- float Corrected sodium level in mEq/L.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "corrected_sodium_katz()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_has_bled_score_028",
+    "tool_name": "has_bled_score",
+    "description": "HAS-BLED Score for Major Bleeding Risk Estimates risk of major bleeding for patients on anticoagulation to assess risk-benefit in atrial fibrillation care. Parameters: ----------- hypertension : bool Hypertension (uncontrolled, >160 mmHg systolic) abnormal_renal_function : bool Renal disease (dialysis, transplant, Cr >2.26 mg/dL or 200 \u00b5mol/L) abnormal_liver_function : bool Liver disease (cirrhosis or bilirubin >2x normal with AST/ALT/AP >3x normal) stroke_history : bool Stroke history bleeding_history : bool Prior major bleeding or predisposition to bleeding labile_inr : bool Labile INR (unstable/high INRs, time in therapeutic range <60%) elderly : bool Elderly (age >65) drugs : bool Medication usage predisposing to bleeding (aspirin, clopidogrel, NSAIDs) alcohol : bool Alcohol usage (\u22658 drinks/week) Returns: -------- int Total HAS-BLED score (0-9)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "has_bled_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_centor_score_modified_029",
+    "tool_name": "centor_score_modified",
+    "description": "Centor Score (Modified/McIsaac) for Strep Pharyngitis Estimates probability that pharyngitis is streptococcal, and suggests management course. Parameters: ----------- age : int Age of patient (-1: \u226545 years, 0: 15-44 years, 1: 3-14 years) tonsillar_exudate : bool Presence of exudate or swelling on tonsils swollen_lymph_nodes : bool Tender/swollen anterior cervical lymph nodes fever : bool Temperature >38\u00b0C (100.4\u00b0F) cough_absent : bool Absence of cough Returns: -------- int Total Modified Centor/McIsaac score (-1 to 5)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "centor_score_modified()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_glasgow_coma_scale_030",
+    "tool_name": "glasgow_coma_scale",
+    "description": "Glasgow Coma Scale (GCS) Coma severity scoring based on Eye, Verbal, and Motor responses. SCORING: -------- Eye Opening (E): 4 = Spontaneous 3 = To verbal command 2 = To pain 1 = No eye opening NT = Not testable (not scored) Verbal Response (V): 5 = Oriented 4 = Confused conversation 3 = Inappropriate words 2 = Incomprehensible sounds 1 = No verbal response NT = Not testable (e.g., intubated; not scored) Motor Response (M): 6 = Obeys commands 5 = Localizes to pain 4 = Withdraws from pain 3 = Flexion to pain (decorticate) 2 = Extension to pain (decerebrate) 1 = No motor response NT = Not testable (e.g., paralyzed; not scored) Parameters: ----------- eye_response: int Eye response score (1 to 4) verbal_response: int Verbal response score (1 to 5) motor_response: int Motor response score (1 to 6) Returns: -------- int Total GCS score (range: 3\u201315)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "glasgow_coma_scale()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_caprini_score_031",
+    "tool_name": "caprini_score",
+    "description": "Caprini Score for Venous Thromboembolism (VTE) Risk stratification based on surgery, history, and clinical conditions. age: int Age of patient in years sex: str 'male' or 'female' surgery_type: str 'none', 'minor', 'major', 'arthroplasty' recent_major_surgery: bool True if patient had major surgery in the last 30 days chf: bool True if patient has congestive heart failure sepsis: bool True if patient has sepsis pneumonia: bool True if patient has pneumonia immobilizing_cast: bool True if patient has an immobilizing cast fracture: bool True if patient has a fracture stroke: bool True if patient has a history of stroke multiple_trauma: bool True if patient has multiple trauma spinal_cord_injury: bool True if patient has spinal cord injury varicose_veins: bool True if patient has varicose veins swollen_legs: bool True if patient has swollen legs central_venous_access: bool True if patient has central venous access history_dvt_pe: bool True if patient has a history of DVT or PE family_history_thrombosis: bool True if patient has a family history of thrombosis factor_v_leiden: bool True if patient has Factor V Leiden mutation prothrombin_20210a: bool True if patient has Prothrombin 20210A mutation homocysteine: bool True if patient has elevated homocysteine levels lupus_anticoagulant: bool True if patient has lupus anticoagulant anticardiolipin_antibody: bool True if patient has anticardiolipin antibody hit: bool True if patient has heparin-induced thrombocytopenia other_thrombophilia: bool True if patient has other thrombophilia mobility_status: str one of 'normal', 'bedrest', 'bedrest_72hr' ibd: bool True if patient has inflammatory bowel disease bmi_over_25: bool True if patient has a BMI over 25 acute_mi: bool True if patient has a history of acute myocardial infarction copd: bool True if patient has chronic obstructive pulmonary disease malignancy: bool True if patient has malignancy other_risk_factors: bool True if patient has other risk factors for VTE Returns: -------- score: int Dictionary containing total Caprini score or error message.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "caprini_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_ldl_calculated_032",
+    "tool_name": "ldl_calculated",
+    "description": "Calculates LDL cholesterol using the Friedewald equation: LDL (mg/dL) = Total Cholesterol - HDL - (Triglycerides / 5) Parameters: ----------- total_cholesterol: float Total cholesterol level in mg/dL. hdl: float HDL cholesterol level in mg/dL. triglycerides: float Triglycerides level in mg/dL. Returns: -------- float LDL cholesterol level in mg/dL",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "ldl_calculated()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_sofa_score_033",
+    "tool_name": "sofa_score",
+    "description": "Sequential Organ Failure Assessment (SOFA) Score Predicts ICU mortality based on the degree of organ dysfunction. Parameters: ----------- pao2_fio2: float Arterial oxygen partial pressure / fraction of inspired oxygen ratio. mechanically_ventilated: bool Whether the patient is currently mechanically ventilated. platelets: int Platelet count in \u00d710\u00b3/\u00b5L. gcs: int Glasgow Coma Scale score (3\u201315). bilirubin: float Serum bilirubin in mg/dL. map_mmHg: float Mean arterial pressure in mmHg. dopamine: float Dopamine dosage in mcg/kg/min. dobutamine: bool True if dobutamine is being administered. epinephrine: float Epinephrine dosage in mcg/kg/min. norepinephrine: float Norepinephrine dosage in mcg/kg/min. creatinine: float Serum creatinine in mg/dL. urine_output_ml_per_day: int Total urine output over 24 hours in mL. Returns: -------- int Total SOFA score (0\u201324)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "sofa_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_perc_rule_034",
+    "tool_name": "perc_rule",
+    "description": "PERC Rule for Pulmonary Embolism Rules out PE in low-risk patients if **none** of the criteria are present. If the pre-test probability is \u226415% (clinically low risk), and all 8 criteria below are **absent** (i.e., all False), PE can be ruled out without further testing. If **any** criterion is present (True), PE cannot be ruled out by PERC alone. CRITERIA (any present = +1): ---------------------------- \u2022 Age \u2265 50 years \u2022 Heart rate \u2265 100 bpm \u2022 Oxygen saturation < 95% on room air \u2022 Unilateral leg swelling \u2022 Hemoptysis \u2022 Recent trauma or surgery \u2022 Prior PE or DVT \u2022 Hormone use (oral contraceptives, HRT, estrogen in any patient) Parameters: ----------- age_over_50: bool True if patient is 50 years or older. heart_rate_100_or_more: bool True if heart rate is \u2265100 bpm. oxygen_sat_below_95: bool True if O\u2082 saturation is less than 95% on room air. unilateral_leg_swelling: bool True if leg swelling is present in only one leg. hemoptysis: bool True if patient is coughing up blood. recent_trauma_or_surgery: bool True if patient had trauma or surgery recently. prior_pe_or_dvt: bool True if patient has a history of PE or DVT. hormone_use: bool True if patient uses hormones (OCPs, HRT, or estrogen). Returns: -------- int Number of positive PERC criteria (0\u20138)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "perc_rule()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_gad7_score_035",
+    "tool_name": "gad7_score",
+    "description": "GAD-7 (Generalized Anxiety Disorder-7) Measures severity of anxiety symptoms over the past two weeks. SCORING PER QUESTION: --------------------- \u2022 0 = Not at all \u2022 1 = Several days \u2022 2 = More than half the days \u2022 3 = Nearly every day QUESTIONS: ---------- 1. Feeling nervous, anxious, or on edge 2. Not being able to stop or control worrying 3. Worrying too much about different things 4. Trouble relaxing 5. Being so restless that it's hard to sit still 6. Becoming easily annoyed or irritable 7. Feeling afraid as if something awful might happen Parameters: ----------- q1 to q7: int Response scores for each of the 7 GAD-7 questions (range: 0\u20133) Returns: -------- int Total GAD-7 score (range: 0\u201321)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "gad7_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_curb65_score_036",
+    "tool_name": "curb65_score",
+    "description": "CURB-65 Score for Pneumonia Severity Assesses mortality risk in community-acquired pneumonia to guide inpatient vs. outpatient treatment decisions. SCORING (1 point each): ----------------------- \u2022 Confusion (new onset disorientation) \u2022 BUN > 19 mg/dL (or urea > 7 mmol/L) \u2022 Respiratory rate \u2265 30 breaths/min \u2022 Systolic BP < 90 mmHg or Diastolic BP \u2264 60 mmHg \u2022 Age \u2265 65 years Parameters: ----------- confusion: bool True if new mental confusion is present. bun_over_19: bool True if BUN > 19 mg/dL (or urea > 7 mmol/L). respiratory_rate_30_or_more: bool True if respiratory rate is 30 or higher. low_blood_pressure: bool True if SBP < 90 mmHg or DBP \u2264 60 mmHg. age_65_or_more: bool True if age is 65 years or older. Returns: -------- int Total CURB-65 score (range: 0\u20135)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "curb65_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_meld_3_037",
+    "tool_name": "meld_3",
+    "description": "Calculates MELD 3.0 Score for liver disease transplant planning. Parameters: ----------- age : int Patient age in years. female : bool True if patient is female. bilirubin : float Serum bilirubin in mg/dL. inr : float INR (International Normalized Ratio). creatinine : float Serum creatinine in mg/dL. albumin : float Serum albumin in g/dL. sodium : float Serum sodium in mEq/L. dialysis : bool True if patient had \u22652 dialysis sessions or 24h CVVHD in last 7 days. Returns: -------- int MELD 3.0 score, rounded to the nearest whole number.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "meld_3()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_framingham_risk_score_038",
+    "tool_name": "framingham_risk_score",
+    "description": "Calculates the Framingham Risk Score for 10-year risk of heart attack (CHD) based on the Framingham Heart Study equation (men and women). Parameters: ----------- age : int Age of the patient (30-79 years). total_cholesterol : float Total cholesterol in mg/dL. hdl_cholesterol : float HDL cholesterol in mg/dL. systolic_bp : float Systolic blood pressure in mmHg. treated_for_bp : bool Whether the patient is treated for high blood pressure (1 if yes, 0 if no). smoker : bool Whether the patient is a smoker (1 if yes, 0 if no). gender : str Gender of the patient (\"male\" or \"female\"). Returns: -------- float 10-year risk of heart attack as a percentage.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "framingham_risk_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_homa_ir_039",
+    "tool_name": "homa_ir",
+    "description": "Calculates the HOMA-IR score for insulin resistance. Formula: Score = (Fasting insulin (uIU/mL) * Fasting glucose (mg/dL)) / 405 Parameters: ----------- fasting_insulin : float Fasting insulin level in micro-units per milliliter (uIU/mL). fasting_glucose : float Fasting glucose level in milligrams per deciliter (mg/dL).A Returns: -------- float HOMA-IR score.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "homa_ir()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_fib4_index_040",
+    "tool_name": "fib4_index",
+    "description": "Fibrosis-4 (FIB-4) Index for Liver Fibrosis Noninvasive estimate of liver scarring in HCV and HBV patients, to assess need for biopsy. Parameters: ----------- age : int Age in years ast : float Aspartate aminotransferase (AST) level in U/L alt : float Alanine aminotransferase (ALT) level in U/L platelets : float Platelet count in 10^9/L (or 1000/\u03bcL) Returns: -------- float FIB-4 score",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "fib4_index()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_ariscat_score_041",
+    "tool_name": "ariscat_score",
+    "description": "ARISCAT Score for Postoperative Pulmonary Complications Predicts risk of respiratory complications (e.g., failure, infection) after surgery. Parameters: ----------- age: int Patient age in years. spo2: float Preoperative oxygen saturation percentage on room air. recent_respiratory_infection: bool True if URI, bronchitis, or pneumonia occurred in the past month with fever and antibiotics. preop_anemia: bool True if hemoglobin \u226410 g/dL. surgical_site: str One of \"peripheral\", \"upper_abdominal\", or \"intrathoracic\". surgery_duration_hrs: float Estimated or actual surgery time in hours. emergency_surgery: bool True if the procedure is non-elective. Returns: -------- int Total ARISCAT score (range: 0\u2013123)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "ariscat_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_sepsis_criteria_042",
+    "tool_name": "sepsis_criteria",
+    "description": "SIRS, Sepsis, and Septic Shock Criteria Categorizes patient condition based on systemic inflammatory response and organ function. Criteria Overview: ------------------ \u2022 SIRS (Systemic Inflammatory Response Syndrome): At least 2 of the following: - Temp >38\u00b0C or <36\u00b0C - HR >90 bpm - RR >20 or PaCO\u2082 <32 mm Hg - WBC >12,000 or <4,000 or >10% bands \u2022 Sepsis: SIRS + suspected or confirmed infection \u2022 Severe Sepsis: Sepsis + evidence of organ dysfunction or hypotension or hypoperfusion \u2022 Septic Shock: Severe sepsis + persistent hypotension despite fluid resuscitation \u2022 MODS (Multiple Organ Dysfunction Syndrome): Severe sepsis + failure of \u22652 organs Parameters: ----------- temp_abnormal: bool True if temperature >38\u00b0C or <36\u00b0C heart_rate_gt_90: bool True if heart rate is over 90 bpm rr_gt_20_or_paco2_lt_32: bool True if RR >20 or PaCO\u2082 <32 mm Hg wbc_abnormal: bool True if WBC >12,000 or <4,000 or bands >10% suspected_infection: bool True if a source of infection is suspected or confirmed organ_dysfunction: bool True if signs of lactic acidosis or SBP <90 or SBP drop \u226540 mm Hg fluid_resistant_hypotension: bool True if hypotension persists despite adequate fluid resuscitation multi_organ_failure: bool True if there is evidence of \u22652 organs failing Returns: -------- str One of: \"No SIRS\", \"SIRS\", \"Sepsis\", \"Severe Sepsis\", \"Septic Shock\", or \"MODS\"",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "sepsis_criteria()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_fractional_excretion_of_sodium_043",
+    "tool_name": "fractional_excretion_of_sodium",
+    "description": "Fractional Excretion of Sodium (FENa) Determines whether acute kidney injury is due to prerenal or intrinsic renal pathology. Formula: -------- FENa (%) = 100 \u00d7 (SCr \u00d7 UNa) / (SNa \u00d7 UCr) Interpretation: --------------- \u2022 FENa <1%  \u2192 Suggests prerenal cause (e.g., hypovolemia) \u2022 FENa >2%  \u2192 Suggests intrinsic renal damage (e.g., acute tubular necrosis) Parameters: ----------- serum_creatinine: float Serum creatinine (SCr), mg/dL urine_sodium: float Urine sodium (UNa), mEq/L serum_sodium: float Serum sodium (SNa), mEq/L urine_creatinine: float Urine creatinine (UCr), mg/dL Returns: -------- float Fractional Excretion of Sodium as a percentage (%)",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "fractional_excretion_of_sodium()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_free_water_deficit_044",
+    "tool_name": "free_water_deficit",
+    "description": "Free Water Deficit in Hypernatremia Calculates free water deficit based on body weight and serum sodium concentration. Formula: -------- Free water deficit (L) = TBW_fraction \u00d7 Weight_kg \u00d7 ([Na_measured / Na_ideal] - 1) \u2022 Na_ideal is assumed to be 140 mEq/L. \u2022 TBW_fraction varies by sex and age: - Adult male: 0.6 - Adult female: 0.5 - Elderly male: 0.5 - Elderly female: 0.45 - (Child: 0.6 \u2014 not handled in this function) Parameters: ----------- weight_kg: float Patient\u2019s weight in kilograms. current_sodium: float Patient\u2019s current serum sodium in mEq/L. is_male: bool True if the patient is biologically male, False if female. is_elderly: bool True if the patient is elderly (e.g., age \u226565), False otherwise. Returns: -------- float Free water deficit in liters.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "free_water_deficit()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_gupta_perioperative_mica_045",
+    "tool_name": "gupta_perioperative_mica",
+    "description": "Gupta Perioperative Risk for Myocardial Infarction or Cardiac Arrest (MICA) Calculates the cardiac risk percentage based on clinical variables and procedure type. Formula: -------- Risk (%) = e^x / (1 + e^x) Where: x = \u22125.25 + age\u00d70.02 + other variable values (based on inputs) Parameters: ----------- age: int Patient's age in years. functional_status: str One of: \"independent\", \"partially_dependent\", \"totally_dependent\". asa_class: int ASA physical status class (1 to 5). creatinine_status: str One of: \"normal\", \"elevated\", \"unknown\". procedure_type: str One of the predefined surgical procedure categories from the Gupta MICA model. Returns: -------- float Predicted cardiac risk as a percentage.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "gupta_perioperative_mica()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_duke_activity_status_index_046",
+    "tool_name": "duke_activity_status_index",
+    "description": "Duke Activity Status Index (DASI) Estimates functional capacity based on self-reported physical activity. Parameters: ----------- self_care: bool True if the patient is able to take care of themselves (e.g., eating, dressing, bathing). walk_indoors: bool True if the patient can walk indoors. walk_1_2_blocks: bool True if the patient can walk 1\u20132 blocks on level ground. climb_stairs: bool True if the patient can climb a flight of stairs or walk up a hill. run_short_distance: bool True if the patient can run a short distance. light_work: bool True if the patient can do light work around the house (e.g., dusting, washing dishes). moderate_work: bool True if the patient can do moderate work around the house (e.g., vacuuming, sweeping floors). heavy_work: bool True if the patient can do heavy work around the house (e.g., scrubbing floors, lifting heavy items). yardwork: bool True if the patient can do yardwork (e.g., raking leaves, weeding, pushing a mower). sexual_relations: bool True if the patient can have sexual relations. moderate_recreational: bool True if the patient can participate in moderate recreational activities (e.g., golf, bowling). strenuous_sports: bool True if the patient can participate in strenuous sports (e.g., swimming, singles tennis). Returns: -------- float The total Duke Activity Status Index (DASI) score.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "duke_activity_status_index()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_ciwa_ar_score_047",
+    "tool_name": "ciwa_ar_score",
+    "description": "CIWA-Ar (Clinical Institute Withdrawal Assessment for Alcohol) Objectifies the severity of alcohol withdrawal based on symptoms. SCORING: -------- Each symptom is scored on a scale of 0 to 7, except for orientation, which is scored from 0 to 4. Symptoms and their associated scoring: - Nausea/vomiting: 0 (No nausea) to 7 (Constant nausea, frequent dry heaves and vomiting) - Tremor: 0 (No tremor) to 7 (Severe tremor, even with arms not extended) - Paroxysmal sweats: 0 (No sweat visible) to 7 (Drenching sweats) - Anxiety: 0 (No anxiety) to 7 (Severe panic states or severe delirium) - Agitation: 0 (Normal activity) to 7 (Constantly thrashes or paces) - Tactile disturbances: 0 (None) to 7 (Continuous hallucinations) - Auditory disturbances: 0 (Not present) to 7 (Continuous hallucinations) - Visual disturbances: 0 (Not present) to 7 (Continuous hallucinations) - Headache/fullness in head: 0 (Not present) to 7 (Extremely severe) - Orientation/clouding of sensorium: 0 (Oriented) to 4 (Disoriented to place or person) Parameters: ----------- nausea_vomiting: int Severity of nausea and vomiting (0-7). tremor: int Severity of tremor (0-7). paroxysmal_sweats: int Severity of paroxysmal sweats (0-7). anxiety: int Severity of anxiety (0-7). agitation: int Severity of agitation (0-7). tactile_disturbances: int Severity of tactile disturbances (0-7). auditory_disturbances: int Severity of auditory disturbances (0-7). visual_disturbances: int Severity of visual disturbances (0-7). headache_fullness: int Severity of headache or fullness in head (0-7). orientation: int Orientation or clouding of sensorium (0-4). Returns: -------- int Total CIWA-Ar score (range: 0-67).",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "ciwa_ar_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_psi_port_score_048",
+    "tool_name": "psi_port_score",
+    "description": "PSI/PORT Score for Pneumonia Severity (Pneumonia Severity Index) Estimates mortality risk for adult patients with community-acquired pneumonia (CAP). SCORING: -------- Age, sex, and various comorbidities are assigned specific scores. The final score is the sum of individual scores based on clinical variables such as: - Age - Sex - Comorbidities (e.g., neoplastic disease, liver disease) - Clinical signs (e.g., respiratory rate, systolic blood pressure) - Laboratory findings (e.g., glucose, sodium, hematocrit) Parameters: ----------- age: int Age in years. sex: str 'Female' or 'Male'. nursing_home_resident: bool Whether the patient is a nursing home resident. neoplastic_disease: bool History of neoplastic disease (cancer). liver_disease: bool History of liver disease. chf_history: bool History of congestive heart failure. cerebrovascular_disease: bool History of cerebrovascular disease. renal_disease: bool History of renal disease. altered_mental_status: bool Whether the patient has altered mental status. resp_rate_30: bool Respiratory rate \u226530 breaths/min. sbp_90: bool Systolic blood pressure <90 mmHg. temp_35_39_9: bool Temperature <35\u00b0C (95\u00b0F) or >39.9\u00b0C (103.8\u00b0F). pulse_125: bool Pulse \u2265125 beats/min. ph_735: bool pH <7.35. bun_30: bool BUN \u226530 mg/dL or \u226511 mmol/L. sodium_130: bool Sodium <130 mmol/L. glucose_250: bool Glucose \u2265250 mg/dL or \u226514 mmol/L. hematocrit_30: bool Hematocrit <30%. pao2_60: bool Partial pressure of oxygen <60 mmHg or <8 kPa. pleural_effusion: bool Whether there is a pleural effusion on x-ray. Returns: -------- int Total PSI/PORT Score for the patient (higher scores indicate higher risk).",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "psi_port_score()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_serum_anion_gap_049",
+    "tool_name": "serum_anion_gap",
+    "description": "Calculate the Serum Anion Gap and related values. FORMULAS: ----------- 1. Anion Gap = Na - (Cl + HCO3-) 2. Delta Gap = (Anion Gap - Normal Anion Gap) 3. Albumin-Corrected Anion Gap = Anion Gap + [ 2.5 * (4 - Albumin) ] 4. Albumin-Corrected Delta Gap = Albumin-Corrected Anion Gap - Normal Anion Gap 5. Delta Ratio = Delta Gap / (24 - Bicarbonate) 6. Albumin-Corrected Delta Ratio = Albumin-Corrected Delta Gap / (24 - Bicarbonate) Parameters: ----------- sodium: float Sodium in mEq/L. chloride: float Chloride in mEq/L. bicarbonate: float Bicarbonate in mEq/L. albumin: float Albumin in g/dL. Returns: -------- dict: A dictionary with the calculated values of Anion Gap, Delta Gap, Albumin-Corrected Anion Gap, Albumin-Corrected Delta Gap, Delta Ratio, and Albumin-Corrected Delta Ratio.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "serum_anion_gap()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_serum_osmolarity_050",
+    "tool_name": "serum_osmolarity",
+    "description": "Calculate the Serum Osmolarity using the formula: Serum Osmolarity (US units) = (2 \u00d7 Na) + (BUN / 2.8) + (Glucose / 18) + (Ethanol / 4.6) Parameters: ----------- sodium: float Sodium concentration in mEq/L. bun: float Blood Urea Nitrogen (BUN) concentration in mg/dL. glucose: float Glucose concentration in mg/dL. ethanol: float Ethanol concentration in mg/dL. Returns: -------- float: Calculated serum osmolarity.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "serum_osmolarity()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_bmi_bsa_calculator_051",
+    "tool_name": "bmi_bsa_calculator",
+    "description": "Calculates Body Mass Index (BMI) and Body Surface Area (BSA) Parameters: ----------- weight : float Weight in kilograms height : float Height in centimeters (default) or meters height_unit : str Unit of height measurement ('cm' or 'm', default is 'cm') Returns: -------- dict Dictionary containing BMI, BSA, and classification",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "bmi_bsa_calculator()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_ibw_abw_calculator_052",
+    "tool_name": "ibw_abw_calculator",
+    "description": "Ideal Body Weight and Adjusted Body Weight Calculator Calculates ideal body weight (Devine formula) and adjusted body weight. Parameters: ----------- weight_kg : float Actual body weight in kilograms height_inches : float Height in inches male : bool True if patient is male, False if female Returns: -------- dict Dictionary containing ideal body weight, adjusted body weight, and calculation details Formulas: --------- Ideal Body Weight (IBW) (Devine formula): - Men: IBW = 50 kg + 2.3 kg \u00d7 (height in inches - 60) - Women: IBW = 45.5 kg + 2.3 kg \u00d7 (height in inches - 60) Adjusted Body Weight (ABW): - ABW = IBW + 0.4 \u00d7 (actual weight - IBW) References: ----------- Devine BJ. Gentamicin therapy. Drug Intell Clin Pharm. 1974;8:650-655. Pai MP. Drug Dosing Based on Weight and Body Surface Area: Mathematical Assumptions and Limitations in Obese Adults. Pharmacotherapy. 2012;32(9):856-868.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "ibw_abw_calculator()"
+    ]
+  },
+  {
+    "tool_id": "medicalcalculator_corrected_sodium_053",
+    "tool_name": "corrected_sodium",
+    "description": "Calculates corrected sodium level in the setting of hyperglycemia using Katz and Hillier correction formulas. Parameters: ----------- measured_sodium : float Measured serum sodium in mEq/L. serum_glucose : float Serum glucose in mg/dL. Returns: -------- dict Dictionary with corrected sodium values using Katz and Hillier formulas.",
+    "category": "health",
+    "server": "Medical Calculator",
+    "usage_example": [
+      "corrected_sodium()"
+    ]
+  },
+  {
+    "tool_id": "metropolitanmuseum_get_museum_object_001",
+    "tool_name": "get-museum-object",
+    "description": "Get a museum object by its ID, from the Metropolitan Museum of Art Collection",
+    "category": "art",
+    "server": "Metropolitan Museum",
+    "usage_example": [
+      "get-museum-object()"
+    ]
+  },
+  {
+    "tool_id": "metropolitanmuseum_list_departments_002",
+    "tool_name": "list-departments",
+    "description": "List all departments in the Metropolitan Museum of Art (Met Museum)",
+    "category": "art",
+    "server": "Metropolitan Museum",
+    "usage_example": [
+      "list-departments()"
+    ]
+  },
+  {
+    "tool_id": "metropolitanmuseum_search_museum_objects_003",
+    "tool_name": "search-museum-objects",
+    "description": "Search for objects in the Metropolitan Museum of Art (Met Museum). Will return Total objects found,",
+    "category": "art",
+    "server": "Metropolitan Museum",
+    "usage_example": [
+      "search-museum-objects()"
+    ]
+  },
+  {
+    "tool_id": "movierecommender_get_movies_001",
+    "tool_name": "get_movies",
+    "description": "Get movie suggestions based on keyword.",
+    "category": "general",
+    "server": "Movie Recommender",
+    "usage_example": [
+      "get_movies()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_astronomy_picture_of_day_001",
+    "tool_name": "get_astronomy_picture_of_day",
+    "description": "Get NASA's astronomy picture of the day. Args: date: Date of the image in YYYY-MM-DD format. If not specified, the current date is used. count: If specified, returns 'count' random images. Cannot be used with 'date'. thumbs: If True, returns the thumbnail URL for videos. If APOD is not a video, this parameter is ignored.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_astronomy_picture_of_day()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_asteroids_feed_002",
+    "tool_name": "get_asteroids_feed",
+    "description": "Get a list of asteroids based on their closest approach date to Earth. Args: start_date: Start date for asteroid search in YYYY-MM-DD format. end_date: End date for asteroid search in YYYY-MM-DD format. The Feed date limit is only 7 Days. If not specified, 7 days after start_date is used.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_asteroids_feed()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_asteroid_lookup_003",
+    "tool_name": "get_asteroid_lookup",
+    "description": "Look up a specific asteroid based on its NASA JPL ID. Args: asteroid_id: Asteroid ID in the NASA JPL small body (SPK-ID) system.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_asteroid_lookup()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_browse_asteroids_004",
+    "tool_name": "browse_asteroids",
+    "description": "Browse the asteroid dataset.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "browse_asteroids()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_coronal_mass_ejection_005",
+    "tool_name": "get_coronal_mass_ejection",
+    "description": "Get coronal mass ejection (CME) data. Args: start_date: Start date in YYYY-MM-DD format. Defaults to 30 days before current date. end_date: End date in YYYY-MM-DD format. Defaults to current date.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_coronal_mass_ejection()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_geomagnetic_storm_006",
+    "tool_name": "get_geomagnetic_storm",
+    "description": "Get geomagnetic storm (GST) data. Args: start_date: Start date in YYYY-MM-DD format. Defaults to 30 days before current date. end_date: End date in YYYY-MM-DD format. Defaults to current date.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_geomagnetic_storm()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_solar_flare_007",
+    "tool_name": "get_solar_flare",
+    "description": "Get solar flare (FLR) data. Args: start_date: Start date in YYYY-MM-DD format. Defaults to 30 days before current date. end_date: End date in YYYY-MM-DD format. Defaults to current date.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_solar_flare()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_solar_energetic_particle_008",
+    "tool_name": "get_solar_energetic_particle",
+    "description": "Get solar energetic particle (SEP) data. Args: start_date: Start date in YYYY-MM-DD format. Defaults to 30 days before current date. end_date: End date in YYYY-MM-DD format. Defaults to current date.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_solar_energetic_particle()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_magnetopause_crossing_009",
+    "tool_name": "get_magnetopause_crossing",
+    "description": "Get magnetopause crossing (MPC) data. Args: start_date: Start date in YYYY-MM-DD format. Defaults to 30 days before current date. end_date: End date in YYYY-MM-DD format. Defaults to current date.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_magnetopause_crossing()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_radiation_belt_enhancement_010",
+    "tool_name": "get_radiation_belt_enhancement",
+    "description": "Get radiation belt enhancement (RBE) data. Args: start_date: Start date in YYYY-MM-DD format. Defaults to 30 days before current date. end_date: End date in YYYY-MM-DD format. Defaults to current date.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_radiation_belt_enhancement()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_wsa_enlil_simulation_012",
+    "tool_name": "get_wsa_enlil_simulation",
+    "description": "Get WSA+Enlil simulation data. Args: start_date: Start date in YYYY-MM-DD format. Defaults to 7 days before current date. end_date: End date in YYYY-MM-DD format. Defaults to current date.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_wsa_enlil_simulation()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_notifications_013",
+    "tool_name": "get_notifications",
+    "description": "Get DONKI notifications. Args: start_date: Start date in YYYY-MM-DD format. Defaults to 7 days before current date. end_date: End date in YYYY-MM-DD format. Defaults to current date. notification_type: Notification type. Options: all, FLR, SEP, CME, IPS, MPC, GST, RBE, report.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_notifications()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_earth_imagery_014",
+    "tool_name": "get_earth_imagery",
+    "description": "Get Earth imagery from Landsat 8 satellite. Args: lat: Latitude. lon: Longitude. date: Image date in YYYY-MM-DD format. If not specified, the most recent image is used. dim: Width and height of the image in degrees (0.025 degrees is approximately 2.7 km). cloud_score: Calculate the percentage of the image covered by clouds (currently not available).",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_earth_imagery()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_earth_assets_015",
+    "tool_name": "get_earth_assets",
+    "description": "Get information about available imagery assets for a specific location and date. Args: lat: Latitude. lon: Longitude. date: Date in YYYY-MM-DD format. dim: Width and height of the image in degrees (0.025 degrees is approximately 2.7 km).",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_earth_assets()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_epic_imagery_016",
+    "tool_name": "get_epic_imagery",
+    "description": "Get images from the EPIC (Earth Polychromatic Imaging Camera). Args: collection: Collection type. Options: natural, enhanced.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_epic_imagery()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_epic_imagery_by_date_017",
+    "tool_name": "get_epic_imagery_by_date",
+    "description": "Get images from the EPIC (Earth Polychromatic Imaging Camera) for a specific date. Args: date: Date in YYYY-MM-DD format. collection: Collection type. Options: natural, enhanced.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_epic_imagery_by_date()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_epic_dates_018",
+    "tool_name": "get_epic_dates",
+    "description": "Get available dates for EPIC images. Args: collection: Collection type. Options: natural, enhanced.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_epic_dates()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_exoplanet_data_019",
+    "tool_name": "get_exoplanet_data",
+    "description": "Get data from NASA's Exoplanet Archive. Args: query: Specific query to filter results using Exoplanet Archive syntax. Example: \"pl_orbper > 300 and pl_rade < 2\" table: Table to query. Common options: exoplanets (confirmed planets), cumulative (Kepler Objects of Interest), koi (subset of cumulative), tce (Threshold Crossing Events). format: Output format. Options: json, csv, xml, ipac. Default: json.",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_exoplanet_data()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_mars_rover_photos_020",
+    "tool_name": "get_mars_rover_photos",
+    "description": "Get photos from a Mars rover (Curiosity, Opportunity, Spirit). Specify either sol (Martian day) or earth_date (YYYY-MM-DD), but not both. Args: rover_name: Name of the rover (curiosity, opportunity, spirit). sol: Martian sol (day number, starting from landing). Use if not using earth_date. earth_date: Earth date in YYYY-MM-DD format. Use if not using sol. camera: Filter by camera abbreviation (e.g., FHAZ, RHAZ, MAST, NAVCAM, PANCAM). See documentation for full list per rover. page: Page number for results (25 photos per page).",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_mars_rover_photos()"
+    ]
+  },
+  {
+    "tool_id": "nasadata_get_mars_rover_manifest_021",
+    "tool_name": "get_mars_rover_manifest",
+    "description": "Get the mission manifest for a Mars rover (Curiosity, Opportunity, Spirit). Provides mission details like landing/launch dates, status, max sol/date, total photos, and photo counts per sol. Args: rover_name: Name of the rover (curiosity, opportunity, spirit).",
+    "category": "space",
+    "server": "NASA Data",
+    "usage_example": [
+      "get_mars_rover_manifest()"
+    ]
+  },
+  {
+    "tool_id": "okxexchange_get_price_001",
+    "tool_name": "get_price",
+    "description": "Get latest price for an OKX instrument",
+    "category": "finance",
+    "server": "OKX Exchange",
+    "usage_example": [
+      "get_price()"
+    ]
+  },
+  {
+    "tool_id": "okxexchange_get_candlesticks_002",
+    "tool_name": "get_candlesticks",
+    "description": "Get candlestick data for an OKX instrument",
+    "category": "finance",
+    "server": "OKX Exchange",
+    "usage_example": [
+      "get_candlesticks()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_arxiv_001",
+    "tool_name": "search_arxiv",
+    "description": "Search academic papers from arXiv. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_arxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_pubmed_002",
+    "tool_name": "search_pubmed",
+    "description": "Search academic papers from PubMed. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_pubmed()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_biorxiv_003",
+    "tool_name": "search_biorxiv",
+    "description": "Search academic papers from bioRxiv. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_biorxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_medrxiv_004",
+    "tool_name": "search_medrxiv",
+    "description": "Search academic papers from medRxiv. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_medrxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_google_scholar_005",
+    "tool_name": "search_google_scholar",
+    "description": "Search academic papers from Google Scholar. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_google_scholar()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_iacr_006",
+    "tool_name": "search_iacr",
+    "description": "Search academic papers from IACR ePrint Archive. Args: query: Search query string (e.g., 'cryptography', 'secret sharing'). max_results: Maximum number of papers to return (default: 10). fetch_details: Whether to fetch detailed information for each paper (default: True). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_iacr()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_arxiv_007",
+    "tool_name": "download_arxiv",
+    "description": "Download PDF of an arXiv paper. Args: paper_id: arXiv paper ID (e.g., '2106.12345'). save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_arxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_pubmed_008",
+    "tool_name": "download_pubmed",
+    "description": "Attempt to download PDF of a PubMed paper. Args: paper_id: PubMed ID (PMID). save_path: Directory to save the PDF (default: './downloads'). Returns: str: Message indicating that direct PDF download is not supported.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_pubmed()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_biorxiv_009",
+    "tool_name": "download_biorxiv",
+    "description": "Download PDF of a bioRxiv paper. Args: paper_id: bioRxiv DOI. save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_biorxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_medrxiv_010",
+    "tool_name": "download_medrxiv",
+    "description": "Download PDF of a medRxiv paper. Args: paper_id: medRxiv DOI. save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_medrxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_iacr_011",
+    "tool_name": "download_iacr",
+    "description": "Download PDF of an IACR ePrint paper. Args: paper_id: IACR paper ID (e.g., '2009/101'). save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_iacr()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_arxiv_paper_012",
+    "tool_name": "read_arxiv_paper",
+    "description": "Read and extract text content from an arXiv paper PDF. Args: paper_id: arXiv paper ID (e.g., '2106.12345'). save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_arxiv_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_pubmed_paper_013",
+    "tool_name": "read_pubmed_paper",
+    "description": "Read and extract text content from a PubMed paper. Args: paper_id: PubMed ID (PMID). save_path: Directory where the PDF would be saved (unused). Returns: str: Message indicating that direct paper reading is not supported.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_pubmed_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_biorxiv_paper_014",
+    "tool_name": "read_biorxiv_paper",
+    "description": "Read and extract text content from a bioRxiv paper PDF. Args: paper_id: bioRxiv DOI. save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_biorxiv_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_medrxiv_paper_015",
+    "tool_name": "read_medrxiv_paper",
+    "description": "Read and extract text content from a medRxiv paper PDF. Args: paper_id: medRxiv DOI. save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_medrxiv_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_iacr_paper_016",
+    "tool_name": "read_iacr_paper",
+    "description": "Read and extract text content from an IACR ePrint paper PDF. Args: paper_id: IACR paper ID (e.g., '2009/101'). save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_iacr_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_semantic_017",
+    "tool_name": "search_semantic",
+    "description": "Search academic papers from Semantic Scholar. Args: query: Search query string (e.g., 'machine learning'). year: Optional year filter (e.g., '2019', '2016-2020', '2010-', '-2015'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_semantic()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_semantic_018",
+    "tool_name": "download_semantic",
+    "description": "Download PDF of a Semantic Scholar paper. Args: paper_id: Semantic Scholar paper ID, Paper identifier in one of the following formats: - Semantic Scholar ID (e.g., \"649def34f8be52c8b66281af98ae884c09aef38b\") - DOI:<doi> (e.g., \"DOI:10.18653/v1/N18-3011\") - ARXIV:<id> (e.g., \"ARXIV:2106.15928\") - MAG:<id> (e.g., \"MAG:112218234\") - ACL:<id> (e.g., \"ACL:W12-3903\") - PMID:<id> (e.g., \"PMID:19872477\") - PMCID:<id> (e.g., \"PMCID:2323736\") - URL:<url> (e.g., \"URL:https://arxiv.org/abs/2106.15928v1\") save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_semantic()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_semantic_paper_019",
+    "tool_name": "read_semantic_paper",
+    "description": "Read and extract text content from a Semantic Scholar paper. Args: paper_id: Semantic Scholar paper ID, Paper identifier in one of the following formats: - Semantic Scholar ID (e.g., \"649def34f8be52c8b66281af98ae884c09aef38b\") - DOI:<doi> (e.g., \"DOI:10.18653/v1/N18-3011\") - ARXIV:<id> (e.g., \"ARXIV:2106.15928\") - MAG:<id> (e.g., \"MAG:112218234\") - ACL:<id> (e.g., \"ACL:W12-3903\") - PMID:<id> (e.g., \"PMID:19872477\") - PMCID:<id> (e.g., \"PMCID:2323736\") - URL:<url> (e.g., \"URL:https://arxiv.org/abs/2106.15928v1\") save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_semantic_paper()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_list_tensor_names_001",
+    "tool_name": "list_tensor_names",
+    "description": "Lists the names of all tensors currently stored in the tensor store. Returns: str: A newline-separated list of tensor names.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "list_tensor_names()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_add_matrices_002",
+    "tool_name": "add_matrices",
+    "description": "Adds two stored tensors element-wise. Args: name_a (str): The name of the first tensor. name_b (str): The name of the second tensor. Returns: np.ndarray: The result of element-wise addition. Raises: ValueError: If the tensor names are not found or shapes are incompatible.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "add_matrices()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_subtract_matrices_003",
+    "tool_name": "subtract_matrices",
+    "description": "Adds two stored tensors element-wise. Args: name_a (str): The name of the first tensor. name_b (str): The name of the second tensor. Returns: np.ndarray: The result of element-wise subtraction. Raises: ValueError: If the tensor names are not found or shapes are incompatible.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "subtract_matrices()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_multiply_matrices_004",
+    "tool_name": "multiply_matrices",
+    "description": "Performs matrix multiplication between two stored tensors. Args: name_a (str): The name of the first tensor. name_b (str): The name of the second tensor. Returns: np.ndarray: The result of matrix multiplication. Raises: ValueError: If either tensor is not found or their shapes are incompatible.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "multiply_matrices()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_scale_matrix_005",
+    "tool_name": "scale_matrix",
+    "description": "Scales a stored tensor by a scalar factor. Args: name (str): The name of the tensor to scale. scale_factor (float): The scalar value to multiply the tensor by. in_place (bool): If True, updates the stored tensor; otherwise, returns a new scaled tensor. Returns: np.ndarray: The scaled tensor. Raises: ValueError: If the tensor name is not found in the store.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "scale_matrix()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_matrix_inverse_006",
+    "tool_name": "matrix_inverse",
+    "description": "Computes the inverse of a stored square matrix. Args: name (str): The name of the tensor to invert. Returns: np.ndarray: The inverse of the matrix. Raises: ValueError: If the matrix is not found, is not square, or is singular (non-invertible).",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "matrix_inverse()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_transpose_007",
+    "tool_name": "transpose",
+    "description": "Computes the transpose of a stored tensor. Args: name (str): The name of the tensor to transpose. Returns: np.ndarray: The transposed tensor. Raises: ValueError: If the tensor name is not found in the store.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "transpose()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_determinant_008",
+    "tool_name": "determinant",
+    "description": "Computes the determinant of a stored square matrix. Args: name (str): The name of the matrix. Returns: float: The determinant of the matrix. Raises: ValueError: If the matrix is not found or is not square.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "determinant()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_rank_009",
+    "tool_name": "rank",
+    "description": "Computes the rank of a stored tensor. Args: name (str): The name of the tensor. Returns: int | list[int]: The rank of the matrix. Raises: ValueError: If the tensor name is not found in the store.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "rank()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_compute_eigen_010",
+    "tool_name": "compute_eigen",
+    "description": "Computes the eigenvalues and right eigenvectors of a stored square matrix. Args: name (str): The name of the tensor to analyze. Returns: dict: A dictionary with keys: - 'eigenvalues': np.ndarray - 'eigenvectors': np.ndarray Raises: ValueError: If the tensor is not found or is not a square matrix.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "compute_eigen()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_qr_decompose_011",
+    "tool_name": "qr_decompose",
+    "description": "Computes the QR decomposition of a stored matrix. Decomposes the matrix A into A = Q @ R, where Q is an orthogonal matrix and R is an upper triangular matrix. Args: name (str): The name of the matrix to decompose. Returns: dict: A dictionary with keys: - 'q': np.ndarray, the orthogonal matrix Q - 'r': np.ndarray, the upper triangular matrix R Raises: ValueError: If the matrix is not found or decomposition fails.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "qr_decompose()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_svd_decompose_012",
+    "tool_name": "svd_decompose",
+    "description": "Computes the Singular Value Decomposition (SVD) of a stored matrix. Decomposes the matrix A into A = U @ S @ V^T, where U and V^T are orthogonal matrices, and S is a diagonal matrix of singular values. Args: name (str): The name of the matrix to decompose. Returns: dict: A dictionary with keys: - 'u': np.ndarray, the left singular vectors - 's': np.ndarray, the singular values - 'v_t': np.ndarray, the right singular vectors transposed Raises: ValueError: If the matrix is not found or decomposition fails.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "svd_decompose()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_find_orthonormal_basis_013",
+    "tool_name": "find_orthonormal_basis",
+    "description": "Finds an orthonormal basis for the column space of a stored matrix using QR decomposition. Args: name (str): The name of the matrix. Returns: list[list[float]]: A list of orthonormal basis vectors. Raises: ValueError: If the matrix is not found or decomposition fails.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "find_orthonormal_basis()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_change_basis_014",
+    "tool_name": "change_basis",
+    "description": "Changes the basis of a stored square matrix. Args: name (str): Name of the matrix in the tensor store. new_basis (list[list[float]]): Columns are new basis vectors. Returns: np.ndarray: Representation of the matrix in the new basis. Raises: ValueError: If the matrix name is not found or non-invertible.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "change_basis()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_create_tensor_015",
+    "tool_name": "create_tensor",
+    "description": "Creates a NumPy array (matrix) with a specified shape and values. Args: shape (list[int]): The shape of the resulting array as a tuple(e.g., (2, 3)). values (list[float]): A flat list of values to populate the array. name (str): The name of the tensor to be stored. Returns: np.ndarray: A NumPy array with the specified shape. Raises: ValueError: If the number of values does not match the product of the shape.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "create_tensor()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_view_tensor_016",
+    "tool_name": "view_tensor",
+    "description": "Returns an immutable view of a previously stored NumPy tensor from the in-memory tensor store. Args: name (str): The name of the tensor as stored in the in-store dictionary Returns: dict: The in-store dictionary for tensors",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "view_tensor()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_delete_tensor_017",
+    "tool_name": "delete_tensor",
+    "description": "Deletes a tensor from the in-memory tensor store. Args: name (str): The name of the tensor to delete. Raises: ValueError: If the tensor name is not found in the store or if an error occurs during deletion.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "delete_tensor()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_plot_vector_field_018",
+    "tool_name": "plot_vector_field",
+    "description": "Plots a 3D vector field from a string \"[u(x,y,z), v(x,y,z), w(x,y,z)]\" Args: f_str: string representation of 3D field, e.g. \"[z, -y, x]\". bounds: (xmin, xmax, ymin, ymax, zmin, zmax) n: grid resolution per axis Returns: Displayed Matplotlib 3D quiver plot (no image return needed)",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "plot_vector_field()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_plot_function_019",
+    "tool_name": "plot_function",
+    "description": "Plots a 2D or 3D mathematical function from a symbolic expression string. Args: expr_str: string representation of a function in x or x and y, e.g. \"x**2\" or \"sin(sqrt(x**2 + y**2))\" xlim: (xmin, xmax) range for x-axis ylim: (ymin, ymax) range for y-axis (used in 2D or 3D) grid: resolution of the plot grid Returns: A rendered Image of the function using Matplotlib. - 2D plot if the expression contains only x - 3D surface plot if the expression contains both x and y",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "plot_function()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_vector_project_020",
+    "tool_name": "vector_project",
+    "description": "Projects a stored vector onto another vector. Args: name (str): Name of the stored vector to project. new_vector (list[float]): The vector to project onto. Returns: np.ndarray: The projection result vector. Raises: ValueError: If the vector name is not found or projection fails.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "vector_project()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_vector_dot_product_021",
+    "tool_name": "vector_dot_product",
+    "description": "Computes the dot product between two stored vectors. Args: name_a (str): Name of the first vector in the tensor store. name_b (str): Name of the second vector in the tensor store. Returns: np.ndarray: Scalar result of the dot product. Raises: ValueError: If either vector is not found or if the dot product computation fails.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "vector_dot_product()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_vector_cross_product_022",
+    "tool_name": "vector_cross_product",
+    "description": "Computes the cross product of two stored vectors. Args: name_a (str): Name of the first vector in the tensor store. name_b (str): Name of the second vector in the tensor store. Returns: np.ndarray: Vector result of the cross product. Raises: ValueError: If either vector is not found or if the cross product computation fails.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "vector_cross_product()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_gradient_023",
+    "tool_name": "gradient",
+    "description": "Computes the symbolic gradient of a scalar function. Args: f_str (str): A string representing a scalar function (e.g., \"x**2 + y*z\"). Returns: str: A string representation of the symbolic gradient as a vector.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "gradient()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_curl_024",
+    "tool_name": "curl",
+    "description": "Computes the symbolic curl of a vector field, optionally evaluated at a point. Args: f_str (str): A string representing the vector field in list format (e.g., \"[x+y, x, 2*z]\"). point (list[float], optional): A list of coordinates [x, y, z] to evaluate the curl numerically. Returns: dict: A dictionary with the symbolic curl as a string, and optionally the evaluated vector.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "curl()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_divergence_025",
+    "tool_name": "divergence",
+    "description": "Computes the symbolic divergence of a vector field, optionally evaluated at a point. Args: f_str (str): A string representing the vector field in list format (e.g., \"[x+y, x, 2*z]\"). point (list[float], optional): A list of coordinates [x, y, z] to evaluate the divergence numerically. Returns: dict: A dictionary with the symbolic divergence as a string, and optionally the evaluated scalar.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "divergence()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_laplacian_026",
+    "tool_name": "laplacian",
+    "description": "Computes the Laplacian of a scalar or vector field symbolically. Args: f_str (str): Scalar function as \"x**2 + y*z\" or vector \"[Fx, Fy, Fz]\". is_vector (bool): Set True to compute vector Laplacian. Returns: str: Symbolic result of the Laplacian\u2014scalar or list of 3 components.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "laplacian()"
+    ]
+  },
+  {
+    "tool_id": "scientificcomputing_directional_deriv_027",
+    "tool_name": "directional_deriv",
+    "description": "Computes symbolic directional derivative of scalar field along a vector direction. Args: f_str (str): Expression like \"x*y*z\". u (list[float]): Direction vector [vx, vy, vz]. unit (bool): True if u should be normalized before calculating directional derivative. Set to True by default. Returns: str: Symbolic result as string.",
+    "category": "science",
+    "server": "Scientific Computing",
+    "usage_example": [
+      "directional_deriv()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_current_weather_tool_001",
+    "tool_name": "get_current_weather_tool",
+    "description": "Get current weather information for a specific city. Args: city: Name of the city to get weather for Returns: Current weather data including temperature, conditions, humidity, wind, etc.",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_current_weather_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_weather_forecast_tool_002",
+    "tool_name": "get_weather_forecast_tool",
+    "description": "Get weather forecast for a specific city. Args: city: Name of the city to get forecast for days: Number of days to forecast (1-10, default: 3) Returns: Weather forecast data for the specified number of days",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_weather_forecast_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_search_locations_tool_003",
+    "tool_name": "search_locations_tool",
+    "description": "Search for locations by name. Args: query: Location name or partial name to search for Returns: List of matching locations with their details",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "search_locations_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_live_temp_004",
+    "tool_name": "get_live_temp",
+    "description": "Legacy tool: Get current temperature for a city (for backward compatibility). Use get_current_weather_tool for more detailed information.",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_live_temp()"
+    ]
+  },
+  {
+    "tool_id": "timemcp_get_current_time_001",
+    "tool_name": "get_current_time",
+    "description": "Get current time in a specific timezones",
+    "category": "time",
+    "server": "Time MCP",
+    "usage_example": [
+      "get_current_time()"
+    ]
+  },
+  {
+    "tool_id": "timemcp_convert_time_002",
+    "tool_name": "convert_time",
+    "description": "Convert time between timezones",
+    "category": "time",
+    "server": "Time MCP",
+    "usage_example": [
+      "convert_time()"
+    ]
+  }
+]

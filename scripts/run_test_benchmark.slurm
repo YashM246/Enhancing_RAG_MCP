@@ -44,6 +44,8 @@ mkdir -p data/results
 # Start vLLM Server
 # ============================================================================
 echo "Starting vLLM server..."
+echo "Start time: $(date)"
+
 vllm serve mistralai/Mistral-7B-Instruct-v0.3 \
     --host 0.0.0.0 \
     --port 8000 \
@@ -53,12 +55,50 @@ vllm serve mistralai/Mistral-7B-Instruct-v0.3 \
 
 VLLM_PID=$!
 echo "vLLM PID: $VLLM_PID"
-sleep 120
+
+# Wait for server to start (with health check)
+echo "Waiting for vLLM server to initialize..."
+MAX_WAIT=300  # 5 minutes max wait
+WAIT_INTERVAL=10
+ELAPSED=0
+
+while [ $ELAPSED -lt $MAX_WAIT ]; do
+    sleep $WAIT_INTERVAL
+    ELAPSED=$((ELAPSED + WAIT_INTERVAL))
+
+    # Check if process is still running
+    if ! ps -p $VLLM_PID > /dev/null; then
+        echo "ERROR: vLLM server process died!"
+        echo "Last 50 lines of vLLM log:"
+        tail -50 logs/vllm_test_${SLURM_JOBID}.log
+        exit 1
+    fi
+
+    # Try to connect to server
+    if curl -s http://localhost:8000/v1/models > /dev/null 2>&1; then
+        echo "✓ vLLM server is ready! (waited ${ELAPSED}s)"
+        curl -s http://localhost:8000/v1/models
+        break
+    else
+        echo "  Still waiting... (${ELAPSED}s elapsed)"
+    fi
+done
+
+# Final check
+if [ $ELAPSED -ge $MAX_WAIT ]; then
+    echo "ERROR: vLLM server did not start within ${MAX_WAIT}s"
+    echo "Last 50 lines of vLLM log:"
+    tail -50 logs/vllm_test_${SLURM_JOBID}.log
+    exit 1
+fi
+
+echo "==========================================="
 
 # ============================================================================
 # Run Test Benchmark (5 queries only)
 # ============================================================================
 echo "Running test benchmark (5 queries)..."
+echo "Benchmark start time: $(date)"
 
 python benchmarking/benchmarker.py \
     --server-url http://localhost:8000 \

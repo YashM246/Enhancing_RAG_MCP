@@ -29,7 +29,7 @@ from src.approaches.bm25_llm import BM25LLMApproach
 from src.approaches.llm_hybrid import LLMHybridApproach
 
 # Default configuration (can be overridden by CLI arguments)
-TOOLS_PATH = "data/tools/tools_list.json"
+TOOLS_PATH = "data/tools/tools_corrected.json"
 QUERIES_PATH = "data/queries/mcp_task_description.json"
 K_VALUES = [3]
 EMBEDDING_MODEL = 'all-MiniLM-L6-v2'

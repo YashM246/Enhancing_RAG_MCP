@@ -1,0 +1,20 @@
+{
+  "approach": "bm25_plus_dense",
+  "config": {
+    "model_name": "all-MiniLM-L6-v2",
+    "rrf_k": 60,
+    "num_tools": 280,
+    "num_queries": 56
+  },
+  "metrics": {
+    "accuracy": 0.5178571428571429,
+    "num_correct": 29,
+    "num_queries": 56,
+    "avg_latency_ms": 11.814461085512969,
+    "recall@1": 0.5178571428571429,
+    "recall@3": 0.6071428571428571,
+    "recall@5": 0.7857142857142857,
+    "recall@7": 0.8035714285714286,
+    "mrr": 0.6053571428571428
+  }
+}

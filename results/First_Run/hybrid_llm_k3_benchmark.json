@@ -1,0 +1,25 @@
+{
+  "approach": "llm_hybrid",
+  "config": {
+    "embedding_model": "all-MiniLM-L6-v2",
+    "llm_model": "mistralai/Mistral-7B-Instruct-v0.3",
+    "rrf_k": 60,
+    "retrieval_k": 3,
+    "num_tools": 280,
+    "num_queries": 56
+  },
+  "metrics": {
+    "accuracy": 0.6607142857142857,
+    "num_correct": 37,
+    "num_queries": 56,
+    "avg_latency_ms": 2431.428259903831,
+    "avg_prompt_tokens": 967.1785714285714,
+    "avg_completion_tokens": 185.94642857142858,
+    "avg_total_tokens": 1153.125,
+    "recall@1": 0.4642857142857143,
+    "recall@3": 0.6607142857142857,
+    "recall@5": 0.6607142857142857,
+    "recall@7": 0.6607142857142857,
+    "mrr": 0.550595238095238
+  }
+}

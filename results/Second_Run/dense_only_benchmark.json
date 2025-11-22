@@ -1,0 +1,27 @@
+{
+  "approach": "dense_only",
+  "config": {
+    "model_name": "all-MiniLM-L6-v2",
+    "k_values": [
+      3,
+      5,
+      7
+    ],
+    "batch_size": 8,
+    "num_tools": 280,
+    "num_queries": 56
+  },
+  "metrics": {
+    "accuracy@1": 0.625,
+    "recall@3": 0.7678571428571429,
+    "recall@5": 0.8392857142857143,
+    "recall@7": 0.8571428571428571,
+    "mrr@3": 0.693452380952381,
+    "mrr@5": 0.7104166666666666,
+    "mrr@7": 0.7133928571428572,
+    "mrr": 0.7133928571428572,
+    "avg_retrieval_time_ms": 4.486130816595895,
+    "min_retrieval_time_ms": 4.204034805297852,
+    "max_retrieval_time_ms": 7.419586181640625
+  }
+}

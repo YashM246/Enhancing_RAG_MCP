@@ -1,0 +1,23 @@
+{
+  "approach": "bm25_llm",
+  "config": {
+    "llm_model": "mistralai/Mistral-7B-Instruct-v0.3",
+    "k": 7,
+    "num_tools": 280,
+    "num_queries": 56
+  },
+  "metrics": {
+    "accuracy": 0.5178571428571429,
+    "num_correct": 29,
+    "num_queries": 56,
+    "avg_latency_ms": 2271.0935125069227,
+    "avg_prompt_tokens": 1740.8035714285713,
+    "avg_completion_tokens": 172.28571428571428,
+    "avg_total_tokens": 1913.0892857142858,
+    "recall@1": 0.26785714285714285,
+    "recall@3": 0.4107142857142857,
+    "recall@5": 0.44642857142857145,
+    "recall@7": 0.5178571428571429,
+    "mrr": 0.3473214285714286
+  }
+}

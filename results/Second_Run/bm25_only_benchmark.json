@@ -1,0 +1,18 @@
+{
+  "approach": "bm25_only",
+  "config": {
+    "num_tools": 280,
+    "num_queries": 56
+  },
+  "metrics": {
+    "accuracy": 0.26785714285714285,
+    "num_correct": 15,
+    "num_queries": 56,
+    "avg_latency_ms": 6.97820952960423,
+    "recall@1": 0.26785714285714285,
+    "recall@3": 0.4107142857142857,
+    "recall@5": 0.44642857142857145,
+    "recall@7": 0.5,
+    "mrr": 0.34434523809523815
+  }
+}

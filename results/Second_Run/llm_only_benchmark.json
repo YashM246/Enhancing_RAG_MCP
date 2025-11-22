@@ -1,0 +1,24 @@
+{
+  "approach": "llm_only",
+  "config": {
+    "server_url": "http://localhost:8000",
+    "model_name": "mistralai/Mistral-7B-Instruct-v0.3",
+    "backend": "vllm",
+    "num_tools": 280,
+    "num_queries": 56
+  },
+  "metrics": {
+    "accuracy": 0.0,
+    "num_correct": 0,
+    "num_queries": 56,
+    "avg_latency_ms": 0.0,
+    "avg_prompt_tokens": 0.0,
+    "avg_completion_tokens": 0.0,
+    "avg_total_tokens": 0.0,
+    "recall@1": 0.0,
+    "recall@3": 0.0,
+    "recall@5": 0.0,
+    "recall@7": 0.0,
+    "mrr": 0.0
+  }
+}

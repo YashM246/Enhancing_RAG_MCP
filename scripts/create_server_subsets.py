@@ -87,7 +87,7 @@ def save_json(data: Any, file_path: str) -> None:
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
-    print(f"  ✓ Saved: {file_path}")
+    print(f"  [OK] Saved: {file_path}")
 
 
 def filter_tools(all_tools: List[Dict], selected_servers: List[str]) -> List[Dict]:
@@ -198,7 +198,7 @@ def validate_subset(tools: List[Dict], queries: Dict, selected_servers: List[str
 
     if errors:
         for error in errors:
-            print(f"  ✗ Validation error: {error}")
+            print(f"  [ERROR] Validation error: {error}")
         return False
 
     return True
@@ -270,9 +270,9 @@ def create_subset(
     # Validate
     print("Validating subset...")
     if not validate_subset(filtered_tools, filtered_queries, selected_servers):
-        print("  ✗ Validation failed! Skipping this subset.")
+        print("  [ERROR] Validation failed! Skipping this subset.")
         return
-    print("  ✓ Validation passed")
+    print("  [OK] Validation passed")
 
     # Create filenames with tool and query counts
     tools_filename = f"tools_{subset_size}servers_{stats['num_tools']}tools.json"
@@ -287,17 +287,17 @@ def create_subset(
     save_json(filtered_queries, queries_path)
 
     # Print statistics
-    print(f"\n📊 Subset Statistics:")
-    print(f"  • Servers: {stats['num_servers']}")
-    print(f"  • Tools: {stats['num_tools']}")
-    print(f"  • Queries: {stats['num_queries']}")
-    print(f"  • Avg tools/server: {stats['num_tools'] / stats['num_servers']:.1f}")
-    print(f"  • Avg queries/server: {stats['num_queries'] / stats['num_servers']:.1f}")
+    print(f"\nSubset Statistics:")
+    print(f"  * Servers: {stats['num_servers']}")
+    print(f"  * Tools: {stats['num_tools']}")
+    print(f"  * Queries: {stats['num_queries']}")
+    print(f"  * Avg tools/server: {stats['num_tools'] / stats['num_servers']:.1f}")
+    print(f"  * Avg queries/server: {stats['num_queries'] / stats['num_servers']:.1f}")
 
     if stats['servers_with_no_queries']:
-        print(f"  ⚠ Servers with no queries: {', '.join(stats['servers_with_no_queries'])}")
+        print(f"  [WARNING] Servers with no queries: {', '.join(stats['servers_with_no_queries'])}")
 
-    print(f"\n  ✓ Subset {subset_size} created successfully!")
+    print(f"\n  [OK] Subset {subset_size} created successfully!")
 
 
 def verify_nested_property(subsets: Dict[int, List[str]]) -> bool:
@@ -322,13 +322,13 @@ def verify_nested_property(subsets: Dict[int, List[str]]) -> bool:
 
         if not smaller_set.issubset(larger_set):
             missing = smaller_set - larger_set
-            print(f"  ✗ Subset {smaller_size} is NOT contained in subset {larger_size}")
+            print(f"  [ERROR] Subset {smaller_size} is NOT contained in subset {larger_size}")
             print(f"    Missing servers: {missing}")
             return False
         else:
-            print(f"  ✓ Subset {smaller_size} ⊂ Subset {larger_size}")
+            print(f"  [OK] Subset {smaller_size} is subset of Subset {larger_size}")
 
-    print(f"\n  ✓ All subsets are properly nested!")
+    print(f"\n  [OK] All subsets are properly nested!")
     return True
 
 
@@ -352,12 +352,12 @@ def main():
     all_tools = load_json(str(tools_path))
     all_queries = load_json(str(queries_path))
 
-    print(f"  ✓ Loaded {len(all_tools)} tools")
-    print(f"  ✓ Loaded {len(all_queries.get('server_tasks', []))} server tasks")
+    print(f"  [OK] Loaded {len(all_tools)} tools")
+    print(f"  [OK] Loaded {len(all_queries.get('server_tasks', []))} server tasks")
 
     # Verify nested property
     if not verify_nested_property(SERVER_SUBSETS):
-        print("\n✗ ERROR: Subsets are not properly nested. Fix SERVER_SUBSETS definition.")
+        print("\n[ERROR] Subsets are not properly nested. Fix SERVER_SUBSETS definition.")
         return
 
     # Create each subset
@@ -369,11 +369,11 @@ def main():
     print(f"\n{'='*80}")
     print("Summary")
     print(f"{'='*80}")
-    print(f"✓ Created {len(SERVER_SUBSETS)} server subsets")
-    print(f"✓ Generated {len(SERVER_SUBSETS) * 2} files (5 tool files + 5 query files)")
+    print(f"[OK] Created {len(SERVER_SUBSETS)} server subsets")
+    print(f"[OK] Generated {len(SERVER_SUBSETS) * 2} files (5 tool files + 5 query files)")
     print(f"\nOutput locations:")
-    print(f"  • Tools: data/tools/subsets/")
-    print(f"  • Queries: data/queries/subsets/")
+    print(f"  * Tools: data/tools/subsets/")
+    print(f"  * Queries: data/queries/subsets/")
     print(f"\nNext steps:")
     print(f"  1. Verify file contents")
     print(f"  2. Modify benchmarker.py to accept custom paths")

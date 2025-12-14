@@ -1078,6 +1078,18 @@ def parse_args():
         help="Output directory for results (default: data/results)"
     )
     parser.add_argument(
+        "--tools-path",
+        type=str,
+        default=TOOLS_PATH,
+        help="Path to tools JSON file (default: data/tools/tools_corrected.json)"
+    )
+    parser.add_argument(
+        "--queries-path",
+        type=str,
+        default=QUERIES_PATH,
+        help="Path to queries JSON file (default: data/queries/mcp_task_description.json)"
+    )
+    parser.add_argument(
         "--limit-queries",
         type=int,
         default=LIMIT_QUERIES,
@@ -1102,13 +1114,15 @@ def main():
     args = parse_args()
 
     # Update global configuration with CLI arguments
-    global LLM_SERVER_URL, LLM_MODEL_NAME, LLM_BACKEND, LIMIT_QUERIES, K_VALUES, RETRIEVAL_K
+    global LLM_SERVER_URL, LLM_MODEL_NAME, LLM_BACKEND, LIMIT_QUERIES, K_VALUES, RETRIEVAL_K, TOOLS_PATH, QUERIES_PATH
     LLM_SERVER_URL = args.server_url
     LLM_MODEL_NAME = args.model_name
     LLM_BACKEND = args.backend
     LIMIT_QUERIES = args.limit_queries
     K_VALUES = args.k_values
     RETRIEVAL_K = args.k_values[0]  # Use first k value for retrieval approaches
+    TOOLS_PATH = args.tools_path
+    QUERIES_PATH = args.queries_path
 
     print("\n" + "=" * 80)
     print("RUNNING ALL BENCHMARKS")

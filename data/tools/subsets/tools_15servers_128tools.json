@@ -1,0 +1,1282 @@
+[
+  {
+    "tool_id": "openapiexplorer_getapioverview_001",
+    "tool_name": "getApiOverview",
+    "description": "API identifier, can be a known ID from openapisearch.com or a URL leading to a raw OpenAPI file",
+    "category": "api",
+    "server": "OpenAPI Explorer",
+    "usage_example": [
+      "getApiOverview()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_temperature_001",
+    "tool_name": "convert_temperature",
+    "description": "Convert temperature between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_temperature()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_angle_002",
+    "tool_name": "convert_angle",
+    "description": "Convert angle between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_angle()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_length_003",
+    "tool_name": "convert_length",
+    "description": "Convert length between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_length()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_energy_004",
+    "tool_name": "convert_energy",
+    "description": "Convert energy between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_energy()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_force_005",
+    "tool_name": "convert_force",
+    "description": "Convert force between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_force()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_pressure_006",
+    "tool_name": "convert_pressure",
+    "description": "Convert pressure between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_pressure()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_power_007",
+    "tool_name": "convert_power",
+    "description": "Convert power between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_power()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_speed_008",
+    "tool_name": "convert_speed",
+    "description": "Convert speed between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_speed()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_area_009",
+    "tool_name": "convert_area",
+    "description": "Convert area between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_area()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_mass_010",
+    "tool_name": "convert_mass",
+    "description": "Convert weight between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_mass()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_volume_011",
+    "tool_name": "convert_volume",
+    "description": "Convert volume between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_volume()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_computer_data_012",
+    "tool_name": "convert_computer_data",
+    "description": "Convert computer storage between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_computer_data()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_density_013",
+    "tool_name": "convert_density",
+    "description": "Convert density between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_density()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_time_014",
+    "tool_name": "convert_time",
+    "description": "Convert time between units.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_time()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_convert_batch_015",
+    "tool_name": "convert_batch",
+    "description": "Perform multiple unit conversions in a single batch request. Each request in the batch should contain: - value: The numeric value to convert - from_unit: Source unit for conversion - to_unit: Target unit for conversion - conversion_type: Type of conversion (temperature, length, mass, etc.) - request_id: Optional identifier for tracking individual requests Returns a structured response with individual results for each conversion, including success/failure status and either converted values or error messages.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "convert_batch()"
+    ]
+  },
+  {
+    "tool_id": "unitconverter_list_supported_units_016",
+    "tool_name": "list_supported_units",
+    "description": "List all supported units for each conversion type or for a specific type.",
+    "category": "utilities",
+    "server": "Unit Converter",
+    "usage_example": [
+      "list_supported_units()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_search_001",
+    "tool_name": "search",
+    "description": "Search Wikipedia for articles matching a query.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "search()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_article_002",
+    "tool_name": "article",
+    "description": "Get the full content of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "article()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_003",
+    "tool_name": "summary",
+    "description": "Get a summary of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_for_query_resource_004",
+    "tool_name": "summary_for_query_resource",
+    "description": "Get a summary of a Wikipedia article tailored to a specific query.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary_for_query_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_section_resource_005",
+    "tool_name": "summary_section_resource",
+    "description": "Get a summary of a specific section of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary_section_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_sections_006",
+    "tool_name": "sections",
+    "description": "Get the sections of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "sections()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_links_007",
+    "tool_name": "links",
+    "description": "Get the links in a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "links()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_key_facts_resource_008",
+    "tool_name": "key_facts_resource",
+    "description": "Extract key facts from a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "key_facts_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_get_related_topics_015",
+    "tool_name": "get_related_topics",
+    "description": "Get topics related to a Wikipedia article based on links and categories.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "get_related_topics()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_search_nearby_001",
+    "tool_name": "search_nearby",
+    "description": "Search for nearby places based on location, with optional filtering by keywords, distance, rating, and operating hours",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "search_nearby()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_get_place_details_002",
+    "tool_name": "get_place_details",
+    "description": "Get detailed information about a specific place including contact details, reviews, ratings, and operating hours",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "get_place_details()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_geocode_003",
+    "tool_name": "maps_geocode",
+    "description": "Convert addresses or place names to geographic coordinates (latitude and longitude)",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_geocode()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_reverse_geocode_004",
+    "tool_name": "maps_reverse_geocode",
+    "description": "Convert geographic coordinates (latitude and longitude) to a human-readable address",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_reverse_geocode()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_distance_matrix_005",
+    "tool_name": "maps_distance_matrix",
+    "description": "Calculate travel distances and durations between multiple origins and destinations for different travel modes",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_distance_matrix()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_directions_006",
+    "tool_name": "maps_directions",
+    "description": "Get detailed turn-by-turn navigation directions between two locations with route information",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_directions()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_elevation_007",
+    "tool_name": "maps_elevation",
+    "description": "Get elevation data (height above sea level) for specific geographic locations",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_elevation()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_hexagram_resource_001",
+    "tool_name": "get_hexagram_resource",
+    "description": "Access hexagram information as a resource for context loading. This resource allows AI models to load hexagram data directly into their context for reference during conversations. Args: number: Hexagram number as string (1-64) Returns: Hexagram data formatted for context use with educational framing",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_hexagram_resource()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_iching_database_002",
+    "tool_name": "get_iching_database",
+    "description": "Access the complete I Ching database as a resource. Provides a summary of all 64 hexagrams for context loading, useful when AI models need to reference the complete system. Returns: Complete hexagram database summary with educational context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_iching_database()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_i_ching_divination_003",
+    "tool_name": "i_ching_divination",
+    "description": "Perform I Ching divination using traditional three-coin method. Generates a random hexagram with interpretation for philosophical guidance. Uses cryptographically secure randomness to simulate coin tosses. Args: query: Optional question or context for the divination Returns: Formatted hexagram reading with interpretation and ethical disclaimer",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "i_ching_divination()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_bibliomantic_consultation_004",
+    "tool_name": "bibliomantic_consultation",
+    "description": "Perform bibliomantic consultation following Philip K. Dick's approach. Augments your query with I Ching wisdom, creating a bridge between your specific question and ancient guidance, as described in \"The Man in the High Castle\". Args: query: The question or situation requiring guidance Returns: Complete bibliomantic consultation with hexagram wisdom and ethical context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "bibliomantic_consultation()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_hexagram_details_005",
+    "tool_name": "get_hexagram_details",
+    "description": "Get detailed information about a specific I Ching hexagram. Provides the traditional name and interpretation for any of the 64 hexagrams in the I Ching (Book of Changes). Args: hexagram_number: The hexagram number (1-64) Returns: Detailed hexagram information with educational context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_hexagram_details()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_server_statistics_006",
+    "tool_name": "server_statistics",
+    "description": "Get bibliomantic server statistics and system information. Provides information about the server's capabilities, the I Ching database, and divination system status. Returns: Complete server statistics and system information with ethical context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "server_statistics()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_get_car_brands_001",
+    "tool_name": "get_car_brands",
+    "description": "Get all available car brands from FIPE API. Returns: List of car brands with their codes and names",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "get_car_brands()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_search_car_price_002",
+    "tool_name": "search_car_price",
+    "description": "Search for car models and prices by brand name. Args: brand_name: The car brand name to search for (e.g., \"Toyota\", \"Honda\", \"Ford\") Returns: Car models with current market prices from FIPE database",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "search_car_price()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_get_vehicles_by_type_003",
+    "tool_name": "get_vehicles_by_type",
+    "description": "Get vehicles by type (cars, motorcycles, trucks). Args: vehicle_type: Type of vehicles to fetch (\"carros\"/\"cars\", \"motos\"/\"motorcycles\", \"caminhoes\"/\"trucks\") Returns: List of vehicle brands for the specified type",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "get_vehicles_by_type()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getnetworks_001",
+    "tool_name": "getNetworks",
+    "description": "REQUIRED FIRST STEP: Get all supported blockchain networks. Always call this first to see available networks before using any network-specific functions. Returns network IDs like \"ethereum\", \"solana\", etc.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getNetworks()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getnetworkdexes_002",
+    "tool_name": "getNetworkDexes",
+    "description": "Get available DEXes on a specific network. First call getNetworks to see valid network IDs.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getNetworkDexes()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getnetworkpools_003",
+    "tool_name": "getNetworkPools",
+    "description": "PRIMARY POOL FUNCTION: Get top liquidity pools on a specific network. This is the MAIN way to get pool data - there is NO global pools function. Use this instead of any \"getTopPools\" or \"getAllPools\" concepts.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getNetworkPools()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getdexpools_004",
+    "tool_name": "getDexPools",
+    "description": "Get pools from a specific DEX on a network. First use getNetworks, then getNetworkDexes to find valid DEX IDs.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getDexPools()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getpooldetails_005",
+    "tool_name": "getPoolDetails",
+    "description": "Get detailed information about a specific pool. Requires network ID from getNetworks and a pool address.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getPoolDetails()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_gettokendetails_006",
+    "tool_name": "getTokenDetails",
+    "description": "Get detailed information about a specific token on a network. First use getNetworks to get valid network IDs.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getTokenDetails()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_gettokenpools_007",
+    "tool_name": "getTokenPools",
+    "description": "Get liquidity pools containing a specific token on a network. Great for finding where a token is traded.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getTokenPools()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getpoolohlcv_008",
+    "tool_name": "getPoolOHLCV",
+    "description": "Get historical price data (OHLCV) for a pool - essential for price analysis, backtesting, and visualization. Requires network and pool address.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getPoolOHLCV()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getpooltransactions_009",
+    "tool_name": "getPoolTransactions",
+    "description": "Get recent transactions for a specific pool. Shows swaps, adds, removes. Requires network and pool address.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getPoolTransactions()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_search_010",
+    "tool_name": "search",
+    "description": "Search across ALL networks for tokens, pools, and DEXes by name, symbol, or address. Good starting point when you don\\",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "search()"
+    ]
+  },
+  {
+    "tool_id": "dexpaprika_getstats_011",
+    "tool_name": "getStats",
+    "description": "Get high-level statistics about the DexPaprika ecosystem: total networks, DEXes, pools, and tokens available.",
+    "category": "crypto",
+    "server": "DEX Paprika",
+    "usage_example": [
+      "getStats()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_trending_games_001",
+    "tool_name": "get_steam_trending_games",
+    "description": "Get real trending games from Steam platform with live data from multiple sources.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_top_sellers_002",
+    "tool_name": "get_steam_top_sellers",
+    "description": "Get real top selling games from Steam platform with live sales data.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_top_sellers()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_most_played_003",
+    "tool_name": "get_steam_most_played",
+    "description": "Get real-time most played games from Steam with live player statistics from SteamCharts.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_most_played()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_epic_free_games_004",
+    "tool_name": "get_epic_free_games",
+    "description": "Get current and upcoming free games from Epic Games Store with real promotion data.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_epic_free_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_epic_trending_games_005",
+    "tool_name": "get_epic_trending_games",
+    "description": "Get trending games from Epic Games Store.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_epic_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_all_trending_games_006",
+    "tool_name": "get_all_trending_games",
+    "description": "Get comprehensive real-time gaming data from all platforms (Steam and Epic Games).",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_all_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_api_health_007",
+    "tool_name": "get_api_health",
+    "description": "Check the health status of the Gaming Trend Analytics API.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_api_health()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_react_usage_guide_001",
+    "tool_name": "React Usage Guide",
+    "description": "React implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "React Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_vue_usage_guide_002",
+    "tool_name": "Vue Usage Guide",
+    "description": "Vue implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Vue Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_angular_usage_guide_003",
+    "tool_name": "Angular Usage Guide",
+    "description": "Angular implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Angular Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_svelte_usage_guide_004",
+    "tool_name": "Svelte Usage Guide",
+    "description": "Svelte implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Svelte Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_react_native_usage_guide_005",
+    "tool_name": "React Native Usage Guide",
+    "description": "React Native implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "React Native Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_flutter_usage_guide_006",
+    "tool_name": "Flutter Usage Guide",
+    "description": "Flutter implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Flutter Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_icons_index_007",
+    "tool_name": "Icons Index",
+    "description": "Complete index of all Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Icons Index()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_list_icons_008",
+    "tool_name": "list_icons",
+    "description": "Get a list of all available Hugeicons icons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "list_icons()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_search_icons_009",
+    "tool_name": "search_icons",
+    "description": "Search for icons by name or tags. Use commas to search for multiple icons (e.g. 'home, notification, settings')",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "search_icons()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_get_platform_usage_010",
+    "tool_name": "get_platform_usage",
+    "description": "Get platform-specific usage instructions for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "get_platform_usage()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_search_models_001",
+    "tool_name": "search-models",
+    "description": "Search for models on Hugging Face Hub",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "search-models()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_model_info_002",
+    "tool_name": "get-model-info",
+    "description": "Get detailed information about a specific model",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-model-info()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_search_datasets_003",
+    "tool_name": "search-datasets",
+    "description": "Search for datasets on Hugging Face Hub",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "search-datasets()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_dataset_info_004",
+    "tool_name": "get-dataset-info",
+    "description": "Get detailed information about a specific dataset",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-dataset-info()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_search_spaces_005",
+    "tool_name": "search-spaces",
+    "description": "Search for Spaces on Hugging Face Hub",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "search-spaces()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_space_info_006",
+    "tool_name": "get-space-info",
+    "description": "Get detailed information about a specific Space",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-space-info()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_paper_info_007",
+    "tool_name": "get-paper-info",
+    "description": "Get information about a specific paper on Hugging Face",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-paper-info()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_daily_papers_008",
+    "tool_name": "get-daily-papers",
+    "description": "Get the list of daily papers curated by Hugging Face",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-daily-papers()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_search_collections_009",
+    "tool_name": "search-collections",
+    "description": "Search for collections on Hugging Face Hub",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "search-collections()"
+    ]
+  },
+  {
+    "tool_id": "huggingface_get_collection_info_010",
+    "tool_name": "get-collection-info",
+    "description": "Get detailed information about a specific collection",
+    "category": "ml",
+    "server": "Hugging Face",
+    "usage_example": [
+      "get-collection-info()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_search_001",
+    "tool_name": "nixos_search",
+    "description": "Search NixOS packages, options, or programs. Args: query: Search term to look for search_type: Type of search - \"packages\", \"options\", \"programs\", or \"flakes\" limit: Maximum number of results to return (1-100) channel: NixOS channel to search in (e.g., \"unstable\", \"stable\", \"25.05\") Returns: Plain text results with bullet points or error message",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_search()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_channels_003",
+    "tool_name": "nixos_channels",
+    "description": "List available NixOS channels with their status. Returns: Plain text list showing channel names, versions, and availability",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_channels()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_stats_004",
+    "tool_name": "nixos_stats",
+    "description": "Get NixOS statistics for a channel. Args: channel: NixOS channel to get stats for (e.g., \"unstable\", \"stable\", \"25.05\") Returns: Plain text statistics including package/option counts",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_stats()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_search_005",
+    "tool_name": "home_manager_search",
+    "description": "Search Home Manager configuration options. Searches through available Home Manager options by name and description. Args: query: The search query string to match against option names and descriptions limit: Maximum number of results to return (default: 20, max: 100) Returns: Plain text list of matching options with name, type, and description",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_search()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_info_006",
+    "tool_name": "home_manager_info",
+    "description": "Get detailed information about a specific Home Manager option. Requires an exact option name match. If not found, suggests similar options. Args: name: The exact option name (e.g., 'programs.git.enable') Returns: Plain text with option details (name, type, description) or error with suggestions",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_info()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_stats_007",
+    "tool_name": "home_manager_stats",
+    "description": "Get statistics about Home Manager options. Retrieves overall statistics including total options, categories, and top categories. Returns: Plain text summary with total options, category count, and top 5 categories",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_stats()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_list_options_008",
+    "tool_name": "home_manager_list_options",
+    "description": "List all Home Manager option categories. Enumerates all top-level categories with their option counts. Returns: Plain text list of categories sorted alphabetically with option counts",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_list_options()"
+    ]
+  },
+  {
+    "tool_id": "nixos_home_manager_options_by_prefix_009",
+    "tool_name": "home_manager_options_by_prefix",
+    "description": "Get Home Manager options matching a specific prefix. Useful for browsing options under a category or finding exact option names. Args: option_prefix: The prefix to match (e.g., 'programs.git' or 'services') Returns: Plain text list of options with the given prefix, including descriptions",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "home_manager_options_by_prefix()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_search_010",
+    "tool_name": "darwin_search",
+    "description": "Search nix-darwin (macOS) configuration options. Searches through available nix-darwin options by name and description. Args: query: The search query string to match against option names and descriptions limit: Maximum number of results to return (default: 20, max: 100) Returns: Plain text list of matching options with name, type, and description",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_search()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_info_011",
+    "tool_name": "darwin_info",
+    "description": "Get detailed information about a specific nix-darwin option. Requires an exact option name match. If not found, suggests similar options. Args: name: The exact option name (e.g., 'system.defaults.dock.autohide') Returns: Plain text with option details (name, type, description) or error with suggestions",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_info()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_stats_012",
+    "tool_name": "darwin_stats",
+    "description": "Get statistics about nix-darwin options. Retrieves overall statistics including total options, categories, and top categories. Returns: Plain text summary with total options, category count, and top 5 categories",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_stats()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_list_options_013",
+    "tool_name": "darwin_list_options",
+    "description": "List all nix-darwin option categories. Enumerates all top-level categories with their option counts. Returns: Plain text list of categories sorted alphabetically with option counts",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_list_options()"
+    ]
+  },
+  {
+    "tool_id": "nixos_darwin_options_by_prefix_014",
+    "tool_name": "darwin_options_by_prefix",
+    "description": "Get nix-darwin options matching a specific prefix. Useful for browsing options under a category or finding exact option names. Args: option_prefix: The prefix to match (e.g., 'system.defaults' or 'services') Returns: Plain text list of options with the given prefix, including descriptions",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "darwin_options_by_prefix()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_flakes_stats_015",
+    "tool_name": "nixos_flakes_stats",
+    "description": "Get statistics about available NixOS flakes. Retrieves statistics from the flake search index including total packages, unique repositories, flake types, and top contributors. Returns: Plain text summary with flake statistics and top contributors",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_flakes_stats()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixos_flakes_search_016",
+    "tool_name": "nixos_flakes_search",
+    "description": "Search NixOS flakes by name, description, owner, or repository. Searches the flake index for community-contributed packages and configurations. Flakes are indexed separately from official packages. Args: query: The search query (flake name, description, owner, or repository) limit: Maximum number of results to return (default: 20, max: 100) channel: Ignored - flakes use a separate indexing system Returns: Plain text list of unique flakes with their packages and metadata",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixos_flakes_search()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixhub_package_versions_017",
+    "tool_name": "nixhub_package_versions",
+    "description": "Get version history and nixpkgs commit hashes for a specific package from NixHub.io. Use this tool when users need specific package versions or commit hashes for reproducible builds. Args: package_name: Name of the package to query (e.g., \"firefox\", \"python\") limit: Maximum number of versions to return (default: 10, max: 50) Returns: Plain text with package info and version history including commit hashes",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixhub_package_versions()"
+    ]
+  },
+  {
+    "tool_id": "nixos_nixhub_find_version_018",
+    "tool_name": "nixhub_find_version",
+    "description": "Find a specific version of a package in NixHub with smart search. Automatically searches with increasing limits to find the requested version. Args: package_name: Name of the package to query (e.g., \"ruby\", \"python\") version: Specific version to find (e.g., \"2.6.7\", \"3.5.9\") Returns: Plain text with version info and commit hash if found, or helpful message if not",
+    "category": "devops",
+    "server": "NixOS",
+    "usage_example": [
+      "nixhub_find_version()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_findparks_001",
+    "tool_name": "findParks",
+    "description": "Search for national parks based on state, name, activities, or other criteria",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "findParks()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getparkdetails_002",
+    "tool_name": "getParkDetails",
+    "description": "Get detailed information about a specific national park",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getParkDetails()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getalerts_003",
+    "tool_name": "getAlerts",
+    "description": "Get current alerts for national parks including closures, hazards, and important information",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getAlerts()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getvisitorcenters_004",
+    "tool_name": "getVisitorCenters",
+    "description": "Get information about visitor centers and their operating hours",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getVisitorCenters()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getcampgrounds_005",
+    "tool_name": "getCampgrounds",
+    "description": "Get information about available campgrounds and their amenities",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getCampgrounds()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getevents_006",
+    "tool_name": "getEvents",
+    "description": "Find upcoming events at parks",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getEvents()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_arxiv_001",
+    "tool_name": "search_arxiv",
+    "description": "Search academic papers from arXiv. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_arxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_pubmed_002",
+    "tool_name": "search_pubmed",
+    "description": "Search academic papers from PubMed. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_pubmed()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_biorxiv_003",
+    "tool_name": "search_biorxiv",
+    "description": "Search academic papers from bioRxiv. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_biorxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_medrxiv_004",
+    "tool_name": "search_medrxiv",
+    "description": "Search academic papers from medRxiv. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_medrxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_google_scholar_005",
+    "tool_name": "search_google_scholar",
+    "description": "Search academic papers from Google Scholar. Args: query: Search query string (e.g., 'machine learning'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_google_scholar()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_iacr_006",
+    "tool_name": "search_iacr",
+    "description": "Search academic papers from IACR ePrint Archive. Args: query: Search query string (e.g., 'cryptography', 'secret sharing'). max_results: Maximum number of papers to return (default: 10). fetch_details: Whether to fetch detailed information for each paper (default: True). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_iacr()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_arxiv_007",
+    "tool_name": "download_arxiv",
+    "description": "Download PDF of an arXiv paper. Args: paper_id: arXiv paper ID (e.g., '2106.12345'). save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_arxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_pubmed_008",
+    "tool_name": "download_pubmed",
+    "description": "Attempt to download PDF of a PubMed paper. Args: paper_id: PubMed ID (PMID). save_path: Directory to save the PDF (default: './downloads'). Returns: str: Message indicating that direct PDF download is not supported.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_pubmed()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_biorxiv_009",
+    "tool_name": "download_biorxiv",
+    "description": "Download PDF of a bioRxiv paper. Args: paper_id: bioRxiv DOI. save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_biorxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_medrxiv_010",
+    "tool_name": "download_medrxiv",
+    "description": "Download PDF of a medRxiv paper. Args: paper_id: medRxiv DOI. save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_medrxiv()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_iacr_011",
+    "tool_name": "download_iacr",
+    "description": "Download PDF of an IACR ePrint paper. Args: paper_id: IACR paper ID (e.g., '2009/101'). save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_iacr()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_arxiv_paper_012",
+    "tool_name": "read_arxiv_paper",
+    "description": "Read and extract text content from an arXiv paper PDF. Args: paper_id: arXiv paper ID (e.g., '2106.12345'). save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_arxiv_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_pubmed_paper_013",
+    "tool_name": "read_pubmed_paper",
+    "description": "Read and extract text content from a PubMed paper. Args: paper_id: PubMed ID (PMID). save_path: Directory where the PDF would be saved (unused). Returns: str: Message indicating that direct paper reading is not supported.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_pubmed_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_biorxiv_paper_014",
+    "tool_name": "read_biorxiv_paper",
+    "description": "Read and extract text content from a bioRxiv paper PDF. Args: paper_id: bioRxiv DOI. save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_biorxiv_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_medrxiv_paper_015",
+    "tool_name": "read_medrxiv_paper",
+    "description": "Read and extract text content from a medRxiv paper PDF. Args: paper_id: medRxiv DOI. save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_medrxiv_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_iacr_paper_016",
+    "tool_name": "read_iacr_paper",
+    "description": "Read and extract text content from an IACR ePrint paper PDF. Args: paper_id: IACR paper ID (e.g., '2009/101'). save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_iacr_paper()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_search_semantic_017",
+    "tool_name": "search_semantic",
+    "description": "Search academic papers from Semantic Scholar. Args: query: Search query string (e.g., 'machine learning'). year: Optional year filter (e.g., '2019', '2016-2020', '2010-', '-2015'). max_results: Maximum number of papers to return (default: 10). Returns: List of paper metadata in dictionary format.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "search_semantic()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_download_semantic_018",
+    "tool_name": "download_semantic",
+    "description": "Download PDF of a Semantic Scholar paper. Args: paper_id: Semantic Scholar paper ID, Paper identifier in one of the following formats: - Semantic Scholar ID (e.g., \"649def34f8be52c8b66281af98ae884c09aef38b\") - DOI:<doi> (e.g., \"DOI:10.18653/v1/N18-3011\") - ARXIV:<id> (e.g., \"ARXIV:2106.15928\") - MAG:<id> (e.g., \"MAG:112218234\") - ACL:<id> (e.g., \"ACL:W12-3903\") - PMID:<id> (e.g., \"PMID:19872477\") - PMCID:<id> (e.g., \"PMCID:2323736\") - URL:<url> (e.g., \"URL:https://arxiv.org/abs/2106.15928v1\") save_path: Directory to save the PDF (default: './downloads'). Returns: Path to the downloaded PDF file.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "download_semantic()"
+    ]
+  },
+  {
+    "tool_id": "papersearch_read_semantic_paper_019",
+    "tool_name": "read_semantic_paper",
+    "description": "Read and extract text content from a Semantic Scholar paper. Args: paper_id: Semantic Scholar paper ID, Paper identifier in one of the following formats: - Semantic Scholar ID (e.g., \"649def34f8be52c8b66281af98ae884c09aef38b\") - DOI:<doi> (e.g., \"DOI:10.18653/v1/N18-3011\") - ARXIV:<id> (e.g., \"ARXIV:2106.15928\") - MAG:<id> (e.g., \"MAG:112218234\") - ACL:<id> (e.g., \"ACL:W12-3903\") - PMID:<id> (e.g., \"PMID:19872477\") - PMCID:<id> (e.g., \"PMCID:2323736\") - URL:<url> (e.g., \"URL:https://arxiv.org/abs/2106.15928v1\") save_path: Directory where the PDF is/will be saved (default: './downloads'). Returns: str: The extracted text content of the paper.",
+    "category": "research",
+    "server": "Paper Search",
+    "usage_example": [
+      "read_semantic_paper()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_current_weather_tool_001",
+    "tool_name": "get_current_weather_tool",
+    "description": "Get current weather information for a specific city. Args: city: Name of the city to get weather for Returns: Current weather data including temperature, conditions, humidity, wind, etc.",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_current_weather_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_weather_forecast_tool_002",
+    "tool_name": "get_weather_forecast_tool",
+    "description": "Get weather forecast for a specific city. Args: city: Name of the city to get forecast for days: Number of days to forecast (1-10, default: 3) Returns: Weather forecast data for the specified number of days",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_weather_forecast_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_search_locations_tool_003",
+    "tool_name": "search_locations_tool",
+    "description": "Search for locations by name. Args: query: Location name or partial name to search for Returns: List of matching locations with their details",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "search_locations_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_live_temp_004",
+    "tool_name": "get_live_temp",
+    "description": "Legacy tool: Get current temperature for a city (for backward compatibility). Use get_current_weather_tool for more detailed information.",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_live_temp()"
+    ]
+  },
+  {
+    "tool_id": "timemcp_get_current_time_001",
+    "tool_name": "get_current_time",
+    "description": "Get current time in a specific timezones",
+    "category": "time",
+    "server": "Time MCP",
+    "usage_example": [
+      "get_current_time()"
+    ]
+  },
+  {
+    "tool_id": "timemcp_convert_time_002",
+    "tool_name": "convert_time",
+    "description": "Convert time between timezones",
+    "category": "time",
+    "server": "Time MCP",
+    "usage_example": [
+      "convert_time()"
+    ]
+  }
+]

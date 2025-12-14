@@ -1,0 +1,162 @@
+[
+  {
+    "tool_id": "openapiexplorer_getapioverview_001",
+    "tool_name": "getApiOverview",
+    "description": "API identifier, can be a known ID from openapisearch.com or a URL leading to a raw OpenAPI file",
+    "category": "api",
+    "server": "OpenAPI Explorer",
+    "usage_example": [
+      "getApiOverview()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_hexagram_resource_001",
+    "tool_name": "get_hexagram_resource",
+    "description": "Access hexagram information as a resource for context loading. This resource allows AI models to load hexagram data directly into their context for reference during conversations. Args: number: Hexagram number as string (1-64) Returns: Hexagram data formatted for context use with educational framing",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_hexagram_resource()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_iching_database_002",
+    "tool_name": "get_iching_database",
+    "description": "Access the complete I Ching database as a resource. Provides a summary of all 64 hexagrams for context loading, useful when AI models need to reference the complete system. Returns: Complete hexagram database summary with educational context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_iching_database()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_i_ching_divination_003",
+    "tool_name": "i_ching_divination",
+    "description": "Perform I Ching divination using traditional three-coin method. Generates a random hexagram with interpretation for philosophical guidance. Uses cryptographically secure randomness to simulate coin tosses. Args: query: Optional question or context for the divination Returns: Formatted hexagram reading with interpretation and ethical disclaimer",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "i_ching_divination()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_bibliomantic_consultation_004",
+    "tool_name": "bibliomantic_consultation",
+    "description": "Perform bibliomantic consultation following Philip K. Dick's approach. Augments your query with I Ching wisdom, creating a bridge between your specific question and ancient guidance, as described in \"The Man in the High Castle\". Args: query: The question or situation requiring guidance Returns: Complete bibliomantic consultation with hexagram wisdom and ethical context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "bibliomantic_consultation()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_hexagram_details_005",
+    "tool_name": "get_hexagram_details",
+    "description": "Get detailed information about a specific I Ching hexagram. Provides the traditional name and interpretation for any of the 64 hexagrams in the I Ching (Book of Changes). Args: hexagram_number: The hexagram number (1-64) Returns: Detailed hexagram information with educational context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_hexagram_details()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_server_statistics_006",
+    "tool_name": "server_statistics",
+    "description": "Get bibliomantic server statistics and system information. Provides information about the server's capabilities, the I Ching database, and divination system status. Returns: Complete server statistics and system information with ethical context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "server_statistics()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_get_car_brands_001",
+    "tool_name": "get_car_brands",
+    "description": "Get all available car brands from FIPE API. Returns: List of car brands with their codes and names",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "get_car_brands()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_search_car_price_002",
+    "tool_name": "search_car_price",
+    "description": "Search for car models and prices by brand name. Args: brand_name: The car brand name to search for (e.g., \"Toyota\", \"Honda\", \"Ford\") Returns: Car models with current market prices from FIPE database",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "search_car_price()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_get_vehicles_by_type_003",
+    "tool_name": "get_vehicles_by_type",
+    "description": "Get vehicles by type (cars, motorcycles, trucks). Args: vehicle_type: Type of vehicles to fetch (\"carros\"/\"cars\", \"motos\"/\"motorcycles\", \"caminhoes\"/\"trucks\") Returns: List of vehicle brands for the specified type",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "get_vehicles_by_type()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_current_weather_tool_001",
+    "tool_name": "get_current_weather_tool",
+    "description": "Get current weather information for a specific city. Args: city: Name of the city to get weather for Returns: Current weather data including temperature, conditions, humidity, wind, etc.",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_current_weather_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_weather_forecast_tool_002",
+    "tool_name": "get_weather_forecast_tool",
+    "description": "Get weather forecast for a specific city. Args: city: Name of the city to get forecast for days: Number of days to forecast (1-10, default: 3) Returns: Weather forecast data for the specified number of days",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_weather_forecast_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_search_locations_tool_003",
+    "tool_name": "search_locations_tool",
+    "description": "Search for locations by name. Args: query: Location name or partial name to search for Returns: List of matching locations with their details",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "search_locations_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_live_temp_004",
+    "tool_name": "get_live_temp",
+    "description": "Legacy tool: Get current temperature for a city (for backward compatibility). Use get_current_weather_tool for more detailed information.",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_live_temp()"
+    ]
+  },
+  {
+    "tool_id": "timemcp_get_current_time_001",
+    "tool_name": "get_current_time",
+    "description": "Get current time in a specific timezones",
+    "category": "time",
+    "server": "Time MCP",
+    "usage_example": [
+      "get_current_time()"
+    ]
+  },
+  {
+    "tool_id": "timemcp_convert_time_002",
+    "tool_name": "convert_time",
+    "description": "Convert time between timezones",
+    "category": "time",
+    "server": "Time MCP",
+    "usage_example": [
+      "convert_time()"
+    ]
+  }
+]

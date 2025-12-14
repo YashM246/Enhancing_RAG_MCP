@@ -1,0 +1,552 @@
+[
+  {
+    "tool_id": "openapiexplorer_getapioverview_001",
+    "tool_name": "getApiOverview",
+    "description": "API identifier, can be a known ID from openapisearch.com or a URL leading to a raw OpenAPI file",
+    "category": "api",
+    "server": "OpenAPI Explorer",
+    "usage_example": [
+      "getApiOverview()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_search_001",
+    "tool_name": "search",
+    "description": "Search Wikipedia for articles matching a query.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "search()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_article_002",
+    "tool_name": "article",
+    "description": "Get the full content of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "article()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_003",
+    "tool_name": "summary",
+    "description": "Get a summary of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_for_query_resource_004",
+    "tool_name": "summary_for_query_resource",
+    "description": "Get a summary of a Wikipedia article tailored to a specific query.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary_for_query_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_summary_section_resource_005",
+    "tool_name": "summary_section_resource",
+    "description": "Get a summary of a specific section of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "summary_section_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_sections_006",
+    "tool_name": "sections",
+    "description": "Get the sections of a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "sections()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_links_007",
+    "tool_name": "links",
+    "description": "Get the links in a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "links()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_key_facts_resource_008",
+    "tool_name": "key_facts_resource",
+    "description": "Extract key facts from a Wikipedia article.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "key_facts_resource()"
+    ]
+  },
+  {
+    "tool_id": "wikipedia_get_related_topics_015",
+    "tool_name": "get_related_topics",
+    "description": "Get topics related to a Wikipedia article based on links and categories.",
+    "category": "reference",
+    "server": "Wikipedia",
+    "usage_example": [
+      "get_related_topics()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_search_nearby_001",
+    "tool_name": "search_nearby",
+    "description": "Search for nearby places based on location, with optional filtering by keywords, distance, rating, and operating hours",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "search_nearby()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_get_place_details_002",
+    "tool_name": "get_place_details",
+    "description": "Get detailed information about a specific place including contact details, reviews, ratings, and operating hours",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "get_place_details()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_geocode_003",
+    "tool_name": "maps_geocode",
+    "description": "Convert addresses or place names to geographic coordinates (latitude and longitude)",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_geocode()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_reverse_geocode_004",
+    "tool_name": "maps_reverse_geocode",
+    "description": "Convert geographic coordinates (latitude and longitude) to a human-readable address",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_reverse_geocode()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_distance_matrix_005",
+    "tool_name": "maps_distance_matrix",
+    "description": "Calculate travel distances and durations between multiple origins and destinations for different travel modes",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_distance_matrix()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_directions_006",
+    "tool_name": "maps_directions",
+    "description": "Get detailed turn-by-turn navigation directions between two locations with route information",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_directions()"
+    ]
+  },
+  {
+    "tool_id": "googlemaps_maps_elevation_007",
+    "tool_name": "maps_elevation",
+    "description": "Get elevation data (height above sea level) for specific geographic locations",
+    "category": "maps",
+    "server": "Google Maps",
+    "usage_example": [
+      "maps_elevation()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_hexagram_resource_001",
+    "tool_name": "get_hexagram_resource",
+    "description": "Access hexagram information as a resource for context loading. This resource allows AI models to load hexagram data directly into their context for reference during conversations. Args: number: Hexagram number as string (1-64) Returns: Hexagram data formatted for context use with educational framing",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_hexagram_resource()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_iching_database_002",
+    "tool_name": "get_iching_database",
+    "description": "Access the complete I Ching database as a resource. Provides a summary of all 64 hexagrams for context loading, useful when AI models need to reference the complete system. Returns: Complete hexagram database summary with educational context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_iching_database()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_i_ching_divination_003",
+    "tool_name": "i_ching_divination",
+    "description": "Perform I Ching divination using traditional three-coin method. Generates a random hexagram with interpretation for philosophical guidance. Uses cryptographically secure randomness to simulate coin tosses. Args: query: Optional question or context for the divination Returns: Formatted hexagram reading with interpretation and ethical disclaimer",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "i_ching_divination()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_bibliomantic_consultation_004",
+    "tool_name": "bibliomantic_consultation",
+    "description": "Perform bibliomantic consultation following Philip K. Dick's approach. Augments your query with I Ching wisdom, creating a bridge between your specific question and ancient guidance, as described in \"The Man in the High Castle\". Args: query: The question or situation requiring guidance Returns: Complete bibliomantic consultation with hexagram wisdom and ethical context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "bibliomantic_consultation()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_get_hexagram_details_005",
+    "tool_name": "get_hexagram_details",
+    "description": "Get detailed information about a specific I Ching hexagram. Provides the traditional name and interpretation for any of the 64 hexagrams in the I Ching (Book of Changes). Args: hexagram_number: The hexagram number (1-64) Returns: Detailed hexagram information with educational context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "get_hexagram_details()"
+    ]
+  },
+  {
+    "tool_id": "bibliomantic_server_statistics_006",
+    "tool_name": "server_statistics",
+    "description": "Get bibliomantic server statistics and system information. Provides information about the server's capabilities, the I Ching database, and divination system status. Returns: Complete server statistics and system information with ethical context",
+    "category": "literature",
+    "server": "Bibliomantic",
+    "usage_example": [
+      "server_statistics()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_get_car_brands_001",
+    "tool_name": "get_car_brands",
+    "description": "Get all available car brands from FIPE API. Returns: List of car brands with their codes and names",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "get_car_brands()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_search_car_price_002",
+    "tool_name": "search_car_price",
+    "description": "Search for car models and prices by brand name. Args: brand_name: The car brand name to search for (e.g., \"Toyota\", \"Honda\", \"Ford\") Returns: Car models with current market prices from FIPE database",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "search_car_price()"
+    ]
+  },
+  {
+    "tool_id": "carpriceevaluator_get_vehicles_by_type_003",
+    "tool_name": "get_vehicles_by_type",
+    "description": "Get vehicles by type (cars, motorcycles, trucks). Args: vehicle_type: Type of vehicles to fetch (\"carros\"/\"cars\", \"motos\"/\"motorcycles\", \"caminhoes\"/\"trucks\") Returns: List of vehicle brands for the specified type",
+    "category": "automotive",
+    "server": "Car Price Evaluator",
+    "usage_example": [
+      "get_vehicles_by_type()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_trending_games_001",
+    "tool_name": "get_steam_trending_games",
+    "description": "Get real trending games from Steam platform with live data from multiple sources.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_top_sellers_002",
+    "tool_name": "get_steam_top_sellers",
+    "description": "Get real top selling games from Steam platform with live sales data.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_top_sellers()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_steam_most_played_003",
+    "tool_name": "get_steam_most_played",
+    "description": "Get real-time most played games from Steam with live player statistics from SteamCharts.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_steam_most_played()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_epic_free_games_004",
+    "tool_name": "get_epic_free_games",
+    "description": "Get current and upcoming free games from Epic Games Store with real promotion data.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_epic_free_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_epic_trending_games_005",
+    "tool_name": "get_epic_trending_games",
+    "description": "Get trending games from Epic Games Store.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_epic_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_all_trending_games_006",
+    "tool_name": "get_all_trending_games",
+    "description": "Get comprehensive real-time gaming data from all platforms (Steam and Epic Games).",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_all_trending_games()"
+    ]
+  },
+  {
+    "tool_id": "gametrends_get_api_health_007",
+    "tool_name": "get_api_health",
+    "description": "Check the health status of the Gaming Trend Analytics API.",
+    "category": "gaming",
+    "server": "Game Trends",
+    "usage_example": [
+      "get_api_health()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_react_usage_guide_001",
+    "tool_name": "React Usage Guide",
+    "description": "React implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "React Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_vue_usage_guide_002",
+    "tool_name": "Vue Usage Guide",
+    "description": "Vue implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Vue Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_angular_usage_guide_003",
+    "tool_name": "Angular Usage Guide",
+    "description": "Angular implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Angular Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_svelte_usage_guide_004",
+    "tool_name": "Svelte Usage Guide",
+    "description": "Svelte implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Svelte Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_react_native_usage_guide_005",
+    "tool_name": "React Native Usage Guide",
+    "description": "React Native implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "React Native Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_flutter_usage_guide_006",
+    "tool_name": "Flutter Usage Guide",
+    "description": "Flutter implementation guide for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Flutter Usage Guide()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_icons_index_007",
+    "tool_name": "Icons Index",
+    "description": "Complete index of all Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "Icons Index()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_list_icons_008",
+    "tool_name": "list_icons",
+    "description": "Get a list of all available Hugeicons icons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "list_icons()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_search_icons_009",
+    "tool_name": "search_icons",
+    "description": "Search for icons by name or tags. Use commas to search for multiple icons (e.g. 'home, notification, settings')",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "search_icons()"
+    ]
+  },
+  {
+    "tool_id": "hugeicons_get_platform_usage_010",
+    "tool_name": "get_platform_usage",
+    "description": "Get platform-specific usage instructions for Hugeicons",
+    "category": "design",
+    "server": "Huge Icons",
+    "usage_example": [
+      "get_platform_usage()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_findparks_001",
+    "tool_name": "findParks",
+    "description": "Search for national parks based on state, name, activities, or other criteria",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "findParks()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getparkdetails_002",
+    "tool_name": "getParkDetails",
+    "description": "Get detailed information about a specific national park",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getParkDetails()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getalerts_003",
+    "tool_name": "getAlerts",
+    "description": "Get current alerts for national parks including closures, hazards, and important information",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getAlerts()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getvisitorcenters_004",
+    "tool_name": "getVisitorCenters",
+    "description": "Get information about visitor centers and their operating hours",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getVisitorCenters()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getcampgrounds_005",
+    "tool_name": "getCampgrounds",
+    "description": "Get information about available campgrounds and their amenities",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getCampgrounds()"
+    ]
+  },
+  {
+    "tool_id": "nationalparks_getevents_006",
+    "tool_name": "getEvents",
+    "description": "Find upcoming events at parks",
+    "category": "travel",
+    "server": "National Parks",
+    "usage_example": [
+      "getEvents()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_current_weather_tool_001",
+    "tool_name": "get_current_weather_tool",
+    "description": "Get current weather information for a specific city. Args: city: Name of the city to get weather for Returns: Current weather data including temperature, conditions, humidity, wind, etc.",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_current_weather_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_weather_forecast_tool_002",
+    "tool_name": "get_weather_forecast_tool",
+    "description": "Get weather forecast for a specific city. Args: city: Name of the city to get forecast for days: Number of days to forecast (1-10, default: 3) Returns: Weather forecast data for the specified number of days",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_weather_forecast_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_search_locations_tool_003",
+    "tool_name": "search_locations_tool",
+    "description": "Search for locations by name. Args: query: Location name or partial name to search for Returns: List of matching locations with their details",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "search_locations_tool()"
+    ]
+  },
+  {
+    "tool_id": "weatherdata_get_live_temp_004",
+    "tool_name": "get_live_temp",
+    "description": "Legacy tool: Get current temperature for a city (for backward compatibility). Use get_current_weather_tool for more detailed information.",
+    "category": "weather",
+    "server": "Weather Data",
+    "usage_example": [
+      "get_live_temp()"
+    ]
+  },
+  {
+    "tool_id": "timemcp_get_current_time_001",
+    "tool_name": "get_current_time",
+    "description": "Get current time in a specific timezones",
+    "category": "time",
+    "server": "Time MCP",
+    "usage_example": [
+      "get_current_time()"
+    ]
+  },
+  {
+    "tool_id": "timemcp_convert_time_002",
+    "tool_name": "convert_time",
+    "description": "Convert time between timezones",
+    "category": "time",
+    "server": "Time MCP",
+    "usage_example": [
+      "convert_time()"
+    ]
+  }
+]
